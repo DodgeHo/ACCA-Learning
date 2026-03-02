@@ -144,6 +144,8 @@ class _QuizPageState extends State<QuizPage> {
   final TextEditingController _jumpController = TextEditingController();
   final FocusNode _aiInputFocusNode = FocusNode();
   bool _askingAi = false;
+  bool _wrongLoopMode = false;
+  String? _filterBeforeWrongLoop;
 
   static const String _keyboardHint =
       '快捷键：← 上一题，→ 下一题，A 显示答案，K 标记会，D 标记不会，F 标记收藏，/ 聚焦提问框（输入框聚焦时不触发）';
@@ -190,6 +192,57 @@ class _QuizPageState extends State<QuizPage> {
   void _runShortcutIfReady(VoidCallback action) {
     if (_isTextInputFocused()) return;
     action();
+  }
+
+  Future<void> _toggleWrongLoopMode(AppModel model, bool enabled) async {
+    if (!enabled) {
+      final restoreFilter = _filterBeforeWrongLoop;
+      setState(() {
+        _wrongLoopMode = false;
+        _filterBeforeWrongLoop = null;
+      });
+      if (restoreFilter != null && model.filterMode != restoreFilter) {
+        await model.setFilterMode(restoreFilter);
+      }
+      return;
+    }
+
+    _filterBeforeWrongLoop = model.filterMode;
+    if (model.filterMode != 'DontKnow') {
+      await model.setFilterMode('DontKnow');
+    }
+
+    if (!mounted) return;
+
+    if (model.questions.isEmpty) {
+      setState(() {
+        _wrongLoopMode = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('当前没有“不会”题目，无法开启错题循环')),
+      );
+      return;
+    }
+
+    setState(() {
+      _wrongLoopMode = true;
+    });
+  }
+
+  void _nextQuestion(AppModel model) {
+    if (_wrongLoopMode && model.questions.isNotEmpty && model.currentIndex >= model.questions.length - 1) {
+      model.jumpToDisplayIndex(0);
+      return;
+    }
+    model.next();
+  }
+
+  void _prevQuestion(AppModel model) {
+    if (_wrongLoopMode && model.questions.isNotEmpty && model.currentIndex == 0) {
+      model.jumpToDisplayIndex(model.questions.length - 1);
+      return;
+    }
+    model.prev();
   }
 
   void _focusAiInput(AppModel model) {
@@ -451,6 +504,14 @@ $enOptions
               },
             ),
             const SizedBox(width: 16),
+            const Text('错题循环'),
+            Checkbox(
+              value: _wrongLoopMode,
+              onChanged: (v) {
+                _toggleWrongLoopMode(model, v ?? false);
+              },
+            ),
+            const SizedBox(width: 8),
             const Text('随机'),
             Checkbox(
               value: model.randomOrder,
@@ -483,9 +544,33 @@ $enOptions
             ),
           ],
         ),
-        Text(
-          '第${model.currentIndex + 1}/${model.questions.length} 题 | 题号为${q.qNum ?? '-'}',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: model.fontSize),
+        Wrap(
+          spacing: 8,
+          runSpacing: 6,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text(
+              '第${model.currentIndex + 1}/${model.questions.length} 题 | 题号为${q.qNum ?? '-'}',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: model.fontSize),
+            ),
+            if (_wrongLoopMode)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade50,
+                  border: Border.all(color: Colors.red.shade300),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  '错题循环中',
+                  style: TextStyle(
+                    color: Colors.red.shade700,
+                    fontWeight: FontWeight.w700,
+                    fontSize: (model.fontSize - 7).clamp(10, 14).toDouble(),
+                  ),
+                ),
+              ),
+          ],
         ),
         Text(
           '状态：$statusText',
@@ -531,8 +616,8 @@ $enOptions
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ElevatedButton(onPressed: model.prev, child: const Text('上一题')),
-            ElevatedButton(onPressed: model.next, child: const Text('下一题')),
+            ElevatedButton(onPressed: () => _prevQuestion(model), child: const Text('上一题')),
+            ElevatedButton(onPressed: () => _nextQuestion(model), child: const Text('下一题')),
           ],
         ),
         const SizedBox(height: 8),
@@ -741,8 +826,10 @@ $enOptions
       autofocus: true,
       child: CallbackShortcuts(
         bindings: {
-          const SingleActivator(LogicalKeyboardKey.arrowLeft): () => _runShortcutIfReady(model.prev),
-          const SingleActivator(LogicalKeyboardKey.arrowRight): () => _runShortcutIfReady(model.next),
+          const SingleActivator(LogicalKeyboardKey.arrowLeft):
+            () => _runShortcutIfReady(() => _prevQuestion(model)),
+          const SingleActivator(LogicalKeyboardKey.arrowRight):
+            () => _runShortcutIfReady(() => _nextQuestion(model)),
           const SingleActivator(LogicalKeyboardKey.keyA): () => _runShortcutIfReady(model.showAnswer),
           const SingleActivator(LogicalKeyboardKey.keyK):
               () => _runShortcutIfReady(() => _markAndMaybeNext(model, 'Know')),
