@@ -43,6 +43,28 @@ class MainScaffold extends StatefulWidget {
 }
 
 class _MainScaffoldState extends State<MainScaffold> {
+  void _openKeyboardHelpDialog() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('本地快捷键'),
+        content: const Text(
+          '← 上一题\n'
+          '→ 下一题\n'
+          'A 显示答案\n'
+          'K 标记会\n'
+          'D 标记不会\n'
+          'F 标记收藏\n'
+          '/ 聚焦提问框\n\n'
+          '提示：当输入框聚焦时，快捷键不会触发。',
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('知道了')),
+        ],
+      ),
+    );
+  }
+
   void _openProgressDialog() {
     final size = MediaQuery.of(context).size;
     final width = (size.width * 0.92).clamp(320.0, 900.0);
@@ -88,6 +110,11 @@ class _MainScaffoldState extends State<MainScaffold> {
         title: const Text('AWS SAA 题库助手'),
         actions: [
           IconButton(
+            tooltip: '快捷键帮助',
+            icon: const Icon(Icons.keyboard_outlined),
+            onPressed: _openKeyboardHelpDialog,
+          ),
+          IconButton(
             tooltip: '进度',
             icon: const Icon(Icons.bar_chart_outlined),
             onPressed: _openProgressDialog,
@@ -115,10 +142,11 @@ class _QuizPageState extends State<QuizPage> {
   final TextEditingController _inputController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _jumpController = TextEditingController();
+  final FocusNode _aiInputFocusNode = FocusNode();
   bool _askingAi = false;
 
   static const String _keyboardHint =
-      '快捷键：← 上一题，→ 下一题，A 显示答案，K 标记会，D 标记不会，F 标记收藏（输入框聚焦时不触发）';
+      '快捷键：← 上一题，→ 下一题，A 显示答案，K 标记会，D 标记不会，F 标记收藏，/ 聚焦提问框（输入框聚焦时不触发）';
 
   static const Map<String, String> _filterDisplayToMode = {
     '所有': 'All',
@@ -164,11 +192,59 @@ class _QuizPageState extends State<QuizPage> {
     action();
   }
 
+  void _focusAiInput(AppModel model) {
+    if (model.apiKey.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('请先在设置中填写 API Key')),
+      );
+      return;
+    }
+    _aiInputFocusNode.requestFocus();
+  }
+
+  Future<void> _markAndMaybeNext(AppModel model, String status) async {
+    await model.mark(status);
+    if (!mounted) return;
+    if (model.autoNextAfterMark &&
+        model.filterMode == 'All' &&
+        model.currentIndex < model.questions.length - 1) {
+      model.next();
+    }
+  }
+
+  String _buildQuestionTextForCopy(Question q, {bool includeAnswer = false}) {
+    final buffer = StringBuffer();
+    buffer.writeln('题号：${q.qNum ?? '-'}');
+    if (q.stemZh != null && q.stemZh!.trim().isNotEmpty) {
+      buffer.writeln('\n【中文题干】');
+      buffer.writeln(q.stemZh);
+    }
+    if (q.optionsZh != null && q.optionsZh!.isNotEmpty) {
+      buffer.writeln('\n【中文选项】');
+      buffer.writeln(q.optionsZh!.join('\n'));
+    }
+    if (includeAnswer) {
+      buffer.writeln('\n【参考答案】${q.correctAnswer ?? '(空)'}');
+      buffer.writeln('\n【中文解析】');
+      buffer.writeln(q.explanationZh ?? '(空)');
+    }
+    return buffer.toString().trim();
+  }
+
+  Future<void> _copyQuestionToClipboard(Question q, {required bool includeAnswer}) async {
+    final text = _buildQuestionTextForCopy(q, includeAnswer: includeAnswer);
+    await Clipboard.setData(ClipboardData(text: text));
+    if (!mounted) return;
+    final msg = includeAnswer ? '题目与答案已复制' : '题目已复制';
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  }
+
   @override
   void dispose() {
     _inputController.dispose();
     _scrollController.dispose();
     _jumpController.dispose();
+    _aiInputFocusNode.dispose();
     super.dispose();
   }
 
@@ -310,6 +386,7 @@ $enOptions
         const SizedBox(height: 8),
         TextField(
           controller: _inputController,
+          focusNode: _aiInputFocusNode,
           decoration: const InputDecoration(
             labelText: '自定义问题',
             hintText: '输入提问后回车',
@@ -471,13 +548,21 @@ $enOptions
               onPressed: model.showAnswer,
               child: const Text('答案'),
             ),
+            OutlinedButton(
+              onPressed: () => _copyQuestionToClipboard(q, includeAnswer: false),
+              child: const Text('复制题目'),
+            ),
+            OutlinedButton(
+              onPressed: () => _copyQuestionToClipboard(q, includeAnswer: true),
+              child: const Text('复制题目+答案'),
+            ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green.shade600,
                 foregroundColor: Colors.white,
                 shape: const StadiumBorder(),
               ),
-              onPressed: () => model.mark('Know'),
+              onPressed: () => _markAndMaybeNext(model, 'Know'),
               child: const Text('会'),
             ),
             ElevatedButton(
@@ -486,7 +571,7 @@ $enOptions
                 foregroundColor: Colors.white,
                 shape: const StadiumBorder(),
               ),
-              onPressed: () => model.mark('DontKnow'),
+              onPressed: () => _markAndMaybeNext(model, 'DontKnow'),
               child: const Text('不会'),
             ),
             ElevatedButton(
@@ -495,7 +580,7 @@ $enOptions
                 foregroundColor: Colors.black87,
                 shape: const StadiumBorder(),
               ),
-              onPressed: () => model.mark('Favorite'),
+              onPressed: () => _markAndMaybeNext(model, 'Favorite'),
               child: const Text('收藏'),
             ),
           ],
@@ -659,9 +744,14 @@ $enOptions
           const SingleActivator(LogicalKeyboardKey.arrowLeft): () => _runShortcutIfReady(model.prev),
           const SingleActivator(LogicalKeyboardKey.arrowRight): () => _runShortcutIfReady(model.next),
           const SingleActivator(LogicalKeyboardKey.keyA): () => _runShortcutIfReady(model.showAnswer),
-          const SingleActivator(LogicalKeyboardKey.keyK): () => _runShortcutIfReady(() => model.mark('Know')),
-          const SingleActivator(LogicalKeyboardKey.keyD): () => _runShortcutIfReady(() => model.mark('DontKnow')),
-          const SingleActivator(LogicalKeyboardKey.keyF): () => _runShortcutIfReady(() => model.mark('Favorite')),
+          const SingleActivator(LogicalKeyboardKey.keyK):
+              () => _runShortcutIfReady(() => _markAndMaybeNext(model, 'Know')),
+          const SingleActivator(LogicalKeyboardKey.keyD):
+              () => _runShortcutIfReady(() => _markAndMaybeNext(model, 'DontKnow')),
+          const SingleActivator(LogicalKeyboardKey.keyF):
+              () => _runShortcutIfReady(() => _markAndMaybeNext(model, 'Favorite')),
+          const SingleActivator(LogicalKeyboardKey.slash):
+              () => _runShortcutIfReady(() => _focusAiInput(model)),
         },
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -785,6 +875,7 @@ class _SettingsPageState extends State<SettingsPage> {
   String _provider = 'deepseek';
   String _model = 'deepseek-chat';
   double _fontSize = 20;
+  bool _autoNextAfterMark = false;
 
   static const Map<String, List<String>> _modelOptions = {
     'deepseek': ['deepseek-chat', 'deepseek-reasoner'],
@@ -818,6 +909,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _keyController.text = model.getProviderKey(_provider);
     _baseUrlController.text = model.aiBaseUrl;
     _fontSize = model.fontSize;
+    _autoNextAfterMark = model.autoNextAfterMark;
   }
 
   @override
@@ -837,6 +929,7 @@ class _SettingsPageState extends State<SettingsPage> {
       model: _model.trim().isEmpty ? _defaultModelFor(_provider) : _model.trim(),
       baseUrl: _baseUrlController.text.trim(),
       font: _fontSize,
+      autoNext: _autoNextAfterMark,
     );
     if (!mounted) return;
     messenger.showSnackBar(const SnackBar(content: Text('保存成功')));
@@ -993,6 +1086,16 @@ class _SettingsPageState extends State<SettingsPage> {
                 '字体预览：这是一道 AWS SAA 题目的示例文本（EC2 / S3 / IAM）',
                 style: TextStyle(fontSize: _fontSize),
               ),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                const Expanded(child: Text('标记后自动下一题（仅 All 筛选时生效）')),
+                Checkbox(
+                  value: _autoNextAfterMark,
+                  onChanged: (v) => setState(() => _autoNextAfterMark = v ?? false),
+                ),
+              ],
             ),
             const SizedBox(height: 8),
             const Text('默认筛选'),

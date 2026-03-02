@@ -28,6 +28,7 @@ class AppModel extends ChangeNotifier {
   String aiModel = 'deepseek-chat';
   String aiBaseUrl = '';
   double fontSize = 20;
+  bool autoNextAfterMark = false;
 
   String filterMode = 'All';
   bool randomOrder = false;
@@ -67,6 +68,7 @@ class AppModel extends ChangeNotifier {
     aiModel = prefs.getString('ai_model') ?? _defaultModelFor(aiProvider);
     aiBaseUrl = prefs.getString('ai_base_url') ?? '';
     fontSize = prefs.getDouble('font_size') ?? 20;
+    autoNextAfterMark = prefs.getBool('auto_next_after_mark') ?? false;
     filterMode = prefs.getString('filter_mode') ?? 'All';
     randomOrder = prefs.getBool('random_order') ?? false;
     notifyListeners();
@@ -81,6 +83,7 @@ class AppModel extends ChangeNotifier {
     await prefs.setString('ai_model', aiModel);
     await prefs.setString('ai_base_url', aiBaseUrl);
     await prefs.setDouble('font_size', fontSize);
+    await prefs.setBool('auto_next_after_mark', autoNextAfterMark);
     await prefs.setString('filter_mode', filterMode);
     await prefs.setBool('random_order', randomOrder);
   }
@@ -91,6 +94,7 @@ class AppModel extends ChangeNotifier {
     required String model,
     required String baseUrl,
     required double font,
+    required bool autoNext,
   }) async {
     aiProvider = provider;
     providerKeys[provider] = key;
@@ -98,6 +102,7 @@ class AppModel extends ChangeNotifier {
     aiModel = model;
     aiBaseUrl = baseUrl;
     fontSize = font;
+    autoNextAfterMark = autoNext;
 
     await saveSettings();
     notifyListeners();
