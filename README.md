@@ -36,7 +36,13 @@
 本仓库已移除旧的 Python/Tkinter 实现，所有功能已迁移到 Flutter。
 生成的应用支持 Windows、macOS、Linux 桌面、Android 手机/平板以及 Web。
 Web 端使用 `assets/questions.json` + `sembast` (IndexedDB) 存储，不依赖 `sqflite`。
-界面采用响应式布局：宽屏时使用侧边 NavigationRail，窄屏时自动切换到底部导航，兼容键鼠与触屏。
+界面采用响应式布局：宽屏为题目区+AI区双栏，窄屏自动切换为上下布局，兼容键鼠与触屏。
+
+Web 离线策略（当前）：
+
+- 已启用自定义 Service Worker（`web/sw.js`），首次在线访问后可离线回访已加载页面与题库 JSON。
+- 导航请求采用 network-first，静态资源采用 cache-first，题库 JSON 采用 stale-while-revalidate。
+- 这仍是“已加载内容可离线回访”模式，不等同于完整离线发行包。
 
 功能概览：
 

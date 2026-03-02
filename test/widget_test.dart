@@ -13,7 +13,8 @@ import 'package:aws_saa_trainer/main.dart';
 void main() {
   testWidgets('App loads smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(const AwsSaaTrainerApp());
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('AWS SAA 题库助手'), findsOneWidget);
     expect(find.byType(MaterialApp), findsOneWidget);

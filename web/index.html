@@ -18,18 +18,18 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="AWS SAA-C03 中文题库刷题与AI讲解助手。支持标记、筛选、收藏与学习进度追踪。">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="aws_saa_trainer">
+  <meta name="apple-mobile-web-app-title" content="AWS SAA 题库助手">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>aws_saa_trainer</title>
+  <title>AWS SAA 题库助手</title>
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -41,6 +41,16 @@
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        const swUrl = new URL('sw.js', document.baseURI).toString();
+        navigator.serviceWorker.register(swUrl).catch((err) => {
+          console.warn('Service Worker 注册失败:', err);
+        });
+      });
+    }
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

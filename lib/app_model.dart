@@ -16,6 +16,7 @@ class AppModel extends ChangeNotifier {
   Map<int, String> statusByQuestionId = {};
   Map<int, String> chatHistoryByQuestionId = {};
   bool answerVisible = false;
+  bool questionsLoaded = false;
 
   // web-specific flag when DB can't be opened
   bool webError = false;
@@ -171,14 +172,17 @@ class AppModel extends ChangeNotifier {
       }
 
       webError = false;
+      questionsLoaded = true;
     } on UnsupportedError catch (_) {
       allQuestions = [];
       questions = [];
       webError = true;
+      questionsLoaded = true;
     } catch (e) {
       allQuestions = [];
       questions = [];
       debugPrint('loadQuestions failed: $e');
+      questionsLoaded = true;
     }
     notifyListeners();
   }

@@ -66,6 +66,26 @@ flutter build web       # Web 应用
 
 构建成果静态放在各自的 `build/` 子目录下，可按需打包分发。
 
+### Web 部署（腾讯云服务器）
+
+如果你将 Web 版本部署到腾讯云服务器（如 CVM + Nginx）：
+
+1. 先构建：
+   ```bash
+   flutter build web
+   ```
+2. 将 `build/web/` 全量上传到站点目录。
+3. 建议缓存策略：
+   - `index.html`：`Cache-Control: no-cache`
+   - `flutter_bootstrap.js`、`flutter.js`：`Cache-Control: no-cache`
+   - `main.dart.js`、`assets/*`：可使用较长缓存（文件名随构建变化时更安全）
+4. 更新版本后，先刷新 `index.html`，再让静态资源按新清单加载，避免“页面更新但资源未更新”的混合版本问题。
+
+> 说明：当前项目目标是“已加载内容可离线回访”，并非完整离线安装包模式。
+
+当前实现已启用自定义 Service Worker（`web/sw.js`）。
+若你修改了缓存策略或离线资源列表，请同步更新 `CACHE_VERSION`，以便浏览器清理旧缓存并拉取新版本。
+
 ## 3. Environment Variables
 
 - `DEEPSEEK_API_KEY` 或 `OPENAI_API_KEY`：仅在使用 AI 提问功能时需要。

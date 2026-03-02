@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -43,12 +44,15 @@ class MainScaffold extends StatefulWidget {
 
 class _MainScaffoldState extends State<MainScaffold> {
   void _openProgressDialog() {
+    final size = MediaQuery.of(context).size;
+    final width = (size.width * 0.92).clamp(320.0, 900.0);
+    final height = (size.height * 0.92).clamp(320.0, 640.0);
     showDialog(
       context: context,
       builder: (_) => Dialog(
         child: SizedBox(
-          width: 900,
-          height: 640,
+          width: width,
+          height: height,
           child: const Padding(
             padding: EdgeInsets.all(12.0),
             child: ProgressPage(),
@@ -59,12 +63,15 @@ class _MainScaffoldState extends State<MainScaffold> {
   }
 
   void _openSettingsDialog() {
+    final size = MediaQuery.of(context).size;
+    final width = (size.width * 0.92).clamp(320.0, 560.0);
+    final height = (size.height * 0.92).clamp(320.0, 520.0);
     showDialog(
       context: context,
       builder: (_) => Dialog(
         child: SizedBox(
-          width: 560,
-          height: 520,
+          width: width,
+          height: height,
           child: const Padding(
             padding: EdgeInsets.all(12.0),
             child: SettingsPage(),
@@ -110,6 +117,9 @@ class _QuizPageState extends State<QuizPage> {
   final TextEditingController _jumpController = TextEditingController();
   bool _askingAi = false;
 
+  static const String _keyboardHint =
+      '快捷键：← 上一题，→ 下一题，A 显示答案，K 标记会，D 标记不会，F 标记收藏（输入框聚焦时不触发）';
+
   static const Map<String, String> _filterDisplayToMode = {
     '所有': 'All',
     '会': 'Know',
@@ -141,6 +151,17 @@ class _QuizPageState extends State<QuizPage> {
       default:
         return Colors.grey.shade700;
     }
+  }
+
+  bool _isTextInputFocused() {
+    final focusContext = FocusManager.instance.primaryFocus?.context;
+    if (focusContext == null) return false;
+    return focusContext.widget is EditableText;
+  }
+
+  void _runShortcutIfReady(VoidCallback action) {
+    if (_isTextInputFocused()) return;
+    action();
   }
 
   @override
@@ -397,6 +418,16 @@ $enOptions
             fontWeight: FontWeight.w700,
           ),
         ),
+        Semantics(
+          label: '键盘快捷键提示',
+          child: Text(
+            _keyboardHint,
+            style: TextStyle(
+              fontSize: (model.fontSize - 8).clamp(10, 14).toDouble(),
+              color: Colors.grey.shade700,
+            ),
+          ),
+        ),
         const SizedBox(height: 8),
         Expanded(
           child: SelectionArea(
@@ -533,39 +564,134 @@ $enOptions
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('刷题记录已清空')));
   }
 
+  Widget _buildLoadingState() {
+    return const Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircularProgressIndicator(),
+          SizedBox(height: 12),
+          Text('正在加载题库，请稍候...'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWebErrorState(AppModel model) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 560),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('题库加载失败', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
+                const Text('当前 Web 环境下题库数据无法打开，请检查网络或静态资源部署。'),
+                const SizedBox(height: 12),
+                ElevatedButton(
+                  onPressed: model.loadQuestions,
+                  child: const Text('重试加载'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(AppModel model) {
+    final isFiltered = model.filterMode != 'All';
+    final message = isFiltered ? '当前筛选下暂无题目。' : '题库为空，请检查数据文件。';
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 520),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(message),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: model.loadQuestions,
+                      child: const Text('重新加载题库'),
+                    ),
+                    if (isFiltered)
+                      OutlinedButton(
+                        onPressed: () => model.setFilterMode('All'),
+                        child: const Text('清除筛选'),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<AppModel>(context);
+    if (model.webError) return _buildWebErrorState(model);
+
+    if (!model.questionsLoaded) return _buildLoadingState();
+
     final q = model.currentQuestion;
-    if (q == null) return const Center(child: Text('没有题目'));
+    if (q == null) return _buildEmptyState(model);
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final wide = constraints.maxWidth >= 1100;
-        if (wide) {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(flex: 3, child: _buildQuestionPanel(model, q)),
-                const SizedBox(width: 16),
-                Expanded(flex: 2, child: _buildAiPanel(model, q)),
-              ],
-            ),
-          );
-        }
+    return Focus(
+      autofocus: true,
+      child: CallbackShortcuts(
+        bindings: {
+          const SingleActivator(LogicalKeyboardKey.arrowLeft): () => _runShortcutIfReady(model.prev),
+          const SingleActivator(LogicalKeyboardKey.arrowRight): () => _runShortcutIfReady(model.next),
+          const SingleActivator(LogicalKeyboardKey.keyA): () => _runShortcutIfReady(model.showAnswer),
+          const SingleActivator(LogicalKeyboardKey.keyK): () => _runShortcutIfReady(() => model.mark('Know')),
+          const SingleActivator(LogicalKeyboardKey.keyD): () => _runShortcutIfReady(() => model.mark('DontKnow')),
+          const SingleActivator(LogicalKeyboardKey.keyF): () => _runShortcutIfReady(() => model.mark('Favorite')),
+        },
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final wide = constraints.maxWidth >= 1100;
+            if (wide) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Expanded(flex: 3, child: _buildQuestionPanel(model, q)),
+                    const SizedBox(width: 16),
+                    Expanded(flex: 2, child: _buildAiPanel(model, q)),
+                  ],
+                ),
+              );
+            }
 
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Expanded(flex: 6, child: _buildQuestionPanel(model, q)),
-              const SizedBox(height: 12),
-              Expanded(flex: 4, child: _buildAiPanel(model, q)),
-            ],
-          ),
-        );
-      },
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Expanded(flex: 6, child: _buildQuestionPanel(model, q)),
+                  const SizedBox(height: 12),
+                  Expanded(flex: 4, child: _buildAiPanel(model, q)),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

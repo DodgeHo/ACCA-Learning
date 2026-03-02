@@ -1,12 +1,11 @@
 {
-    "name": "aws_saa_trainer",
-    "short_name": "aws_saa_trainer",
+    "name": "AWS SAA 题库助手",
+    "short_name": "AWS SAA",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "description": "AWS SAA-C03 中文题库刷题与AI讲解助手，支持标记、筛选、收藏与进度追踪。",
     "prefer_related_applications": false,
     "icons": [
         {
