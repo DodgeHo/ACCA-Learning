@@ -29,7 +29,7 @@
 - 讲师: Stéphane Maarek
 - 官方认证页面: https://aws.amazon.com/certification/certified-solutions-architect-associate/
 
-> 说明: 本仓库不包含课程视频或字幕文件, 仅提供学习框架与结构化模板。课程素材需由学习者自行准备并放置在translations路径中。
+> 说明: 本仓库不包含课程视频或字幕文件, 仅提供学习框架与结构化模板。课程素材需由学习者自行准备并放置在 `translations/` 路径中。
 
 ## 学习框架来源
 
