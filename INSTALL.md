@@ -93,6 +93,27 @@ flutter build web       # Web 应用
 当前实现已启用自定义 Service Worker（`web/sw.js`）。
 若你修改了缓存策略或离线资源列表，请同步更新 `CACHE_VERSION`，以便浏览器清理旧缓存并拉取新版本。
 
+#### `CACHE_VERSION` 更新规范
+
+- 命名格式固定为：`aws-saa-web-v{数字}`（例如 `aws-saa-web-v2`）。
+- 以下情况必须递增版本号：
+   1. `STATIC_ASSETS` 列表变化；
+   2. 缓存策略变化（`networkFirst` / `cacheFirst` / `staleWhileRevalidate` 逻辑调整）；
+   3. 已发生“线上更新后仍命中旧缓存”的问题并需要强制刷新。
+- 递增后重新 `flutter build web` 并全量发布 `build/web/`。
+
+#### 上线前后检查清单（Web）
+
+- 上线前：
+   1. 执行 `flutter build web`，确认构建成功；
+   2. 确认 `web/sw.js` 中 `CACHE_VERSION` 已按本次变更递增；
+   3. 全量上传 `build/web/`（不要只传部分静态文件）。
+- 上线后：
+   1. 在线首次访问，确认题库、切题、标记、AI 提问正常；
+   2. 刷新页面后确认刷题状态仍存在；
+   3. 切离线后回访同地址，确认已加载页面可打开；
+   4. 若仍命中旧版本，清理站点缓存后再次验证。
+
 ### Chrome 离线内测验收清单（建议）
 
 以下清单用于验证“已加载内容可离线回访”是否满足内测标准：

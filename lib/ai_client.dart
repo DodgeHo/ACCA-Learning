@@ -9,6 +9,7 @@ class AiClient {
     required String prompt,
     String? model,
     String? baseUrl,
+    http.Client? client,
   }) async {
     final trimmedProvider = provider.trim().toLowerCase();
     final trimmedKey = apiKey.trim();
@@ -34,14 +35,22 @@ class AiClient {
       'temperature': 0.4,
     };
 
-    final response = await http.post(
-      uri,
-      headers: {
-        'Authorization': 'Bearer $trimmedKey',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(payload),
-    );
+    final httpClient = client ?? http.Client();
+    http.Response response;
+    try {
+      response = await httpClient.post(
+        uri,
+        headers: {
+          'Authorization': 'Bearer $trimmedKey',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(payload),
+      );
+    } finally {
+      if (client == null) {
+        httpClient.close();
+      }
+    }
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw Exception('AI 请求失败(${response.statusCode}): ${response.body}');
