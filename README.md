@@ -8,6 +8,21 @@
 - 面向实操: 将 Hands-On 章节视为实践任务
 - 面向复习: 通过进度追踪与间隔复习强化记忆
 
+## 使用入口（两条主线）
+
+本仓库包含两个并行子系统，请按你的使用场景选择：
+
+1. **Flutter 题库 App（推荐日常刷题）**
+  - 入口：`lib/` + `flutter run`
+  - 适用：刷题、标记会/不会/收藏、AI 题目讲解、进度可视化
+2. **Skill 学习流程（Obsidian 路线）**
+  - 入口：`SKILL.md` + `templates/` + `references/`
+  - 适用：按章节阅读课程材料、生成结构化笔记与复习卡片
+
+快速建议：
+- 以通过考试为第一目标：优先使用 Flutter 题库 App。
+- 以系统化学习与长期沉淀为目标：结合 Skill + Obsidian 流程。
+
 ## 课程来源
 
 - 课程名称: AWS Certified Solutions Architect Associate

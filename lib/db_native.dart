@@ -144,7 +144,6 @@ class AppDatabase {
 
   static Future<void> setStatus(int questionId, String status) async {
     final db = await getInstance();
-    await db.delete('user_status', where: 'question_id=?', whereArgs: [questionId]);
     await db.insert('user_status', {
       'question_id': questionId,
       'status': status,
@@ -183,12 +182,64 @@ class AppDatabase {
   /// return a map of status->count for all existing entries
   static Future<Map<String,int>> countByStatus() async {
     final db = await getInstance();
-    final rows = await db.rawQuery('SELECT status,COUNT(*) as c FROM user_status GROUP BY status');
+    final rows = await db.rawQuery('''
+      SELECT us.status, COUNT(*) AS c
+      FROM user_status us
+      INNER JOIN (
+        SELECT question_id, MAX(rowid) AS max_rowid
+        FROM user_status
+        GROUP BY question_id
+      ) latest ON latest.max_rowid = us.rowid
+      GROUP BY us.status
+    ''');
     final Map<String,int> m = {};
     for (var r in rows) {
       m[r['status'] as String] = r['c'] as int;
     }
     return m;
+  }
+
+  static Future<Map<String, int>> recentDontKnowTrend({int days = 7}) async {
+    final db = await getInstance();
+    final since = DateTime.now().subtract(Duration(days: days - 1)).toIso8601String();
+    final rows = await db.rawQuery(
+      '''
+      SELECT substr(updated_at, 1, 10) AS day, COUNT(*) AS c
+      FROM user_status
+      WHERE status = ? AND updated_at >= ?
+      GROUP BY day
+      ORDER BY day DESC
+      ''',
+      ['DontKnow', since],
+    );
+
+    final out = <String, int>{};
+    for (final row in rows) {
+      final day = row['day'];
+      final count = row['c'];
+      if (day is String && count is int) {
+        out[day] = count;
+      }
+    }
+    return out;
+  }
+
+  static Future<List<Map<String, dynamic>>> topFavoriteHotspots({int limit = 5}) async {
+    final db = await getInstance();
+    final rows = await db.rawQuery(
+      '''
+      SELECT us.question_id, q.q_num, q.stem_zh, COUNT(*) AS c, MAX(us.updated_at) AS last_at
+      FROM user_status us
+      LEFT JOIN questions q ON q.id = us.question_id
+      WHERE us.status = ?
+      GROUP BY us.question_id
+      ORDER BY c DESC, last_at DESC
+      LIMIT ?
+      ''',
+      ['Favorite', limit],
+    );
+
+    return rows;
   }
 
   static Future<String?> getChatHistory(int questionId) async {

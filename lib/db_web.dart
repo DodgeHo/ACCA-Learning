@@ -67,8 +67,6 @@ class AppDatabase {
 
   static Future<void> setStatus(int questionId, String status) async {
     final db = await getInstance();
-    // remove previous for simplicity
-    await _statusStore.delete(db, finder: Finder(filter: Filter.equals('question_id', questionId)));
     await _statusStore.add(db, {'question_id': questionId, 'status': status, 'timestamp': DateTime.now().toIso8601String()});
   }
 
@@ -79,7 +77,10 @@ class AppDatabase {
 
   static Future<Map<int, String>> getLatestStatuses() async {
     final db = await getInstance();
-    final recs = await _statusStore.find(db);
+    final recs = await _statusStore.find(
+      db,
+      finder: Finder(sortOrders: [SortOrder('timestamp')]),
+    );
     final map = <int, String>{};
     for (final record in recs) {
       final value = record.value;
@@ -94,14 +95,80 @@ class AppDatabase {
 
   /// status counts
   static Future<Map<String,int>> countByStatus() async {
-    final db = await getInstance();
-    final recs = await _statusStore.find(db);
+    final latest = await getLatestStatuses();
     final Map<String,int> m = {};
-    for (var r in recs) {
-      final st = r['status'] as String;
+    for (final st in latest.values) {
       m[st] = (m[st] ?? 0) + 1;
     }
     return m;
+  }
+
+  static Future<Map<String, int>> recentDontKnowTrend({int days = 7}) async {
+    final db = await getInstance();
+    final recs = await _statusStore.find(
+      db,
+      finder: Finder(
+        filter: Filter.equals('status', 'DontKnow'),
+        sortOrders: [SortOrder('timestamp', false)],
+      ),
+    );
+
+    final earliest = DateTime.now().subtract(Duration(days: days - 1));
+    final out = <String, int>{};
+    for (final rec in recs) {
+      final ts = rec['timestamp'];
+      if (ts is! String) continue;
+      final dt = DateTime.tryParse(ts);
+      if (dt == null) continue;
+      if (dt.isBefore(earliest)) continue;
+      final day = dt.toIso8601String().substring(0, 10);
+      out[day] = (out[day] ?? 0) + 1;
+    }
+    return out;
+  }
+
+  static Future<List<Map<String, dynamic>>> topFavoriteHotspots({int limit = 5}) async {
+    final db = await getInstance();
+    final recs = await _statusStore.find(
+      db,
+      finder: Finder(
+        filter: Filter.equals('status', 'Favorite'),
+        sortOrders: [SortOrder('timestamp', false)],
+      ),
+    );
+
+    final counts = <int, int>{};
+    final lastAt = <int, String>{};
+    for (final rec in recs) {
+      final qid = rec['question_id'];
+      final ts = rec['timestamp'];
+      if (qid is! int) continue;
+      counts[qid] = (counts[qid] ?? 0) + 1;
+      if (ts is String && (lastAt[qid] == null || ts.compareTo(lastAt[qid]!) > 0)) {
+        lastAt[qid] = ts;
+      }
+    }
+
+    final sortedIds = counts.keys.toList()
+      ..sort((a, b) {
+        final c = (counts[b] ?? 0).compareTo(counts[a] ?? 0);
+        if (c != 0) return c;
+        return (lastAt[b] ?? '').compareTo(lastAt[a] ?? '');
+      });
+
+    final topIds = sortedIds.take(limit);
+    final out = <Map<String, dynamic>>[];
+    for (final qid in topIds) {
+      final q = await _questionStore.record(qid.toString()).get(db);
+      out.add({
+        'question_id': qid,
+        'q_num': q?['q_num']?.toString() ?? qid.toString(),
+        'stem_zh': q?['stem_zh']?.toString() ?? '',
+        'c': counts[qid] ?? 0,
+        'last_at': lastAt[qid] ?? '',
+      });
+    }
+    return out;
   }
 
   static Future<String?> getChatHistory(int questionId) async {

@@ -881,16 +881,21 @@ class ProgressPage extends StatelessWidget {
     final model = Provider.of<AppModel>(context);
     final total = model.allQuestions.length;
 
-    return FutureBuilder<Map<String, int>>(
-      future: _computeStats(),
+    return FutureBuilder<Map<String, dynamic>>(
+      future: _computeAnalytics(),
       builder: (ctx, snap) {
         if (snap.connectionState != ConnectionState.done) {
           return const Center(child: CircularProgressIndicator());
         }
-        final stats = snap.data;
-        final know = stats?['Know'] ?? 0;
-        final dont = stats?['DontKnow'] ?? 0;
-        final fav = stats?['Favorite'] ?? 0;
+        final stats = (snap.data?['stats'] as Map<String, int>?) ?? const <String, int>{};
+        final wrongTrend = (snap.data?['wrongTrend'] as Map<String, int>?) ?? const <String, int>{};
+        final favoriteHotspots = (snap.data?['favoriteHotspots'] as List<Map<String, dynamic>>?) ?? const <Map<String, dynamic>>[];
+        final know = stats['Know'] ?? 0;
+        final dont = stats['DontKnow'] ?? 0;
+        final fav = stats['Favorite'] ?? 0;
+        final knownRate = total > 0 ? (know / total * 100) : 0.0;
+        final dontRate = total > 0 ? (dont / total * 100) : 0.0;
+        final favRate = total > 0 ? (fav / total * 100) : 0.0;
 
         return Padding(
           padding: const EdgeInsets.all(16.0),
@@ -899,6 +904,32 @@ class ProgressPage extends StatelessWidget {
             children: [
               Text('共 $total 题'),
               Text('会: $know    不会: $dont    收藏: $fav'),
+              const SizedBox(height: 8),
+              Text('状态占比：会 ${knownRate.toStringAsFixed(1)}%  ｜ 不会 ${dontRate.toStringAsFixed(1)}%  ｜ 收藏 ${favRate.toStringAsFixed(1)}%'),
+              const SizedBox(height: 12),
+              const Text('最近 7 天错题趋势（按“标记不会”次数）', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              if (wrongTrend.isEmpty)
+                const Text('暂无错题标记记录')
+              else
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 6,
+                  children: wrongTrend.entries
+                      .map((e) => Chip(label: Text('${e.key}: ${e.value} 次')))
+                      .toList(),
+                ),
+              const SizedBox(height: 12),
+              const Text('收藏高频点（最近累计）', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              if (favoriteHotspots.isEmpty)
+                const Text('暂无收藏高频题')
+              else
+                ...favoriteHotspots.map(
+                  (item) => Text(
+                    '题号 ${item['q_num'] ?? '-'} · 收藏 ${item['c'] ?? 0} 次 · ${_shortStem(item['stem_zh']?.toString() ?? '')}',
+                  ),
+                ),
               const SizedBox(height: 16),
               const Text('题目概览：'),
               Expanded(child: _buildOverviewGrid(context, model)),
@@ -909,8 +940,30 @@ class ProgressPage extends StatelessWidget {
     );
   }
 
-  Future<Map<String, int>> _computeStats() async {
-    return await AppDatabase.countByStatus();
+  String _shortStem(String stem) {
+    final s = stem.trim();
+    if (s.isEmpty) return '(无题干)';
+    if (s.length <= 36) return s;
+    return '${s.substring(0, 36)}...';
+  }
+
+  Future<Map<String, dynamic>> _computeAnalytics() async {
+    final stats = await AppDatabase.countByStatus();
+    final trendRaw = await AppDatabase.recentDontKnowTrend(days: 7);
+    final favoriteHotspots = await AppDatabase.topFavoriteHotspots(limit: 5);
+
+    final sortedTrendEntries = trendRaw.entries.toList()
+      ..sort((a, b) => b.key.compareTo(a.key));
+    final trend = <String, int>{};
+    for (final entry in sortedTrendEntries) {
+      trend[entry.key] = entry.value;
+    }
+
+    return {
+      'stats': stats,
+      'wrongTrend': trend,
+      'favoriteHotspots': favoriteHotspots,
+    };
   }
 
   Widget _buildOverviewGrid(BuildContext context, AppModel model) {
