@@ -1,20 +1,16 @@
 ﻿---
-name: aws-saa-learning
-version: 1.0.0
+name: AWS-SAA-Learning-Flutter
 description: AWS Certified Solutions Architect Associate (SAA) 学习辅导系统。Use when: AWS, SAA, Solutions Architect, 学习进度, 解释。
-triggers:
-  - keywords: [aws, aws saa, solutions architect, aws 认证, 学习进度, 解释]
-  - intent_patterns: [开始.*学习, 学习.*章节, 我的进度, 下一步, 读, 解释.*]
-dependencies:
-  - obsidian-markdown
-  - json-canvas
+metadata:
+  triggers:
+    keywords: [aws, aws saa, solutions architect, aws 认证, 学习进度, 解释]
+    intent_patterns: [开始.*学习, 学习.*章节, 我的进度, 下一步, 读, 解释.*]
+  dependencies:
+    - obsidian-markdown
+    - json-canvas
 ---
 
 # AWS SAA 学习系统
-
-## Project Plans
-
-- Windows bilingual QBank trainer plan: see [PROJECT_PLAN.md](PROJECT_PLAN.md)
 
 ## 系统角色
 

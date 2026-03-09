@@ -1,5 +1,21 @@
 ﻿# Changelog
 
+## 1.2.0 - 2026-03-09
+- Reliability & data safety:
+  - fixed native DB repair flow to preserve `chat_history` in addition to `user_status`
+  - added chat history export/import (JSON) in settings for manual backup and restore
+- Documentation alignment:
+  - synced README/INSTALL with current AI integration status
+  - added local data backup recommendations and web deployment checklist updates
+- Testing & release quality:
+  - added `AiClient` unit tests (empty key, unsupported provider, non-2xx error readability, success parsing)
+  - updated web service worker cache versioning guidance and bumped `CACHE_VERSION`
+- Progress analytics:
+  - added status ratio, recent wrong-question trend, and favorite hotspots summary in progress view
+- Release doc cleanup:
+  - removed internal sprint execution document
+  - removed outdated Python MVP planning document to avoid confusion with Flutter implementation
+
 ## 1.0.2 - 2026-02-11
 - Added MIT LICENSE file
 - Clarified upstream license status in README and ISSUES

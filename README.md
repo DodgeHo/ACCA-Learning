@@ -170,7 +170,6 @@ aws-saa-learning/
 ├── README.md
 ├── INSTALL.md
 ├── SKILL.md
-├── PROJECT_PLAN.md
 ├── ISSUES.md
 ├── translations/       # 课程字幕整理稿
 ├── references/         # 附加文档
