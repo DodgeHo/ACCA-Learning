@@ -52,7 +52,14 @@ flutter run          # 在默认连接的设备或模拟器上运行
 > ```
 > 该命令会写入或更新 `assets/questions.json`，用于 Web 模式的初始数据。
 
-用户设置、进度和 AI Key 保存在本地 `shared_preferences` 中。
+用户设置和 AI Key 保存在本地（`shared_preferences` + 系统安全存储），
+刷题状态与 AI 对话历史保存在本地数据库（原生 SQLite / Web IndexedDB）。
+
+### 本地数据备份建议
+
+- 在设置页可使用“导出所有对话历史（JSON）”进行手动备份。
+- 在新环境可通过“导入对话历史（JSON）”恢复历史记录。
+- 若发生浏览器站点数据清理、系统重装、应用卸载，本地数据可能不可恢复，请提前导出备份。
 
 ### Packaging
 

@@ -53,9 +53,17 @@ Web 离线策略（当前）：
 - 按状态筛选题目（All/Know/DontKnow/Favorite），支持随机顺序。
 - 浏览题目、显示答案，记录和查询状态、进度。
 - 题目概览页面可跳转、统计各类题目数量。
-- AI 问答模块，留有 TODO 位置用于接入 Deepseek/OpenAI 等服务。
+- AI 问答模块已接入，支持 DeepSeek / OpenAI 兼容接口。
+- 设置页支持配置 AI Provider、Model、Base URL 与 API Key。
+- 设置页支持 AI 对话历史导出/导入（JSON）用于手动备份恢复。
 - 设置页面可调整字体大小、选择 AI 提供者及输入 API Key，保存于本地。
 - 全局状态由 `AppModel` 使用 `provider` 管理。
+
+本地数据与备份建议：
+
+- 题库与刷题状态、AI 对话历史均保存于本地数据库（原生为 SQLite，Web 为 IndexedDB）。
+- 若清理浏览器站点数据、卸载应用或更换设备，本地数据可能丢失。
+- 建议定期在设置页使用“导出所有对话历史（JSON）”做手动备份。
 
 快速启动：
 

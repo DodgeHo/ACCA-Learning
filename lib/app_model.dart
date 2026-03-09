@@ -340,4 +340,63 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
     await AppDatabase.clearAllChatHistories();
   }
+
+  Future<String> exportAllChatHistoriesJson() async {
+    final histories = await AppDatabase.getAllChatHistories();
+    final payload = {
+      'version': 1,
+      'exported_at': DateTime.now().toIso8601String(),
+      'chat_histories': histories.map((k, v) => MapEntry(k.toString(), v)),
+    };
+    return const JsonEncoder.withIndent('  ').convert(payload);
+  }
+
+  Future<Map<String, int>> importAllChatHistoriesJson(
+    String rawJson, {
+    bool clearExisting = false,
+  }) async {
+    final raw = rawJson.trim();
+    if (raw.isEmpty) {
+      throw const FormatException('导入内容为空。');
+    }
+
+    final decoded = jsonDecode(raw);
+    dynamic source;
+
+    if (decoded is Map<String, dynamic> && decoded['chat_histories'] is Map) {
+      source = decoded['chat_histories'];
+    } else {
+      source = decoded;
+    }
+
+    if (source is! Map) {
+      throw const FormatException('JSON 格式不正确，必须是对象。');
+    }
+
+    final parsed = <int, String>{};
+    int skipped = 0;
+    source.forEach((k, v) {
+      final qid = int.tryParse(k.toString());
+      final content = (v ?? '').toString();
+      if (qid == null || content.trim().isEmpty) {
+        skipped++;
+        return;
+      }
+      parsed[qid] = content;
+    });
+
+    if (parsed.isEmpty) {
+      throw const FormatException('未解析到有效聊天历史。');
+    }
+
+    await AppDatabase.importChatHistories(parsed, clearExisting: clearExisting);
+    chatHistoryByQuestionId = await AppDatabase.getAllChatHistories();
+    notifyListeners();
+
+    return {
+      'imported': parsed.length,
+      'skipped': skipped,
+      'total_after_import': chatHistoryByQuestionId.length,
+    };
+  }
 }

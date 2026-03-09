@@ -1072,6 +1072,127 @@ class _SettingsPageState extends State<SettingsPage> {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('所有对话历史已清空')));
   }
 
+  Future<void> _exportAllChatHistoriesJson() async {
+    final model = Provider.of<AppModel>(context, listen: false);
+    final jsonText = await model.exportAllChatHistoriesJson();
+    if (!mounted) return;
+
+    await showDialog<void>(
+      context: context,
+      builder: (dialogCtx) => AlertDialog(
+        title: const Text('导出对话历史 JSON'),
+        content: SizedBox(
+          width: 600,
+          child: SingleChildScrollView(
+            child: SelectableText(jsonText),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              await Clipboard.setData(ClipboardData(text: jsonText));
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('导出 JSON 已复制到剪贴板')),
+                );
+              }
+            },
+            child: const Text('复制 JSON'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogCtx).pop(),
+            child: const Text('关闭'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _importAllChatHistoriesJson() async {
+    final inputController = TextEditingController();
+    bool clearExisting = false;
+
+    final payload = await showDialog<Map<String, dynamic>>(
+      context: context,
+      builder: (dialogCtx) => StatefulBuilder(
+        builder: (ctx, setStateDialog) => AlertDialog(
+          title: const Text('导入对话历史 JSON'),
+          content: SizedBox(
+            width: 600,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('请粘贴导出的 JSON 内容。'),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: inputController,
+                  minLines: 8,
+                  maxLines: 14,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: '{"chat_histories": {"1": "..."}}',
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: clearExisting,
+                      onChanged: (v) => setStateDialog(() => clearExisting = v ?? false),
+                    ),
+                    const Expanded(child: Text('导入前清空当前所有对话历史')),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogCtx).pop(),
+              child: const Text('取消'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(dialogCtx).pop({
+                  'json': inputController.text,
+                  'clear_existing': clearExisting,
+                });
+              },
+              child: const Text('开始导入'),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    inputController.dispose();
+
+    if (payload == null) return;
+
+    final model = Provider.of<AppModel>(context, listen: false);
+    try {
+      final stats = await model.importAllChatHistoriesJson(
+        (payload['json'] ?? '').toString(),
+        clearExisting: payload['clear_existing'] == true,
+      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '导入完成：成功 ${stats['imported']} 条，跳过 ${stats['skipped']} 条，当前总计 ${stats['total_after_import']} 条',
+          ),
+        ),
+      );
+    } on FormatException catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('导入失败：${e.message}')));
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('导入失败：$e')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -1212,6 +1333,16 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
             const SizedBox(height: 16),
+            OutlinedButton(
+              onPressed: _exportAllChatHistoriesJson,
+              child: const Text('导出所有对话历史（JSON）'),
+            ),
+            const SizedBox(height: 8),
+            OutlinedButton(
+              onPressed: _importAllChatHistoriesJson,
+              child: const Text('导入对话历史（JSON）'),
+            ),
+            const SizedBox(height: 8),
             OutlinedButton(
               onPressed: _clearAllChatHistoryWithTripleConfirm,
               style: OutlinedButton.styleFrom(foregroundColor: Colors.red.shade700),

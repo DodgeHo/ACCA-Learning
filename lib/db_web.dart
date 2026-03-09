@@ -148,4 +148,23 @@ class AppDatabase {
     final db = await getInstance();
     await _chatStore.drop(db);
   }
+
+  static Future<void> importChatHistories(
+    Map<int, String> histories, {
+    bool clearExisting = false,
+  }) async {
+    final db = await getInstance();
+    if (clearExisting) {
+      await _chatStore.drop(db);
+    }
+
+    for (final entry in histories.entries) {
+      final content = entry.value.trim();
+      if (content.isEmpty) continue;
+      await _chatStore.record(entry.key).put(db, {
+        'content': entry.value,
+        'updated_at': DateTime.now().toIso8601String(),
+      });
+    }
+  }
 }

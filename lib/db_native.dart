@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -24,6 +25,7 @@ class AppDatabase {
     final needsRepair = await _needsNativeRepair(_db!);
     if (needsRepair) {
       final statusRows = await _db!.query('user_status');
+      final chatRows = await _db!.query('chat_history');
       await _db!.close();
       _db = null;
 
@@ -37,6 +39,17 @@ class AppDatabase {
 
       for (final row in statusRows) {
         await _db!.insert('user_status', row);
+      }
+      for (final row in chatRows) {
+        try {
+          await _db!.insert(
+            'chat_history',
+            row,
+            conflictAlgorithm: ConflictAlgorithm.replace,
+          );
+        } catch (e) {
+          debugPrint('chat history restore skipped: $e');
+        }
       }
     }
 
@@ -231,5 +244,30 @@ class AppDatabase {
   static Future<void> clearAllChatHistories() async {
     final db = await getInstance();
     await db.delete('chat_history');
+  }
+
+  static Future<void> importChatHistories(
+    Map<int, String> histories, {
+    bool clearExisting = false,
+  }) async {
+    final db = await getInstance();
+    await db.transaction((txn) async {
+      if (clearExisting) {
+        await txn.delete('chat_history');
+      }
+      for (final entry in histories.entries) {
+        final content = entry.value.trim();
+        if (content.isEmpty) continue;
+        await txn.insert(
+          'chat_history',
+          {
+            'question_id': entry.key,
+            'content': entry.value,
+            'updated_at': DateTime.now().toIso8601String(),
+          },
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+    });
   }
 }
