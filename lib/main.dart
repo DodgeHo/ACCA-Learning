@@ -420,8 +420,7 @@ ${q.stemEn ?? ''}
 $enOptions
 
 参考答案：${q.correctAnswer ?? ''}
-中文解析：${q.explanationZh ?? ''}
-英文解析：${q.explanationEn ?? ''}
+
 
 请按以下要求回答：
 1) 先给结论，再给理由；
@@ -802,7 +801,7 @@ $enOptions
     final statusText = _statusDisplay[model.currentStatus] ?? '未标记';
     final statusColor = _statusColor(model.currentStatus);
     final answerText =
-        '正确答案：${q.correctAnswer ?? '(空)'}\n\n中文解析：\n${q.explanationZh ?? '(空)'}\n\nEnglish Explanation:\n${q.explanationEn ?? '(empty)'}';
+        '正确答案：${q.correctAnswer ?? '(空)'}\n';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
