@@ -274,6 +274,12 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setFontSize(double value) async {
+    fontSize = value;
+    await saveSettings();
+    notifyListeners();
+  }
+
   void jumpToDisplayIndex(int index) {
     if (index < 0 || index >= questions.length) return;
     currentIndex = index;

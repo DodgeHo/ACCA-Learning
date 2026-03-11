@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
@@ -149,6 +151,7 @@ class _QuizPageState extends State<QuizPage> {
   bool _wrongLoopMode = false;
   bool _attachQuestionContext = true;
   String? _filterBeforeWrongLoop;
+  Timer? _fontAdjustTimer;
 
   static const String _keyboardHint =
       '快捷键：← 上一题，→ 下一题，A 显示答案，K 标记会，D 标记不会，F 标记收藏，/ 聚焦提问框（输入框聚焦时不触发）';
@@ -295,8 +298,44 @@ class _QuizPageState extends State<QuizPage> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
+  void _changeFontSize(AppModel model, double delta) {
+    final next = (model.fontSize + delta).clamp(14.0, 32.0);
+    model.setFontSize(next);
+  }
+
+  void _startFontAdjustRepeat(AppModel model, double delta) {
+    _fontAdjustTimer?.cancel();
+    _fontAdjustTimer = Timer.periodic(const Duration(milliseconds: 140), (_) {
+      _changeFontSize(model, delta);
+    });
+  }
+
+  void _stopFontAdjustRepeat() {
+    _fontAdjustTimer?.cancel();
+    _fontAdjustTimer = null;
+  }
+
+  Widget _buildFontAdjustControl({
+    required AppModel model,
+    required IconData icon,
+    required String tooltip,
+    required double delta,
+  }) {
+    return GestureDetector(
+      onLongPressStart: (_) => _startFontAdjustRepeat(model, delta),
+      onLongPressEnd: (_) => _stopFontAdjustRepeat(),
+      onLongPressCancel: _stopFontAdjustRepeat,
+      child: IconButton(
+        tooltip: tooltip,
+        onPressed: () => _changeFontSize(model, delta),
+        icon: Icon(icon),
+      ),
+    );
+  }
+
   @override
   void dispose() {
+    _stopFontAdjustRepeat();
     _inputController.dispose();
     _scrollController.dispose();
     _jumpController.dispose();
@@ -633,22 +672,23 @@ $enOptions
               });
             },
           ),
-        TextField(
-          controller: _inputController,
-          focusNode: _aiInputFocusNode,
-          decoration: const InputDecoration(
-            labelText: '自定义问题',
-            hintText: '输入提问后回车',
-            border: OutlineInputBorder(),
+        if (!bubbleMode)
+          TextField(
+            controller: _inputController,
+            focusNode: _aiInputFocusNode,
+            decoration: const InputDecoration(
+              labelText: '自定义问题',
+              hintText: '输入提问后回车',
+              border: OutlineInputBorder(),
+            ),
+            enabled: hasKey,
+            onSubmitted: (v) => _sendQuestion(
+              model,
+              q,
+              v,
+              includeQuestionContext: _attachQuestionContext,
+            ),
           ),
-          enabled: hasKey,
-          onSubmitted: (v) => _sendQuestion(
-            model,
-            q,
-            v,
-            includeQuestionContext: _attachQuestionContext,
-          ),
-        ),
         const SizedBox(height: 8),
         if (_askingAi) const LinearProgressIndicator(),
         if (_askingAi) const SizedBox(height: 8),
@@ -679,6 +719,46 @@ $enOptions
                   ),
           ),
         ),
+        if (bubbleMode) ...[
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _inputController,
+                  focusNode: _aiInputFocusNode,
+                  decoration: const InputDecoration(
+                    labelText: '自定义问题',
+                    hintText: '输入问题...',
+                    border: OutlineInputBorder(),
+                    isDense: true,
+                  ),
+                  enabled: hasKey,
+                  textInputAction: TextInputAction.send,
+                  onSubmitted: (v) => _sendQuestion(
+                    model,
+                    q,
+                    v,
+                    includeQuestionContext: _attachQuestionContext,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              IconButton.filled(
+                tooltip: '发送',
+                onPressed: canAsk
+                    ? () => _sendQuestion(
+                          model,
+                          q,
+                          _inputController.text,
+                          includeQuestionContext: _attachQuestionContext,
+                        )
+                    : null,
+                icon: const Icon(Icons.send_rounded),
+              ),
+            ],
+          ),
+        ],
       ],
     );
   }
@@ -882,6 +962,32 @@ $enOptions
               ),
           ],
         ),
+        if (compact)
+          Wrap(
+            spacing: 8,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                '字号 ${model.fontSize.toStringAsFixed(0)}',
+                style: TextStyle(
+                  fontSize: (model.fontSize - 6).clamp(11, 16).toDouble(),
+                  color: Colors.grey.shade700,
+                ),
+              ),
+              _buildFontAdjustControl(
+                model: model,
+                icon: Icons.remove,
+                tooltip: '缩小题干字体（长按连续）',
+                delta: -1,
+              ),
+              _buildFontAdjustControl(
+                model: model,
+                icon: Icons.add,
+                tooltip: '放大题干字体（长按连续）',
+                delta: 1,
+              ),
+            ],
+          ),
         Text(
           '状态：$statusText',
           style: TextStyle(
