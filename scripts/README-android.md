@@ -1,0 +1,110 @@
+# Android 快速使用说明（AWS-SAA-Learning-Flutter）
+
+## 1) 前置条件
+
+- 已安装 Flutter（当前项目使用 3.41.2）
+- Android SDK / Emulator 可用
+- 建议开启 Clash 代理（本项目脚本默认：HTTP `127.0.0.1:7892`，SOCKS `127.0.0.1:7891`）
+
+## 2) 一键运行（模拟器/真机）
+
+在项目根目录执行：
+
+```powershell
+.\scripts\run_android.ps1 -NoResident
+```
+
+- 默认行为：自动选择第一个可用 Android 设备
+- 若没有在线 Android 设备：脚本会尝试自动启动第一个可用模拟器
+- 指定设备：
+
+```powershell
+.\scripts\run_android.ps1 -DeviceId <device-id> -NoResident
+```
+
+- 仅查看将执行的命令（不真正运行）：
+
+```powershell
+.\scripts\run_android.ps1 -DryRun
+```
+
+## 3) 一键构建 APK
+
+### Release APK（默认）
+
+```powershell
+.\scripts\build_android.ps1
+```
+
+产物：
+
+- `build/app/outputs/flutter-apk/app-release.apk`
+
+### Debug APK
+
+```powershell
+.\scripts\build_android.ps1 -Debug
+```
+
+产物：
+
+- `build/app/outputs/flutter-apk/app-debug.apk`
+
+## 4) 一键构建 AAB（上架包）
+
+```powershell
+.\scripts\build_android.ps1 -Aab
+```
+
+产物：
+
+- `build/app/outputs/bundle/release/app-release.aab`
+
+## 5) 代理开关
+
+脚本默认启用代理。如果你临时不想走代理：
+
+```powershell
+.\scripts\run_android.ps1 -NoProxyMode -NoResident
+.\scripts\build_android.ps1 -NoProxyMode
+```
+
+## 6) 脚本说明
+
+- `scripts/android_env.ps1`：注入 `JAVA_HOME` 与代理环境变量
+- `scripts/run_android.ps1`：运行到设备（支持 `-DeviceId`）
+- `scripts/build_android.ps1`：构建 APK/AAB
+
+## 7) 常见问题
+
+### 7.1 卡在 Gradle 下载 / `Read timed out`
+
+- 检查 Clash 是否开启
+- 优先用默认代理模式重新执行构建脚本
+- 如果仍失败，重试一次：
+
+```powershell
+.\scripts\build_android.ps1
+```
+
+### 7.2 `adb` 异常（device offline / protocol fault）
+
+```powershell
+adb kill-server
+adb start-server
+adb devices
+```
+
+### 7.3 `JAVA_HOME` 相关错误
+
+- 直接通过脚本执行，不要手动裸跑 `gradlew`，脚本会自动设置 `JAVA_HOME`
+
+## 8) 推荐日常命令
+
+```powershell
+# 启动调试运行
+.\scripts\run_android.ps1 -NoResident
+
+# 生成发布 APK
+.\scripts\build_android.ps1
+```

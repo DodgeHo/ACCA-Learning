@@ -1162,6 +1162,8 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _importAllChatHistoriesJson() async {
+    final model = Provider.of<AppModel>(context, listen: false);
+    final messenger = ScaffoldMessenger.of(context);
     final inputController = TextEditingController();
     bool clearExisting = false;
 
@@ -1223,14 +1225,13 @@ class _SettingsPageState extends State<SettingsPage> {
 
     if (payload == null) return;
 
-    final model = Provider.of<AppModel>(context, listen: false);
     try {
       final stats = await model.importAllChatHistoriesJson(
         (payload['json'] ?? '').toString(),
         clearExisting: payload['clear_existing'] == true,
       );
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
+      messenger.showSnackBar(
         SnackBar(
           content: Text(
             '导入完成：成功 ${stats['imported']} 条，跳过 ${stats['skipped']} 条，当前总计 ${stats['total_after_import']} 条',
@@ -1239,10 +1240,10 @@ class _SettingsPageState extends State<SettingsPage> {
       );
     } on FormatException catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('导入失败：${e.message}')));
+      messenger.showSnackBar(SnackBar(content: Text('导入失败：${e.message}')));
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('导入失败：$e')));
+      messenger.showSnackBar(SnackBar(content: Text('导入失败：$e')));
     }
   }
 
