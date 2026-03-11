@@ -105,15 +105,17 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   @override
   Widget build(BuildContext context) {
+    final isCompact = MediaQuery.of(context).size.width < 760;
     return Scaffold(
       appBar: AppBar(
         title: const Text('AWS SAA 题库助手'),
         actions: [
-          IconButton(
-            tooltip: '快捷键帮助',
-            icon: const Icon(Icons.keyboard_outlined),
-            onPressed: _openKeyboardHelpDialog,
-          ),
+          if (!isCompact)
+            IconButton(
+              tooltip: '快捷键帮助',
+              icon: const Icon(Icons.keyboard_outlined),
+              onPressed: _openKeyboardHelpDialog,
+            ),
           IconButton(
             tooltip: '进度',
             icon: const Icon(Icons.bar_chart_outlined),
@@ -145,6 +147,7 @@ class _QuizPageState extends State<QuizPage> {
   final FocusNode _aiInputFocusNode = FocusNode();
   bool _askingAi = false;
   bool _wrongLoopMode = false;
+  bool _attachQuestionContext = true;
   String? _filterBeforeWrongLoop;
 
   static const String _keyboardHint =
@@ -301,7 +304,12 @@ class _QuizPageState extends State<QuizPage> {
     super.dispose();
   }
 
-  Future<void> _sendQuestion(AppModel model, Question q, String text) async {
+  Future<void> _sendQuestion(
+    AppModel model,
+    Question q,
+    String text, {
+    bool includeQuestionContext = true,
+  }) async {
     final t = text.trim();
     if (t.isEmpty || _askingAi) return;
 
@@ -312,7 +320,16 @@ class _QuizPageState extends State<QuizPage> {
     await model.appendToCurrentChatHistory('\n### 用户（题号: ${q.qNum ?? '-'}）\n$t\n\n');
     await model.appendToCurrentChatHistory('> 系统：正在请求 ${model.aiProvider.toUpperCase()}...\n\n');
 
-    final prompt = _buildPrompt(q, t);
+    final prompt = includeQuestionContext
+      ? _buildPrompt(q, t)
+      : '''
+  用户提问：$t
+
+  请按以下要求回答：
+  1) 先给结论，再给理由；
+  2) 用简洁中文，必要时括号补英文术语；
+  3) 回答要可执行，不要空泛。
+  ''';
 
     try {
       final reply = await AiClient.ask(
@@ -374,7 +391,146 @@ $enOptions
 ''';
   }
 
-  Widget _buildAiPanel(AppModel model, Question q) {
+  List<Map<String, String>> _parseAiHistory(String history) {
+    final items = <Map<String, String>>[];
+    String role = '';
+    final buffer = StringBuffer();
+
+    void flush() {
+      final text = buffer.toString().trim();
+      if (role.isNotEmpty && text.isNotEmpty) {
+        items.add({'role': role, 'text': text});
+      }
+      buffer.clear();
+    }
+
+    for (final rawLine in history.split('\n')) {
+      final line = rawLine.trimRight();
+      if (line.startsWith('### 用户')) {
+        flush();
+        role = 'user';
+        continue;
+      }
+      if (line.startsWith('### AI 回复')) {
+        flush();
+        role = 'assistant';
+        continue;
+      }
+      if (line.startsWith('### 错误')) {
+        flush();
+        role = 'error';
+        continue;
+      }
+      if (line.startsWith('> 系统：')) {
+        flush();
+        items.add({'role': 'system', 'text': line.replaceFirst('> 系统：', '').trim()});
+        role = '';
+        continue;
+      }
+      if (line.trim() == '---') {
+        flush();
+        role = '';
+        continue;
+      }
+      if (role.isNotEmpty) {
+        buffer.writeln(line);
+      }
+    }
+    flush();
+    return items;
+  }
+
+  Widget _buildAiBubbleHistory(AppModel model) {
+    final messages = _parseAiHistory(model.currentChatHistory);
+    if (messages.isEmpty) {
+      return const Center(
+        child: Text(
+          '暂无对话历史',
+          style: TextStyle(color: Colors.grey),
+        ),
+      );
+    }
+
+    return ListView.builder(
+      controller: _scrollController,
+      itemCount: messages.length,
+      itemBuilder: (context, index) {
+        final msg = messages[index];
+        final role = msg['role'] ?? 'assistant';
+        final text = msg['text'] ?? '';
+        final isUser = role == 'user';
+        final isSystem = role == 'system';
+        final isError = role == 'error';
+
+        Alignment align = Alignment.centerLeft;
+        Color bg = Colors.blueGrey.shade50;
+        Color fg = Colors.black87;
+        String title = 'AI';
+
+        if (isUser) {
+          align = Alignment.centerRight;
+          bg = Colors.blue.shade600;
+          fg = Colors.white;
+          title = '你';
+        } else if (isSystem) {
+          align = Alignment.center;
+          bg = Colors.orange.shade100;
+          fg = Colors.orange.shade900;
+          title = '系统';
+        } else if (isError) {
+          align = Alignment.centerLeft;
+          bg = Colors.red.shade50;
+          fg = Colors.red.shade900;
+          title = '错误';
+        }
+
+        return Align(
+          alignment: align,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: isSystem ? 320 : 360,
+            ),
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              decoration: BoxDecoration(
+                color: bg,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: fg.withValues(alpha: 0.85),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  MarkdownBody(
+                    selectable: true,
+                    data: text,
+                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+                      p: TextStyle(color: fg, height: 1.35),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildAiPanel(
+    AppModel model,
+    Question q, {
+    bool bubbleMode = false,
+    bool showAttachSwitch = false,
+  }) {
     final hasKey = model.apiKey.trim().isNotEmpty;
     final canAsk = hasKey && !_askingAi;
 
@@ -404,7 +560,14 @@ $enOptions
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
-              onPressed: canAsk ? () => _sendQuestion(model, q, '这题用到了什么知识？') : null,
+              onPressed: canAsk
+                  ? () => _sendQuestion(
+                        model,
+                        q,
+                        '这题用到了什么知识？',
+                        includeQuestionContext: _attachQuestionContext,
+                      )
+                  : null,
               child: const Text('这题用到了什么知识？'),
             ),
             ElevatedButton(
@@ -413,7 +576,14 @@ $enOptions
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
-              onPressed: canAsk ? () => _sendQuestion(model, q, '请用通俗中文解释这道题在问什么，并指出关键词。') : null,
+              onPressed: canAsk
+                  ? () => _sendQuestion(
+                        model,
+                        q,
+                        '请用通俗中文解释这道题在问什么，并指出关键词。',
+                        includeQuestionContext: _attachQuestionContext,
+                      )
+                  : null,
               child: const Text('这道题是什么意思？'),
             ),
             ElevatedButton(
@@ -422,7 +592,14 @@ $enOptions
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
-              onPressed: canAsk ? () => _sendQuestion(model, q, '为什么是这个结果？') : null,
+              onPressed: canAsk
+                  ? () => _sendQuestion(
+                        model,
+                        q,
+                        '为什么是这个结果？',
+                        includeQuestionContext: _attachQuestionContext,
+                      )
+                  : null,
               child: const Text('为什么是这个结果？'),
             ),
             ElevatedButton(
@@ -431,12 +608,31 @@ $enOptions
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
-              onPressed: canAsk ? () => _sendQuestion(model, q, '请用更简单、面向初学者的方式重讲，并给一个生活类比') : null,
+              onPressed: canAsk
+                  ? () => _sendQuestion(
+                        model,
+                        q,
+                        '请用更简单、面向初学者的方式重讲，并给一个生活类比',
+                        includeQuestionContext: _attachQuestionContext,
+                      )
+                  : null,
               child: const Text('我没看懂，能更简单吗？'),
             ),
           ],
         ),
         const SizedBox(height: 8),
+        if (showAttachSwitch)
+          SwitchListTile.adaptive(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('关联当前题目内容'),
+            subtitle: const Text('关闭后仅按你的文字提问'),
+            value: _attachQuestionContext,
+            onChanged: (v) {
+              setState(() {
+                _attachQuestionContext = v;
+              });
+            },
+          ),
         TextField(
           controller: _inputController,
           focusNode: _aiInputFocusNode,
@@ -446,7 +642,12 @@ $enOptions
             border: OutlineInputBorder(),
           ),
           enabled: hasKey,
-          onSubmitted: (v) => _sendQuestion(model, q, v),
+          onSubmitted: (v) => _sendQuestion(
+            model,
+            q,
+            v,
+            includeQuestionContext: _attachQuestionContext,
+          ),
         ),
         const SizedBox(height: 8),
         if (_askingAi) const LinearProgressIndicator(),
@@ -465,20 +666,58 @@ $enOptions
               border: Border.all(color: Colors.black12),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: MarkdownBody(
-                selectable: true,
-                data: model.currentChatHistory.trim().isEmpty ? '_暂无对话历史_' : model.currentChatHistory,
-              ),
-            ),
+            child: bubbleMode
+                ? _buildAiBubbleHistory(model)
+                : SingleChildScrollView(
+                    controller: _scrollController,
+                    child: MarkdownBody(
+                      selectable: true,
+                      data: model.currentChatHistory.trim().isEmpty
+                          ? '_暂无对话历史_'
+                          : model.currentChatHistory,
+                    ),
+                  ),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildQuestionPanel(AppModel model, Question q) {
+  Future<void> _openAiBottomSheet(AppModel model, Question q) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      showDragHandle: true,
+      builder: (_) {
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.78,
+          minChildSize: 0.48,
+          maxChildSize: 0.95,
+          builder: (context, _) {
+            final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+            return Padding(
+              padding: EdgeInsets.fromLTRB(12, 8, 12, 12 + bottomInset),
+              child: _buildAiPanel(
+                model,
+                q,
+                bubbleMode: true,
+                showAttachSwitch: true,
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildQuestionPanel(
+    AppModel model,
+    Question q, {
+    bool compact = false,
+    bool showKeyboardHint = true,
+  }) {
     final displayFilter = _filterModeToDisplay[model.filterMode] ?? '所有';
     final statusText = _statusDisplay[model.currentStatus] ?? '未标记';
     final statusColor = _statusColor(model.currentStatus);
@@ -488,62 +727,133 @@ $enOptions
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            const Text('筛选：'),
-            DropdownButton<String>(
-              value: displayFilter,
-              items: _filterDisplayToMode.keys
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                  .toList(),
-              onChanged: (v) {
-                if (v != null) {
-                  final mode = _filterDisplayToMode[v] ?? 'All';
-                  model.setFilterMode(mode);
-                }
-              },
-            ),
-            const SizedBox(width: 16),
-            const Text('错题循环'),
-            Checkbox(
-              value: _wrongLoopMode,
-              onChanged: (v) {
-                _toggleWrongLoopMode(model, v ?? false);
-              },
-            ),
-            const SizedBox(width: 8),
-            const Text('随机'),
-            Checkbox(
-              value: model.randomOrder,
-              onChanged: (v) {
-                model.setRandomOrder(v ?? false);
-              },
-            ),
-            const SizedBox(width: 12),
-            SizedBox(
-              width: 72,
-              child: TextField(
-                controller: _jumpController,
-                decoration: const InputDecoration(
-                  hintText: '题号',
-                  isDense: true,
-                ),
-                keyboardType: TextInputType.number,
-                onSubmitted: (_) => _handleJump(model),
+        if (!compact)
+          Row(
+            children: [
+              const Text('筛选：'),
+              DropdownButton<String>(
+                value: displayFilter,
+                items: _filterDisplayToMode.keys
+                    .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                    .toList(),
+                onChanged: (v) {
+                  if (v != null) {
+                    final mode = _filterDisplayToMode[v] ?? 'All';
+                    model.setFilterMode(mode);
+                  }
+                },
               ),
-            ),
-            const SizedBox(width: 6),
-            OutlinedButton(
-              onPressed: () => _handleJump(model),
-              child: const Text('跳转'),
-            ),
-            const SizedBox(width: 6),
-            OutlinedButton(
-              onPressed: () => _confirmClearProgress(model),
-              child: const Text('清空刷题记录'),
-            ),
-          ],
-        ),
+              const SizedBox(width: 16),
+              const Text('错题循环'),
+              Checkbox(
+                value: _wrongLoopMode,
+                onChanged: (v) {
+                  _toggleWrongLoopMode(model, v ?? false);
+                },
+              ),
+              const SizedBox(width: 8),
+              const Text('随机'),
+              Checkbox(
+                value: model.randomOrder,
+                onChanged: (v) {
+                  model.setRandomOrder(v ?? false);
+                },
+              ),
+              const SizedBox(width: 12),
+              SizedBox(
+                width: 72,
+                child: TextField(
+                  controller: _jumpController,
+                  decoration: const InputDecoration(
+                    hintText: '题号',
+                    isDense: true,
+                  ),
+                  keyboardType: TextInputType.number,
+                  onSubmitted: (_) => _handleJump(model),
+                ),
+              ),
+              const SizedBox(width: 6),
+              OutlinedButton(
+                onPressed: () => _handleJump(model),
+                child: const Text('跳转'),
+              ),
+              const SizedBox(width: 6),
+              OutlinedButton(
+                onPressed: () => _confirmClearProgress(model),
+                child: const Text('清空刷题记录'),
+              ),
+            ],
+          )
+        else
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('筛选：'),
+                  DropdownButton<String>(
+                    value: displayFilter,
+                    items: _filterDisplayToMode.keys
+                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                        .toList(),
+                    onChanged: (v) {
+                      if (v != null) {
+                        final mode = _filterDisplayToMode[v] ?? 'All';
+                        model.setFilterMode(mode);
+                      }
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('错题循环'),
+                  Checkbox(
+                    value: _wrongLoopMode,
+                    onChanged: (v) {
+                      _toggleWrongLoopMode(model, v ?? false);
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('随机'),
+                  Checkbox(
+                    value: model.randomOrder,
+                    onChanged: (v) {
+                      model.setRandomOrder(v ?? false);
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 86,
+                child: TextField(
+                  controller: _jumpController,
+                  decoration: const InputDecoration(
+                    hintText: '题号',
+                    isDense: true,
+                  ),
+                  keyboardType: TextInputType.number,
+                  onSubmitted: (_) => _handleJump(model),
+                ),
+              ),
+              OutlinedButton(
+                onPressed: () => _handleJump(model),
+                child: const Text('跳转'),
+              ),
+              OutlinedButton(
+                onPressed: () => _confirmClearProgress(model),
+                child: const Text('清空记录'),
+              ),
+            ],
+          ),
         Wrap(
           spacing: 8,
           runSpacing: 6,
@@ -580,16 +890,17 @@ $enOptions
             fontWeight: FontWeight.w700,
           ),
         ),
-        Semantics(
-          label: '键盘快捷键提示',
-          child: Text(
-            _keyboardHint,
-            style: TextStyle(
-              fontSize: (model.fontSize - 8).clamp(10, 14).toDouble(),
-              color: Colors.grey.shade700,
+        if (showKeyboardHint)
+          Semantics(
+            label: '键盘快捷键提示',
+            child: Text(
+              _keyboardHint,
+              style: TextStyle(
+                fontSize: (model.fontSize - 8).clamp(10, 14).toDouble(),
+                color: Colors.grey.shade700,
+              ),
             ),
           ),
-        ),
         const SizedBox(height: 8),
         Expanded(
           child: SelectionArea(
@@ -843,14 +1154,46 @@ $enOptions
         child: LayoutBuilder(
           builder: (context, constraints) {
             final wide = constraints.maxWidth >= 1100;
+            final compact = constraints.maxWidth < 760;
             if (wide) {
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    Expanded(flex: 3, child: _buildQuestionPanel(model, q)),
+                    Expanded(
+                      flex: 3,
+                      child: _buildQuestionPanel(model, q),
+                    ),
                     const SizedBox(width: 16),
                     Expanded(flex: 2, child: _buildAiPanel(model, q)),
+                  ],
+                ),
+              );
+            }
+
+            if (compact) {
+              final hasHistory = model.currentChatHistory.trim().isNotEmpty;
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: _buildQuestionPanel(
+                        model,
+                        q,
+                        compact: true,
+                        showKeyboardHint: false,
+                      ),
+                    ),
+                    Positioned(
+                      right: 6,
+                      bottom: 6,
+                      child: FloatingActionButton.extended(
+                        onPressed: () => _openAiBottomSheet(model, q),
+                        icon: const Icon(Icons.chat_bubble_outline),
+                        label: Text(hasHistory ? 'AI 对话' : 'AI 提问'),
+                      ),
+                    ),
                   ],
                 ),
               );
@@ -860,7 +1203,15 @@ $enOptions
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  Expanded(flex: 6, child: _buildQuestionPanel(model, q)),
+                  Expanded(
+                    flex: 6,
+                    child: _buildQuestionPanel(
+                      model,
+                      q,
+                      compact: true,
+                      showKeyboardHint: false,
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   Expanded(flex: 4, child: _buildAiPanel(model, q)),
                 ],
