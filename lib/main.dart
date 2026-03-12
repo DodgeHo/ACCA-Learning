@@ -150,6 +150,7 @@ class _QuizPageState extends State<QuizPage> {
   bool _askingAi = false;
   bool _wrongLoopMode = false;
   bool _attachQuestionContext = true;
+  bool _compactHeaderCollapsed = false;
   String? _filterBeforeWrongLoop;
   Timer? _fontAdjustTimer;
 
@@ -800,168 +801,210 @@ $enOptions
     final displayFilter = _filterModeToDisplay[model.filterMode] ?? '所有';
     final statusText = _statusDisplay[model.currentStatus] ?? '未标记';
     final statusColor = _statusColor(model.currentStatus);
+    final questionHeadline = '第${model.currentIndex + 1}/${model.questions.length} 题 | 题号 ${q.qNum ?? '-'}';
+    final headerCollapsed = compact && _compactHeaderCollapsed;
     final answerText =
         '正确答案：${q.correctAnswer ?? '(空)'}\n';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (!compact)
+        if (compact)
           Row(
             children: [
-              const Text('筛选：'),
-              DropdownButton<String>(
-                value: displayFilter,
-                items: _filterDisplayToMode.keys
-                    .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                    .toList(),
-                onChanged: (v) {
-                  if (v != null) {
-                    final mode = _filterDisplayToMode[v] ?? 'All';
-                    model.setFilterMode(mode);
-                  }
-                },
-              ),
-              const SizedBox(width: 16),
-              const Text('错题循环'),
-              Checkbox(
-                value: _wrongLoopMode,
-                onChanged: (v) {
-                  _toggleWrongLoopMode(model, v ?? false);
-                },
-              ),
-              const SizedBox(width: 8),
-              const Text('随机'),
-              Checkbox(
-                value: model.randomOrder,
-                onChanged: (v) {
-                  model.setRandomOrder(v ?? false);
-                },
-              ),
-              const SizedBox(width: 12),
-              SizedBox(
-                width: 72,
-                child: TextField(
-                  controller: _jumpController,
-                  decoration: const InputDecoration(
-                    hintText: '题号',
-                    isDense: true,
-                  ),
-                  keyboardType: TextInputType.number,
-                  onSubmitted: (_) => _handleJump(model),
+              Expanded(
+                child: Text(
+                  questionHeadline,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: model.fontSize),
                 ),
               ),
-              const SizedBox(width: 6),
-              OutlinedButton(
-                onPressed: () => _handleJump(model),
-                child: const Text('跳转'),
-              ),
-              const SizedBox(width: 6),
-              OutlinedButton(
-                onPressed: () => _confirmClearProgress(model),
-                child: const Text('清空刷题记录'),
-              ),
-            ],
-          )
-        else
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('筛选：'),
-                  DropdownButton<String>(
-                    value: displayFilter,
-                    items: _filterDisplayToMode.keys
-                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                        .toList(),
-                    onChanged: (v) {
-                      if (v != null) {
-                        final mode = _filterDisplayToMode[v] ?? 'All';
-                        model.setFilterMode(mode);
-                      }
-                    },
+              if (_wrongLoopMode)
+                Container(
+                  margin: const EdgeInsets.only(right: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade50,
+                    border: Border.all(color: Colors.red.shade300),
+                    borderRadius: BorderRadius.circular(999),
                   ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('错题循环'),
-                  Checkbox(
-                    value: _wrongLoopMode,
-                    onChanged: (v) {
-                      _toggleWrongLoopMode(model, v ?? false);
-                    },
+                  child: Text(
+                    '错题循环中',
+                    style: TextStyle(
+                      color: Colors.red.shade700,
+                      fontWeight: FontWeight.w700,
+                      fontSize: (model.fontSize - 8).clamp(10, 13).toDouble(),
+                    ),
                   ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('随机'),
-                  Checkbox(
-                    value: model.randomOrder,
-                    onChanged: (v) {
-                      model.setRandomOrder(v ?? false);
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: 86,
-                child: TextField(
-                  controller: _jumpController,
-                  decoration: const InputDecoration(
-                    hintText: '题号',
-                    isDense: true,
-                  ),
-                  keyboardType: TextInputType.number,
-                  onSubmitted: (_) => _handleJump(model),
                 ),
-              ),
-              OutlinedButton(
-                onPressed: () => _handleJump(model),
-                child: const Text('跳转'),
-              ),
-              OutlinedButton(
-                onPressed: () => _confirmClearProgress(model),
-                child: const Text('清空记录'),
+              IconButton(
+                tooltip: headerCollapsed ? '展开题目信息' : '折叠题目信息',
+                onPressed: () {
+                  setState(() {
+                    _compactHeaderCollapsed = !_compactHeaderCollapsed;
+                  });
+                },
+                icon: Icon(headerCollapsed ? Icons.unfold_more : Icons.unfold_less),
               ),
             ],
           ),
-        Wrap(
-          spacing: 8,
-          runSpacing: 6,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text(
-              '第${model.currentIndex + 1}/${model.questions.length} 题 | 题号为${q.qNum ?? '-'}',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: model.fontSize),
-            ),
-            if (_wrongLoopMode)
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.red.shade50,
-                  border: Border.all(color: Colors.red.shade300),
-                  borderRadius: BorderRadius.circular(999),
+        if (!headerCollapsed)
+          if (!compact)
+            Row(
+              children: [
+                const Text('筛选：'),
+                DropdownButton<String>(
+                  value: displayFilter,
+                  items: _filterDisplayToMode.keys
+                      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                      .toList(),
+                  onChanged: (v) {
+                    if (v != null) {
+                      final mode = _filterDisplayToMode[v] ?? 'All';
+                      model.setFilterMode(mode);
+                    }
+                  },
                 ),
-                child: Text(
-                  '错题循环中',
-                  style: TextStyle(
-                    color: Colors.red.shade700,
-                    fontWeight: FontWeight.w700,
-                    fontSize: (model.fontSize - 7).clamp(10, 14).toDouble(),
+                const SizedBox(width: 16),
+                const Text('错题循环'),
+                Checkbox(
+                  value: _wrongLoopMode,
+                  onChanged: (v) {
+                    _toggleWrongLoopMode(model, v ?? false);
+                  },
+                ),
+                const SizedBox(width: 8),
+                const Text('随机'),
+                Checkbox(
+                  value: model.randomOrder,
+                  onChanged: (v) {
+                    model.setRandomOrder(v ?? false);
+                  },
+                ),
+                const SizedBox(width: 12),
+                SizedBox(
+                  width: 72,
+                  child: TextField(
+                    controller: _jumpController,
+                    decoration: const InputDecoration(
+                      hintText: '题号',
+                      isDense: true,
+                    ),
+                    keyboardType: TextInputType.number,
+                    onSubmitted: (_) => _handleJump(model),
                   ),
                 ),
+                const SizedBox(width: 6),
+                OutlinedButton(
+                  onPressed: () => _handleJump(model),
+                  child: const Text('跳转'),
+                ),
+                const SizedBox(width: 6),
+                OutlinedButton(
+                  onPressed: () => _confirmClearProgress(model),
+                  child: const Text('清空刷题记录'),
+                ),
+              ],
+            )
+          else
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('筛选：'),
+                    DropdownButton<String>(
+                      value: displayFilter,
+                      items: _filterDisplayToMode.keys
+                          .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                          .toList(),
+                      onChanged: (v) {
+                        if (v != null) {
+                          final mode = _filterDisplayToMode[v] ?? 'All';
+                          model.setFilterMode(mode);
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('错题循环'),
+                    Checkbox(
+                      value: _wrongLoopMode,
+                      onChanged: (v) {
+                        _toggleWrongLoopMode(model, v ?? false);
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('随机'),
+                    Checkbox(
+                      value: model.randomOrder,
+                      onChanged: (v) {
+                        model.setRandomOrder(v ?? false);
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 86,
+                  child: TextField(
+                    controller: _jumpController,
+                    decoration: const InputDecoration(
+                      hintText: '题号',
+                      isDense: true,
+                    ),
+                    keyboardType: TextInputType.number,
+                    onSubmitted: (_) => _handleJump(model),
+                  ),
+                ),
+                OutlinedButton(
+                  onPressed: () => _handleJump(model),
+                  child: const Text('跳转'),
+                ),
+                OutlinedButton(
+                  onPressed: () => _confirmClearProgress(model),
+                  child: const Text('清空记录'),
+                ),
+              ],
+            ),
+        if (!compact)
+          Wrap(
+            spacing: 8,
+            runSpacing: 6,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                questionHeadline,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: model.fontSize),
               ),
-          ],
-        ),
-        if (compact)
+              if (_wrongLoopMode)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade50,
+                    border: Border.all(color: Colors.red.shade300),
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Text(
+                    '错题循环中',
+                    style: TextStyle(
+                      color: Colors.red.shade700,
+                      fontWeight: FontWeight.w700,
+                      fontSize: (model.fontSize - 7).clamp(10, 14).toDouble(),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        if (compact && !headerCollapsed)
           Wrap(
             spacing: 8,
             crossAxisAlignment: WrapCrossAlignment.center,
@@ -987,14 +1030,15 @@ $enOptions
               ),
             ],
           ),
-        Text(
-          '状态：$statusText',
-          style: TextStyle(
-            fontSize: model.fontSize,
-            color: statusColor,
-            fontWeight: FontWeight.w700,
+        if (!headerCollapsed)
+          Text(
+            '状态：$statusText',
+            style: TextStyle(
+              fontSize: model.fontSize,
+              color: statusColor,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
         if (showKeyboardHint)
           Semantics(
             label: '键盘快捷键提示',
