@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +30,7 @@ class AppModel extends ChangeNotifier {
   String aiBaseUrl = '';
   double fontSize = 20;
   bool autoNextAfterMark = false;
+  int randomSeed = 0;
 
   String filterMode = 'All';
   bool randomOrder = false;
@@ -71,6 +73,14 @@ class AppModel extends ChangeNotifier {
     autoNextAfterMark = prefs.getBool('auto_next_after_mark') ?? false;
     filterMode = prefs.getString('filter_mode') ?? 'All';
     randomOrder = prefs.getBool('random_order') ?? false;
+
+    final storedSeed = prefs.getInt('random_seed');
+    if (storedSeed == null || storedSeed <= 0) {
+      randomSeed = _generateInitialRandomSeed();
+      await prefs.setInt('random_seed', randomSeed);
+    } else {
+      randomSeed = storedSeed;
+    }
     notifyListeners();
   }
 
@@ -86,6 +96,15 @@ class AppModel extends ChangeNotifier {
     await prefs.setBool('auto_next_after_mark', autoNextAfterMark);
     await prefs.setString('filter_mode', filterMode);
     await prefs.setBool('random_order', randomOrder);
+    await prefs.setInt('random_seed', randomSeed);
+  }
+
+  int _generateInitialRandomSeed() {
+    // Use current timestamp mixed with process randomness so first-launch seed is stable per install.
+    final now = DateTime.now().microsecondsSinceEpoch;
+    final mixed = now ^ Random().nextInt(1 << 31);
+    final seed = mixed & 0x7fffffff;
+    return seed == 0 ? 1 : seed;
   }
 
   Future<void> applySettings({
@@ -199,7 +218,7 @@ class AppModel extends ChangeNotifier {
     }).toList();
 
     if (randomOrder) {
-      filtered.shuffle();
+      filtered.shuffle(Random(randomSeed));
     }
     questions = filtered;
     answerVisible = false;
@@ -277,6 +296,16 @@ class AppModel extends ChangeNotifier {
   Future<void> setFontSize(double value) async {
     fontSize = value;
     await saveSettings();
+    notifyListeners();
+  }
+
+  Future<void> setRandomSeed(int value) async {
+    randomSeed = value <= 0 ? 1 : value;
+    await saveSettings();
+    _applyFilterAndRandom();
+    if (currentIndex >= questions.length) {
+      currentIndex = questions.isEmpty ? 0 : questions.length - 1;
+    }
     notifyListeners();
   }
 

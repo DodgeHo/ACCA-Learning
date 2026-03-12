@@ -1512,10 +1512,13 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final TextEditingController _keyController = TextEditingController();
   final TextEditingController _baseUrlController = TextEditingController();
+  final TextEditingController _randomSeedController = TextEditingController();
   String _provider = 'deepseek';
   String _model = 'deepseek-chat';
+  String _filterMode = 'All';
   double _fontSize = 20;
   bool _autoNextAfterMark = false;
+  bool _randomOrder = false;
 
   static const Map<String, List<String>> _modelOptions = {
     'deepseek': ['deepseek-chat', 'deepseek-reasoner'],
@@ -1550,18 +1553,27 @@ class _SettingsPageState extends State<SettingsPage> {
     _baseUrlController.text = model.aiBaseUrl;
     _fontSize = model.fontSize;
     _autoNextAfterMark = model.autoNextAfterMark;
+    _filterMode = model.filterMode;
+    _randomOrder = model.randomOrder;
+    _randomSeedController.text = model.randomSeed.toString();
   }
 
   @override
   void dispose() {
     _keyController.dispose();
     _baseUrlController.dispose();
+    _randomSeedController.dispose();
     super.dispose();
   }
 
   Future<void> _savePrefs() async {
     final model = Provider.of<AppModel>(context, listen: false);
     final messenger = ScaffoldMessenger.of(context);
+    final seed = int.tryParse(_randomSeedController.text.trim());
+    if (seed == null || seed <= 0) {
+      messenger.showSnackBar(const SnackBar(content: Text('随机种子必须是正整数')));
+      return;
+    }
 
     await model.applySettings(
       provider: _provider,
@@ -1571,9 +1583,24 @@ class _SettingsPageState extends State<SettingsPage> {
       font: _fontSize,
       autoNext: _autoNextAfterMark,
     );
+    if (model.filterMode != _filterMode) {
+      await model.setFilterMode(_filterMode);
+    }
+    if (model.randomOrder != _randomOrder) {
+      await model.setRandomOrder(_randomOrder);
+    }
+    if (model.randomSeed != seed) {
+      await model.setRandomSeed(seed);
+    }
     if (!mounted) return;
     messenger.showSnackBar(const SnackBar(content: Text('保存成功')));
     Navigator.of(context).pop();
+  }
+
+  void _generateRandomSeedByNow() {
+    final nowSeed = (DateTime.now().millisecondsSinceEpoch & 0x7fffffff).clamp(1, 0x7fffffff);
+    _randomSeedController.text = nowSeed.toString();
+    setState(() {});
   }
 
   Future<void> _clearAllChatHistoryWithTripleConfirm() async {
@@ -1862,14 +1889,15 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(height: 8),
             const Text('默认筛选'),
             DropdownButton<String>(
-              value: Provider.of<AppModel>(context, listen: false).filterMode,
+              value: _filterMode,
               items: ['All', 'Know', 'DontKnow', 'Favorite']
                   .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                   .toList(),
               onChanged: (v) {
                 if (v != null) {
-                  Provider.of<AppModel>(context, listen: false).filterMode = v;
-                  setState(() {});
+                  setState(() {
+                    _filterMode = v;
+                  });
                 }
               },
             ),
@@ -1878,11 +1906,42 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 const Text('随机顺序'),
                 Checkbox(
-                  value: Provider.of<AppModel>(context, listen: false).randomOrder,
+                  value: _randomOrder,
                   onChanged: (v) {
-                    Provider.of<AppModel>(context, listen: false).randomOrder = v ?? false;
-                    setState(() {});
+                    setState(() {
+                      _randomOrder = v ?? false;
+                    });
                   },
+                ),
+              ],
+            ),
+            const Text('随机种子（稳定随机，可跨设备迁移）'),
+            TextField(
+              controller: _randomSeedController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                hintText: '输入正整数，例如 1709876543',
+              ),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                OutlinedButton(
+                  onPressed: _generateRandomSeedByNow,
+                  child: const Text('按当前时间生成'),
+                ),
+                OutlinedButton(
+                  onPressed: () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    await Clipboard.setData(ClipboardData(text: _randomSeedController.text.trim()));
+                    if (!mounted) return;
+                    messenger.showSnackBar(
+                      const SnackBar(content: Text('随机种子已复制')),
+                    );
+                  },
+                  child: const Text('复制种子'),
                 ),
               ],
             ),
