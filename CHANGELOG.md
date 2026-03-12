@@ -1,5 +1,18 @@
 ﻿# Changelog
 
+## 0.1.1 - 2026-03-12
+- Android release packaging:
+  - prepared release artifacts for Android upload workflow
+  - aligned app semantic version to `0.1.1+1`
+- Mobile UX improvements:
+  - added compact header collapse/expand for quiz mode
+  - moved AI interaction to touch-first bottom sheet flow
+  - added fixed composer with send button in AI panel
+  - improved mobile readability controls for question font size
+- Stable random mode:
+  - random order now uses a persisted deterministic seed
+  - added seed management in settings for cross-device migration
+
 ## 1.2.0 - 2026-03-09
 - Reliability & data safety:
   - fixed native DB repair flow to preserve `chat_history` in addition to `user_status`

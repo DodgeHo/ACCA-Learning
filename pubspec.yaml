@@ -1,5 +1,5 @@
 name: aws_saa_trainer
-version: 0.1.0
+version: 0.1.1+1
 description: AWS SAA 题库助手，支持PC、平板、手机多端适配
 publish_to: 'none'
 environment:
