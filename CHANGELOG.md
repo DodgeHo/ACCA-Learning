@@ -1,5 +1,14 @@
 ﻿# Changelog
 
+## 0.1.2 - 2026-03-13
+- Release packaging:
+  - prepared Android release artifacts for v0.1.2 (`APK` + `AAB`)
+  - prepared Web release artifact for v0.1.2 (`web.zip`)
+- Mobile interaction refinement:
+  - reduced vertical chrome on quiz page by moving prev/next into headline controls
+  - added swipe left/right navigation for question paging
+  - improved AI sheet readability with collapsible quick prompts and larger default reading area
+
 ## 0.1.1 - 2026-03-12
 - Android release packaging:
   - prepared release artifacts for Android upload workflow
