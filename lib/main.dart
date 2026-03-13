@@ -150,6 +150,7 @@ class _QuizPageState extends State<QuizPage> {
   bool _askingAi = false;
   bool _wrongLoopMode = false;
   bool _attachQuestionContext = true;
+  bool _aiQuickPromptsExpanded = true;
   bool _compactHeaderCollapsed = false;
   String? _filterBeforeWrongLoop;
   Timer? _fontAdjustTimer;
@@ -355,6 +356,10 @@ class _QuizPageState extends State<QuizPage> {
 
     setState(() {
       _askingAi = true;
+      // On mobile, collapse quick prompts after first ask to free reading area.
+      if (MediaQuery.of(context).size.width < 760) {
+        _aiQuickPromptsExpanded = false;
+      }
     });
 
     await model.appendToCurrentChatHistory('\n### 用户（题号: ${q.qNum ?? '-'}）\n$t\n\n');
@@ -572,6 +577,7 @@ $enOptions
   }) {
     final hasKey = model.apiKey.trim().isNotEmpty;
     final canAsk = hasKey && !_askingAi;
+    final showQuickPrompts = !bubbleMode || _aiQuickPromptsExpanded;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -588,77 +594,114 @@ $enOptions
             padding: EdgeInsets.only(top: 4, bottom: 6),
             child: Text('请先在设置中填写 API Key 后再使用 AI 提问。', style: TextStyle(color: Colors.red)),
           ),
+        if (bubbleMode)
+          Row(
+            children: [
+              Text(
+                '快捷提问',
+                style: TextStyle(
+                  color: Colors.grey.shade700,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Spacer(),
+              TextButton.icon(
+                onPressed: () {
+                  setState(() {
+                    _aiQuickPromptsExpanded = !_aiQuickPromptsExpanded;
+                  });
+                },
+                icon: Icon(
+                  _aiQuickPromptsExpanded ? Icons.expand_less : Icons.expand_more,
+                ),
+                label: Text(_aiQuickPromptsExpanded ? '收起' : '展开'),
+              ),
+            ],
+          ),
         const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple.shade500,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        if (showQuickPrompts)
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple.shade500,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  padding: bubbleMode
+                      ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
+                      : null,
+                ),
+                onPressed: canAsk
+                    ? () => _sendQuestion(
+                          model,
+                          q,
+                          '这题用到了什么知识？',
+                          includeQuestionContext: _attachQuestionContext,
+                        )
+                    : null,
+                child: const Text('这题用到了什么知识？'),
               ),
-              onPressed: canAsk
-                  ? () => _sendQuestion(
-                        model,
-                        q,
-                        '这题用到了什么知识？',
-                        includeQuestionContext: _attachQuestionContext,
-                      )
-                  : null,
-              child: const Text('这题用到了什么知识？'),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.indigo.shade500,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.indigo.shade500,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  padding: bubbleMode
+                      ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
+                      : null,
+                ),
+                onPressed: canAsk
+                    ? () => _sendQuestion(
+                          model,
+                          q,
+                          '请用通俗中文解释这道题在问什么，并指出关键词。',
+                          includeQuestionContext: _attachQuestionContext,
+                        )
+                    : null,
+                child: const Text('这道题是什么意思？'),
               ),
-              onPressed: canAsk
-                  ? () => _sendQuestion(
-                        model,
-                        q,
-                        '请用通俗中文解释这道题在问什么，并指出关键词。',
-                        includeQuestionContext: _attachQuestionContext,
-                      )
-                  : null,
-              child: const Text('这道题是什么意思？'),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal.shade500,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal.shade500,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  padding: bubbleMode
+                      ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
+                      : null,
+                ),
+                onPressed: canAsk
+                    ? () => _sendQuestion(
+                          model,
+                          q,
+                          '为什么是这个结果？',
+                          includeQuestionContext: _attachQuestionContext,
+                        )
+                    : null,
+                child: const Text('为什么是这个结果？'),
               ),
-              onPressed: canAsk
-                  ? () => _sendQuestion(
-                        model,
-                        q,
-                        '为什么是这个结果？',
-                        includeQuestionContext: _attachQuestionContext,
-                      )
-                  : null,
-              child: const Text('为什么是这个结果？'),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple.shade700,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple.shade700,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  padding: bubbleMode
+                      ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
+                      : null,
+                ),
+                onPressed: canAsk
+                    ? () => _sendQuestion(
+                          model,
+                          q,
+                          '请用更简单、面向初学者的方式重讲，并给一个生活类比',
+                          includeQuestionContext: _attachQuestionContext,
+                        )
+                    : null,
+                child: const Text('我没看懂，能更简单吗？'),
               ),
-              onPressed: canAsk
-                  ? () => _sendQuestion(
-                        model,
-                        q,
-                        '请用更简单、面向初学者的方式重讲，并给一个生活类比',
-                        includeQuestionContext: _attachQuestionContext,
-                      )
-                  : null,
-              child: const Text('我没看懂，能更简单吗？'),
-            ),
-          ],
-        ),
+            ],
+          ),
         const SizedBox(height: 8),
         if (showAttachSwitch)
           SwitchListTile.adaptive(
@@ -772,9 +815,9 @@ $enOptions
       builder: (_) {
         return DraggableScrollableSheet(
           expand: false,
-          initialChildSize: 0.78,
+          initialChildSize: model.currentChatHistory.trim().isNotEmpty ? 0.9 : 0.78,
           minChildSize: 0.48,
-          maxChildSize: 0.95,
+          maxChildSize: 0.98,
           builder: (context, _) {
             final bottomInset = MediaQuery.of(context).viewInsets.bottom;
             return Padding(
