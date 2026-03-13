@@ -202,6 +202,16 @@ class _QuizPageState extends State<QuizPage> {
     action();
   }
 
+  void _handleQuestionHorizontalSwipe(AppModel model, DragEndDetails details) {
+    final velocity = details.primaryVelocity ?? 0;
+    if (velocity.abs() < 180) return;
+    if (velocity < 0) {
+      _nextQuestion(model);
+    } else {
+      _prevQuestion(model);
+    }
+  }
+
   Future<void> _toggleWrongLoopMode(AppModel model, bool enabled) async {
     if (!enabled) {
       final restoreFilter = _filterBeforeWrongLoop;
@@ -849,9 +859,12 @@ $enOptions
     final answerText =
         '正确答案：${q.correctAnswer ?? '(空)'}\n';
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onHorizontalDragEnd: (details) => _handleQuestionHorizontalSwipe(model, details),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
         if (compact)
           Row(
             children: [
@@ -879,6 +892,16 @@ $enOptions
                     ),
                   ),
                 ),
+              IconButton(
+                tooltip: '上一题',
+                icon: const Icon(Icons.chevron_left),
+                onPressed: () => _prevQuestion(model),
+              ),
+              IconButton(
+                tooltip: '下一题',
+                icon: const Icon(Icons.chevron_right),
+                onPressed: () => _nextQuestion(model),
+              ),
               IconButton(
                 tooltip: headerCollapsed ? '展开题目信息' : '折叠题目信息',
                 onPressed: () {
@@ -1045,6 +1068,16 @@ $enOptions
                     ),
                   ),
                 ),
+              IconButton(
+                tooltip: '上一题',
+                icon: const Icon(Icons.chevron_left),
+                onPressed: () => _prevQuestion(model),
+              ),
+              IconButton(
+                tooltip: '下一题',
+                icon: const Icon(Icons.chevron_right),
+                onPressed: () => _nextQuestion(model),
+              ),
             ],
           ),
         if (compact && !headerCollapsed)
@@ -1116,14 +1149,6 @@ $enOptions
           ),
         ),
         const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ElevatedButton(onPressed: () => _prevQuestion(model), child: const Text('上一题')),
-            ElevatedButton(onPressed: () => _nextQuestion(model), child: const Text('下一题')),
-          ],
-        ),
-        const SizedBox(height: 8),
         Wrap(
           spacing: 8,
           children: [
@@ -1185,7 +1210,8 @@ $enOptions
               child: Text(answerText, style: TextStyle(fontSize: model.fontSize - 1)),
             ),
           ),
-      ],
+          ],
+        ),
     );
   }
 
