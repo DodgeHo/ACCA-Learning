@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:math';
+import 'dart:async';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +10,8 @@ import 'models.dart';
 
 class AppModel extends ChangeNotifier {
   static const String _secureProviderKeysKey = 'provider_keys_secure';
+  static const String _lastQuestionIdKey = 'last_question_id';
+  static const String _lastQuestionIndexKey = 'last_question_index';
   static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   List<Question> allQuestions = [];
@@ -189,10 +192,13 @@ class AppModel extends ChangeNotifier {
       chatHistoryByQuestionId = await AppDatabase.getAllChatHistories();
 
       _applyFilterAndRandom();
-      if (questions.isEmpty) {
-        currentIndex = 0;
-      } else if (currentIndex >= questions.length) {
-        currentIndex = questions.length - 1;
+      final restored = await _restoreLastQuestionPosition();
+      if (!restored) {
+        if (questions.isEmpty) {
+          currentIndex = 0;
+        } else if (currentIndex >= questions.length) {
+          currentIndex = questions.length - 1;
+        }
       }
 
       webError = false;
@@ -209,6 +215,35 @@ class AppModel extends ChangeNotifier {
       questionsLoaded = true;
     }
     notifyListeners();
+  }
+
+  Future<bool> _restoreLastQuestionPosition() async {
+    if (questions.isEmpty) return false;
+    final prefs = await SharedPreferences.getInstance();
+    final lastQuestionId = prefs.getInt(_lastQuestionIdKey);
+    if (lastQuestionId != null) {
+      final idx = questions.indexWhere((q) => q.id == lastQuestionId);
+      if (idx >= 0) {
+        currentIndex = idx;
+        return true;
+      }
+    }
+
+    final lastIndex = prefs.getInt(_lastQuestionIndexKey);
+    if (lastIndex != null && lastIndex >= 0 && lastIndex < questions.length) {
+      currentIndex = lastIndex;
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> _saveLastQuestionPosition() async {
+    if (questions.isEmpty) return;
+    final q = currentQuestion;
+    if (q == null) return;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_lastQuestionIdKey, q.id);
+    await prefs.setInt(_lastQuestionIndexKey, currentIndex);
   }
 
   void _applyFilterAndRandom() {
@@ -246,6 +281,7 @@ class AppModel extends ChangeNotifier {
     if (currentIndex < questions.length - 1) {
       currentIndex++;
       answerVisible = false;
+      unawaited(_saveLastQuestionPosition());
       notifyListeners();
     }
   }
@@ -254,6 +290,7 @@ class AppModel extends ChangeNotifier {
     if (currentIndex > 0) {
       currentIndex--;
       answerVisible = false;
+      unawaited(_saveLastQuestionPosition());
       notifyListeners();
     }
   }
@@ -274,6 +311,7 @@ class AppModel extends ChangeNotifier {
         currentIndex = idx >= 0 ? idx : 0;
       }
     }
+    unawaited(_saveLastQuestionPosition());
     notifyListeners();
   }
 
@@ -282,6 +320,7 @@ class AppModel extends ChangeNotifier {
     await saveSettings();
     _applyFilterAndRandom();
     currentIndex = 0;
+    unawaited(_saveLastQuestionPosition());
     notifyListeners();
   }
 
@@ -290,6 +329,7 @@ class AppModel extends ChangeNotifier {
     await saveSettings();
     _applyFilterAndRandom();
     currentIndex = 0;
+    unawaited(_saveLastQuestionPosition());
     notifyListeners();
   }
 
@@ -306,6 +346,7 @@ class AppModel extends ChangeNotifier {
     if (currentIndex >= questions.length) {
       currentIndex = questions.isEmpty ? 0 : questions.length - 1;
     }
+    unawaited(_saveLastQuestionPosition());
     notifyListeners();
   }
 
@@ -313,6 +354,7 @@ class AppModel extends ChangeNotifier {
     if (index < 0 || index >= questions.length) return;
     currentIndex = index;
     answerVisible = false;
+    unawaited(_saveLastQuestionPosition());
     notifyListeners();
   }
 
@@ -321,6 +363,7 @@ class AppModel extends ChangeNotifier {
     if (idx < 0 || idx >= questions.length) return false;
     currentIndex = idx;
     answerVisible = false;
+    unawaited(_saveLastQuestionPosition());
     notifyListeners();
     return true;
   }
@@ -335,6 +378,7 @@ class AppModel extends ChangeNotifier {
     if (idx >= 0) {
       currentIndex = idx;
       answerVisible = false;
+      unawaited(_saveLastQuestionPosition());
       notifyListeners();
     }
   }
@@ -344,6 +388,7 @@ class AppModel extends ChangeNotifier {
     statusByQuestionId = {};
     _applyFilterAndRandom();
     currentIndex = 0;
+    unawaited(_saveLastQuestionPosition());
     notifyListeners();
   }
 

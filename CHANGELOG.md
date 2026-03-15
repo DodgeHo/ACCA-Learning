@@ -1,5 +1,16 @@
 ﻿# Changelog
 
+## 0.1.3 - 2026-03-15
+- Mobile UX and state continuity:
+  - improved AI quick-prompt collapse and expand responsiveness with animated feedback
+  - added visible question transition animation for swipe and previous/next navigation
+  - reduced compact-mode vertical chrome by shrinking the app bar and tightening question headline layout
+  - added clear current-question status indicators for Know / DontKnow / Favorite
+  - restored the last visited question when reopening the app on Android
+- Release packaging:
+  - prepared Android release artifacts for v0.1.3 (`APK` + `AAB`)
+  - prepared Web release artifact for v0.1.3 (`web.zip`)
+
 ## 0.1.2 - 2026-03-13
 - Release packaging:
   - prepared Android release artifacts for v0.1.2 (`APK` + `AAB`)

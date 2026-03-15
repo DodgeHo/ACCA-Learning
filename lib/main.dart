@@ -110,7 +110,9 @@ class _MainScaffoldState extends State<MainScaffold> {
     final isCompact = MediaQuery.of(context).size.width < 760;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AWS SAA 题库助手'),
+        toolbarHeight: isCompact ? 48 : null,
+        titleSpacing: isCompact ? 8 : null,
+        title: isCompact ? null : const Text('AWS SAA 题库助手'),
         actions: [
           if (!isCompact)
             IconButton(
@@ -152,6 +154,9 @@ class _QuizPageState extends State<QuizPage> {
   bool _attachQuestionContext = true;
   bool _aiQuickPromptsExpanded = true;
   bool _compactHeaderCollapsed = false;
+  int _questionNavDirection = 1;
+  String _cachedAiHistoryRaw = '';
+  List<Map<String, String>> _cachedAiMessages = const <Map<String, String>>[];
   String? _filterBeforeWrongLoop;
   Timer? _fontAdjustTimer;
 
@@ -248,6 +253,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   void _nextQuestion(AppModel model) {
+    _questionNavDirection = 1;
     if (_wrongLoopMode && model.questions.isNotEmpty && model.currentIndex >= model.questions.length - 1) {
       model.jumpToDisplayIndex(0);
       return;
@@ -256,6 +262,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   void _prevQuestion(AppModel model) {
+    _questionNavDirection = -1;
     if (_wrongLoopMode && model.questions.isNotEmpty && model.currentIndex == 0) {
       model.jumpToDisplayIndex(model.questions.length - 1);
       return;
@@ -410,7 +417,12 @@ class _QuizPageState extends State<QuizPage> {
     _inputController.clear();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+        final target = _scrollController.position.maxScrollExtent;
+        _scrollController.animateTo(
+          target,
+          duration: const Duration(milliseconds: 260),
+          curve: Curves.easeOutCubic,
+        );
       }
     });
   }
@@ -494,8 +506,18 @@ $enOptions
     return items;
   }
 
+  List<Map<String, String>> _getParsedAiHistoryCached(String history) {
+    if (_cachedAiHistoryRaw == history) {
+      return _cachedAiMessages;
+    }
+    final parsed = _parseAiHistory(history);
+    _cachedAiHistoryRaw = history;
+    _cachedAiMessages = parsed;
+    return parsed;
+  }
+
   Widget _buildAiBubbleHistory(AppModel model) {
-    final messages = _parseAiHistory(model.currentChatHistory);
+    final messages = _getParsedAiHistoryCached(model.currentChatHistory);
     if (messages.isEmpty) {
       return const Center(
         child: Text(
@@ -629,89 +651,100 @@ $enOptions
             ],
           ),
         const SizedBox(height: 8),
-        if (showQuickPrompts)
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple.shade500,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                  padding: bubbleMode
-                      ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
-                      : null,
-                ),
-                onPressed: canAsk
-                    ? () => _sendQuestion(
-                          model,
-                          q,
-                          '这题用到了什么知识？',
-                          includeQuestionContext: _attachQuestionContext,
-                        )
-                    : null,
-                child: const Text('这题用到了什么知识？'),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.indigo.shade500,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                  padding: bubbleMode
-                      ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
-                      : null,
-                ),
-                onPressed: canAsk
-                    ? () => _sendQuestion(
-                          model,
-                          q,
-                          '请用通俗中文解释这道题在问什么，并指出关键词。',
-                          includeQuestionContext: _attachQuestionContext,
-                        )
-                    : null,
-                child: const Text('这道题是什么意思？'),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal.shade500,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                  padding: bubbleMode
-                      ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
-                      : null,
-                ),
-                onPressed: canAsk
-                    ? () => _sendQuestion(
-                          model,
-                          q,
-                          '为什么是这个结果？',
-                          includeQuestionContext: _attachQuestionContext,
-                        )
-                    : null,
-                child: const Text('为什么是这个结果？'),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple.shade700,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                  padding: bubbleMode
-                      ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
-                      : null,
-                ),
-                onPressed: canAsk
-                    ? () => _sendQuestion(
-                          model,
-                          q,
-                          '请用更简单、面向初学者的方式重讲，并给一个生活类比',
-                          includeQuestionContext: _attachQuestionContext,
-                        )
-                    : null,
-                child: const Text('我没看懂，能更简单吗？'),
-              ),
-            ],
+        AnimatedSize(
+          duration: const Duration(milliseconds: 160),
+          curve: Curves.easeOutCubic,
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 160),
+            switchInCurve: Curves.easeOutCubic,
+            switchOutCurve: Curves.easeInCubic,
+            child: !showQuickPrompts
+                ? const SizedBox.shrink()
+                : Wrap(
+                    key: const ValueKey('quickPromptsExpanded'),
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.deepPurple.shade500,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          padding: bubbleMode
+                              ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
+                              : null,
+                        ),
+                        onPressed: canAsk
+                            ? () => _sendQuestion(
+                                  model,
+                                  q,
+                                  '这题用到了什么知识？',
+                                  includeQuestionContext: _attachQuestionContext,
+                                )
+                            : null,
+                        child: const Text('这题用到了什么知识？'),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.indigo.shade500,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          padding: bubbleMode
+                              ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
+                              : null,
+                        ),
+                        onPressed: canAsk
+                            ? () => _sendQuestion(
+                                  model,
+                                  q,
+                                  '请用通俗中文解释这道题在问什么，并指出关键词。',
+                                  includeQuestionContext: _attachQuestionContext,
+                                )
+                            : null,
+                        child: const Text('这道题是什么意思？'),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal.shade500,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          padding: bubbleMode
+                              ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
+                              : null,
+                        ),
+                        onPressed: canAsk
+                            ? () => _sendQuestion(
+                                  model,
+                                  q,
+                                  '为什么是这个结果？',
+                                  includeQuestionContext: _attachQuestionContext,
+                                )
+                            : null,
+                        child: const Text('为什么是这个结果？'),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple.shade700,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          padding: bubbleMode
+                              ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
+                              : null,
+                        ),
+                        onPressed: canAsk
+                            ? () => _sendQuestion(
+                                  model,
+                                  q,
+                                  '请用更简单、面向初学者的方式重讲，并给一个生活类比',
+                                  includeQuestionContext: _attachQuestionContext,
+                                )
+                            : null,
+                        child: const Text('我没看懂，能更简单吗？'),
+                      ),
+                    ],
+                  ),
           ),
+        ),
         const SizedBox(height: 8),
         if (showAttachSwitch)
           SwitchListTile.adaptive(
@@ -854,7 +887,11 @@ $enOptions
     final displayFilter = _filterModeToDisplay[model.filterMode] ?? '所有';
     final statusText = _statusDisplay[model.currentStatus] ?? '未标记';
     final statusColor = _statusColor(model.currentStatus);
+    final isKnowSelected = model.currentStatus == 'Know';
+    final isDontKnowSelected = model.currentStatus == 'DontKnow';
+    final isFavoriteSelected = model.currentStatus == 'Favorite';
     final questionHeadline = '第${model.currentIndex + 1}/${model.questions.length} 题 | 题号 ${q.qNum ?? '-'}';
+    final compactHeadline = '${model.currentIndex + 1}/${model.questions.length} | 题号 ${q.qNum ?? '-'}';
     final headerCollapsed = compact && _compactHeaderCollapsed;
     final answerText =
         '正确答案：${q.correctAnswer ?? '(空)'}\n';
@@ -870,7 +907,9 @@ $enOptions
             children: [
               Expanded(
                 child: Text(
-                  questionHeadline,
+                  compactHeadline,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: model.fontSize),
                 ),
               ),
@@ -1042,17 +1081,19 @@ $enOptions
               ],
             ),
         if (!compact)
-          Wrap(
-            spacing: 8,
-            runSpacing: 6,
-            crossAxisAlignment: WrapCrossAlignment.center,
+          Row(
             children: [
-              Text(
-                questionHeadline,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: model.fontSize),
+              Expanded(
+                child: Text(
+                  questionHeadline,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: model.fontSize),
+                ),
               ),
               if (_wrongLoopMode)
                 Container(
+                  margin: const EdgeInsets.only(left: 8),
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: Colors.red.shade50,
@@ -1149,6 +1190,30 @@ $enOptions
           ),
         ),
         const SizedBox(height: 8),
+        if (model.currentStatus != null)
+          Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: statusColor.withValues(alpha: 0.12),
+              border: Border.all(color: statusColor.withValues(alpha: 0.45)),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.check_circle, size: 16, color: statusColor),
+                const SizedBox(width: 6),
+                Text(
+                  '当前题已标记：$statusText',
+                  style: TextStyle(
+                    color: statusColor,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
         Wrap(
           spacing: 8,
           children: [
@@ -1171,30 +1236,30 @@ $enOptions
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green.shade600,
+                backgroundColor: isKnowSelected ? Colors.green.shade800 : Colors.green.shade600,
                 foregroundColor: Colors.white,
                 shape: const StadiumBorder(),
               ),
               onPressed: () => _markAndMaybeNext(model, 'Know'),
-              child: const Text('会'),
+              child: Text(isKnowSelected ? '会 ✓' : '会'),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red.shade600,
+                backgroundColor: isDontKnowSelected ? Colors.red.shade800 : Colors.red.shade600,
                 foregroundColor: Colors.white,
                 shape: const StadiumBorder(),
               ),
               onPressed: () => _markAndMaybeNext(model, 'DontKnow'),
-              child: const Text('不会'),
+              child: Text(isDontKnowSelected ? '不会 ✓' : '不会'),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.amber.shade600,
+                backgroundColor: isFavoriteSelected ? Colors.amber.shade700 : Colors.amber.shade600,
                 foregroundColor: Colors.black87,
                 shape: const StadiumBorder(),
               ),
               onPressed: () => _markAndMaybeNext(model, 'Favorite'),
-              child: const Text('收藏'),
+              child: Text(isFavoriteSelected ? '收藏 ✓' : '收藏'),
             ),
           ],
         ),
@@ -1222,6 +1287,8 @@ $enOptions
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('请输入有效题号')));
       return;
     }
+    final targetIndex = num - 1;
+    _questionNavDirection = targetIndex >= model.currentIndex ? 1 : -1;
     final ok = model.jumpToNumber(num);
     if (!ok) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('题号超出范围')));
@@ -1341,6 +1408,47 @@ $enOptions
     );
   }
 
+  Widget _buildAnimatedQuestionPanel(
+    AppModel model,
+    Question q, {
+    bool compact = false,
+    bool showKeyboardHint = true,
+  }) {
+    final beginOffset = _questionNavDirection >= 0
+        ? const Offset(0.09, 0)
+        : const Offset(-0.09, 0);
+
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 220),
+      switchInCurve: Curves.easeOutCubic,
+      switchOutCurve: Curves.easeInCubic,
+      transitionBuilder: (child, animation) {
+        final slide = Tween<Offset>(
+          begin: beginOffset,
+          end: Offset.zero,
+        ).animate(animation);
+        return ClipRect(
+          child: FadeTransition(
+            opacity: animation,
+            child: SlideTransition(
+              position: slide,
+              child: child,
+            ),
+          ),
+        );
+      },
+      child: KeyedSubtree(
+        key: ValueKey<int>(q.id),
+        child: _buildQuestionPanel(
+          model,
+          q,
+          compact: compact,
+          showKeyboardHint: showKeyboardHint,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<AppModel>(context);
@@ -1380,7 +1488,7 @@ $enOptions
                   children: [
                     Expanded(
                       flex: 3,
-                      child: _buildQuestionPanel(model, q),
+                      child: _buildAnimatedQuestionPanel(model, q),
                     ),
                     const SizedBox(width: 16),
                     Expanded(flex: 2, child: _buildAiPanel(model, q)),
@@ -1396,7 +1504,7 @@ $enOptions
                 child: Stack(
                   children: [
                     Positioned.fill(
-                      child: _buildQuestionPanel(
+                      child: _buildAnimatedQuestionPanel(
                         model,
                         q,
                         compact: true,
@@ -1423,7 +1531,7 @@ $enOptions
                 children: [
                   Expanded(
                     flex: 6,
-                    child: _buildQuestionPanel(
+                    child: _buildAnimatedQuestionPanel(
                       model,
                       q,
                       compact: true,
