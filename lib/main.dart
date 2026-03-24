@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'ai_client.dart';
 import 'app_model.dart';
@@ -26,7 +27,7 @@ class AwsSaaTrainerApp extends StatelessWidget {
         return model;
       },
       child: MaterialApp(
-        title: 'AWS SAA 题库助手',
+        title: 'SAA 练习',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
@@ -45,6 +46,43 @@ class MainScaffold extends StatefulWidget {
 }
 
 class _MainScaffoldState extends State<MainScaffold> {
+  static const String _learningNoticeAckKey = 'learning_notice_ack_v1';
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(_showLearningNoticeIfNeeded());
+    });
+  }
+
+  Future<void> _showLearningNoticeIfNeeded() async {
+    final prefs = await SharedPreferences.getInstance();
+    final accepted = prefs.getBool(_learningNoticeAckKey) ?? false;
+    if (accepted || !mounted) return;
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogCtx) => AlertDialog(
+        title: const Text('使用须知'),
+        content: const Text(
+          '本应用内容仅供交流学习与备考参考，不构成任何官方建议或商业承诺。\n\n'
+          '请勿用于违规用途；由使用者自行判断和承担相关责任。',
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.of(dialogCtx).pop(),
+            child: const Text('我已知晓'),
+          ),
+        ],
+      ),
+    );
+
+    if (!mounted) return;
+    await prefs.setBool(_learningNoticeAckKey, true);
+  }
+
   void _openKeyboardHelpDialog() {
     showDialog(
       context: context,
@@ -112,7 +150,7 @@ class _MainScaffoldState extends State<MainScaffold> {
       appBar: AppBar(
         toolbarHeight: isCompact ? 48 : null,
         titleSpacing: isCompact ? 8 : null,
-        title: isCompact ? null : const Text('AWS SAA 题库助手'),
+        title: isCompact ? null : const Text('SAA 练习'),
         actions: [
           if (!isCompact)
             IconButton(
@@ -149,6 +187,7 @@ class _QuizPageState extends State<QuizPage> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _jumpController = TextEditingController();
   final FocusNode _aiInputFocusNode = FocusNode();
+  StateSetter? _aiBottomSheetSetState;
   bool _askingAi = false;
   bool _wrongLoopMode = false;
   bool _attachQuestionContext = true;
@@ -205,6 +244,14 @@ class _QuizPageState extends State<QuizPage> {
   void _runShortcutIfReady(VoidCallback action) {
     if (_isTextInputFocused()) return;
     action();
+  }
+
+  void _refreshAiPanelUi([VoidCallback? update]) {
+    if (!mounted) return;
+    setState(() {
+      update?.call();
+    });
+    _aiBottomSheetSetState?.call(() {});
   }
 
   void _handleQuestionHorizontalSwipe(AppModel model, DragEndDetails details) {
@@ -371,7 +418,7 @@ class _QuizPageState extends State<QuizPage> {
     final t = text.trim();
     if (t.isEmpty || _askingAi) return;
 
-    setState(() {
+    _refreshAiPanelUi(() {
       _askingAi = true;
       // On mobile, collapse quick prompts after first ask to free reading area.
       if (MediaQuery.of(context).size.width < 760) {
@@ -408,7 +455,7 @@ class _QuizPageState extends State<QuizPage> {
       await model.appendToCurrentChatHistory('### 错误\n$e\n\n---\n');
     } finally {
       if (mounted) {
-        setState(() {
+        _refreshAiPanelUi(() {
           _askingAi = false;
         });
       }
@@ -639,7 +686,7 @@ $enOptions
               const Spacer(),
               TextButton.icon(
                 onPressed: () {
-                  setState(() {
+                  _refreshAiPanelUi(() {
                     _aiQuickPromptsExpanded = !_aiQuickPromptsExpanded;
                   });
                 },
@@ -753,7 +800,7 @@ $enOptions
             subtitle: const Text('关闭后仅按你的文字提问'),
             value: _attachQuestionContext,
             onChanged: (v) {
-              setState(() {
+              _refreshAiPanelUi(() {
                 _attachQuestionContext = v;
               });
             },
@@ -850,32 +897,46 @@ $enOptions
   }
 
   Future<void> _openAiBottomSheet(AppModel model, Question q) async {
-    await showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (_) {
-        return DraggableScrollableSheet(
-          expand: false,
-          initialChildSize: model.currentChatHistory.trim().isNotEmpty ? 0.9 : 0.78,
-          minChildSize: 0.48,
-          maxChildSize: 0.98,
-          builder: (context, _) {
-            final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-            return Padding(
-              padding: EdgeInsets.fromLTRB(12, 8, 12, 12 + bottomInset),
-              child: _buildAiPanel(
-                model,
-                q,
-                bubbleMode: true,
-                showAttachSwitch: true,
-              ),
-            );
-          },
-        );
-      },
-    );
+    try {
+      await showModalBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        showDragHandle: true,
+        builder: (_) {
+          return StatefulBuilder(
+            builder: (context, bottomSheetSetState) {
+              _aiBottomSheetSetState = bottomSheetSetState;
+              return DraggableScrollableSheet(
+                expand: false,
+                initialChildSize: model.currentChatHistory.trim().isNotEmpty ? 0.9 : 0.78,
+                minChildSize: 0.48,
+                maxChildSize: 0.98,
+                builder: (context, _) {
+                  final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+                  return ListenableBuilder(
+                    listenable: model,
+                    builder: (context, __) {
+                      return Padding(
+                        padding: EdgeInsets.fromLTRB(12, 8, 12, 12 + bottomInset),
+                        child: _buildAiPanel(
+                          model,
+                          q,
+                          bubbleMode: true,
+                          showAttachSwitch: true,
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+    } finally {
+      _aiBottomSheetSetState = null;
+    }
   }
 
   Widget _buildQuestionPanel(
@@ -1690,6 +1751,7 @@ class _SettingsPageState extends State<SettingsPage> {
   final TextEditingController _keyController = TextEditingController();
   final TextEditingController _baseUrlController = TextEditingController();
   final TextEditingController _randomSeedController = TextEditingController();
+  Timer? _autoSaveTimer;
   String _provider = 'deepseek';
   String _model = 'deepseek-chat';
   String _filterMode = 'All';
@@ -1737,20 +1799,28 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   void dispose() {
+    _autoSaveTimer?.cancel();
     _keyController.dispose();
     _baseUrlController.dispose();
     _randomSeedController.dispose();
     super.dispose();
   }
 
-  Future<void> _savePrefs() async {
-    final model = Provider.of<AppModel>(context, listen: false);
-    final messenger = ScaffoldMessenger.of(context);
-    final seed = int.tryParse(_randomSeedController.text.trim());
-    if (seed == null || seed <= 0) {
-      messenger.showSnackBar(const SnackBar(content: Text('随机种子必须是正整数')));
+  void _scheduleAutoSave({bool immediate = false}) {
+    _autoSaveTimer?.cancel();
+    if (immediate) {
+      unawaited(_persistPrefs());
       return;
     }
+    _autoSaveTimer = Timer(const Duration(milliseconds: 450), () {
+      unawaited(_persistPrefs());
+    });
+  }
+
+  Future<void> _persistPrefs() async {
+    final model = Provider.of<AppModel>(context, listen: false);
+    final seed = int.tryParse(_randomSeedController.text.trim());
+    final validSeed = seed != null && seed > 0;
 
     await model.applySettings(
       provider: _provider,
@@ -1766,18 +1836,16 @@ class _SettingsPageState extends State<SettingsPage> {
     if (model.randomOrder != _randomOrder) {
       await model.setRandomOrder(_randomOrder);
     }
-    if (model.randomSeed != seed) {
+    if (validSeed && model.randomSeed != seed) {
       await model.setRandomSeed(seed);
     }
-    if (!mounted) return;
-    messenger.showSnackBar(const SnackBar(content: Text('保存成功')));
-    Navigator.of(context).pop();
   }
 
   void _generateRandomSeedByNow() {
     final nowSeed = (DateTime.now().millisecondsSinceEpoch & 0x7fffffff).clamp(1, 0x7fffffff);
     _randomSeedController.text = nowSeed.toString();
     setState(() {});
+    _scheduleAutoSave(immediate: true);
   }
 
   Future<void> _clearAllChatHistoryWithTripleConfirm() async {
@@ -1977,6 +2045,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       _model = _defaultModelFor(v);
                     }
                   });
+                  _scheduleAutoSave();
                 }
               },
             ),
@@ -1989,13 +2058,17 @@ class _SettingsPageState extends State<SettingsPage> {
                   .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                   .toList(),
               onChanged: (v) {
-                if (v != null) setState(() => _model = v);
+                if (v != null) {
+                  setState(() => _model = v);
+                  _scheduleAutoSave();
+                }
               },
             ),
             const SizedBox(height: 8),
             const Text('自定义 Base URL（可选）'),
             TextField(
               controller: _baseUrlController,
+              onChanged: (_) => _scheduleAutoSave(),
               decoration: const InputDecoration(
                 hintText: '例如 https://api.deepseek.com 或 OpenAI 兼容网关地址',
               ),
@@ -2004,7 +2077,10 @@ class _SettingsPageState extends State<SettingsPage> {
             const Text('API Key'),
             TextField(
               controller: _keyController,
-              onChanged: (_) => setState(() {}),
+              onChanged: (_) {
+                setState(() {});
+                _scheduleAutoSave();
+              },
             ),
             const SizedBox(height: 6),
             Row(
@@ -2020,7 +2096,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Text(
                   _keyController.text.trim().isNotEmpty
                       ? '当前 Key 将保存到系统安全存储'
-                      : '未填写 Key（保存后会写入系统安全存储）',
+                      : '未填写 Key（会自动写入系统安全存储）',
                   style: TextStyle(
                     fontSize: 12,
                     color: _keyController.text.trim().isNotEmpty
@@ -2039,6 +2115,7 @@ class _SettingsPageState extends State<SettingsPage> {
               divisions: 16,
               label: _fontSize.toStringAsFixed(0),
               onChanged: (v) => setState(() => _fontSize = v),
+              onChangeEnd: (_) => _scheduleAutoSave(),
             ),
             Container(
               width: double.infinity,
@@ -2059,7 +2136,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 const Expanded(child: Text('标记后自动下一题（仅 All 筛选时生效）')),
                 Checkbox(
                   value: _autoNextAfterMark,
-                  onChanged: (v) => setState(() => _autoNextAfterMark = v ?? false),
+                  onChanged: (v) {
+                    setState(() => _autoNextAfterMark = v ?? false);
+                    _scheduleAutoSave();
+                  },
                 ),
               ],
             ),
@@ -2075,6 +2155,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   setState(() {
                     _filterMode = v;
                   });
+                  _scheduleAutoSave();
                 }
               },
             ),
@@ -2088,6 +2169,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     setState(() {
                       _randomOrder = v ?? false;
                     });
+                    _scheduleAutoSave();
                   },
                 ),
               ],
@@ -2096,6 +2178,7 @@ class _SettingsPageState extends State<SettingsPage> {
             TextField(
               controller: _randomSeedController,
               keyboardType: TextInputType.number,
+              onChanged: (_) => _scheduleAutoSave(),
               decoration: const InputDecoration(
                 hintText: '输入正整数，例如 1709876543',
               ),
@@ -2139,7 +2222,10 @@ class _SettingsPageState extends State<SettingsPage> {
               child: const Text('清空所有对话历史（不可恢复）'),
             ),
             const SizedBox(height: 8),
-            ElevatedButton(onPressed: _savePrefs, child: const Text('保存')),
+            Text(
+              '设置会自动保存',
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
+            ),
           ],
         ),
       ),

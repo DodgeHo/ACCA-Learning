@@ -1,5 +1,16 @@
 ﻿# Changelog
 
+## 0.1.4 - 2026-03-24
+- Mobile AI sheet polish:
+  - fixed AI quick-prompt collapse and shortcut actions so the bottom sheet updates immediately
+  - kept AI loading and chat-history changes in sync inside the mobile bottom sheet
+- App naming:
+  - renamed the displayed app title across Flutter, Android, iOS, Web, Windows, Linux, and macOS to `SAA 练习`
+- Release packaging:
+  - prepared Android release artifacts for v0.1.4 (`APK` + `AAB`)
+  - prepared Web release artifact for v0.1.4 (`web.zip`)
+  - bumped web cache version to `aws-saa-web-v4`
+
 ## 0.1.3 - 2026-03-15
 - Mobile UX and state continuity:
   - improved AI quick-prompt collapse and expand responsiveness with animated feedback

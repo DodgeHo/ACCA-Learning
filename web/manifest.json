@@ -1,11 +1,11 @@
 {
-    "name": "AWS SAA 题库助手",
-    "short_name": "AWS SAA",
+    "name": "SAA 练习",
+    "short_name": "SAA 练习",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "AWS SAA-C03 中文题库刷题与AI讲解助手，支持标记、筛选、收藏与进度追踪。",
+    "description": "SAA 练习，提供 AWS SAA-C03 中文题库刷题与 AI 讲解，支持标记、筛选、收藏与进度追踪。",
     "prefer_related_applications": false,
     "icons": [
         {
