@@ -1,5 +1,18 @@
 ﻿# Changelog
 
+## 0.1.5 - 2026-03-24
+- Settings UX:
+  - removed manual save button in settings and switched to auto-save behavior
+- Compliance notice:
+  - added first-launch learning notice dialog (shown once per device)
+- Desktop stability:
+  - improved Windows desktop data loading compatibility for local database files
+- Release packaging:
+  - prepared Android release artifacts for v0.1.5 (`APK` + `AAB`)
+  - prepared Web release artifact for v0.1.5 (`web.zip`)
+  - prepared Windows release artifact for v0.1.5 (`windows-x64.zip`)
+  - bumped web cache version to `aws-saa-web-v5`
+
 ## 0.1.4 - 2026-03-24
 - Mobile AI sheet polish:
   - fixed AI quick-prompt collapse and shortcut actions so the bottom sheet updates immediately
