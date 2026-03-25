@@ -108,3 +108,50 @@ adb devices
 # 生成发布 APK
 .\scripts\build_android.ps1
 ```
+
+## 9) 题库替换与多题库 APK（开发者）
+
+目标：在不修改数据库表结构的前提下，构建不同题库的 APK 变体。
+
+### 9.1 题库资产目录
+
+- `assets/banks/saa/`：SAA 题库资产（`data.db` + `questions.json`）
+- `assets/banks/sap/`：SAP 题库资产（`data.db` + `questions.json`）
+
+### 9.2 从 SAP PDF 生成题库资产
+
+先安装一次 PDF 提取依赖：
+
+```powershell
+py -m pip install pypdf
+```
+
+```powershell
+.\scripts\prepare_sap_bank.ps1
+```
+
+该命令会：
+- 从 `题库/2.中文SAP-C02 - 含答案.pdf` 抽取 UTF-8 文本到 `题库/SAP-C02 中文题库.txt`
+- 生成 `assets/banks/sap/data.db` 和 `assets/banks/sap/questions.json`
+
+### 9.3 切换当前构建题库
+
+```powershell
+.\scripts\select_question_bank.ps1 -Bank saa
+.\scripts\select_question_bank.ps1 -Bank sap
+```
+
+切换后会覆盖：
+- `assets/data.db`
+- `assets/questions.json`
+
+### 9.4 构建题库变体 APK
+
+```powershell
+.\scripts\build_android_bank_variant.ps1 -Bank saa -VersionTag 0.2.0
+.\scripts\build_android_bank_variant.ps1 -Bank sap -VersionTag 0.2.0
+```
+
+输出文件：
+- `release/banks/app-0.2.0-saa.apk`
+- `release/banks/app-0.2.0-sap.apk`

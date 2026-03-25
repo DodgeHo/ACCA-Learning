@@ -1,0 +1,8 @@
+{
+  "bank": "sap",
+  "generated_at": "2026-03-25T11:23:27.080220+00:00",
+  "questions": 527,
+  "txt": "tmp\\sap_source.txt",
+  "data_db": "assets\\banks\\sap\\data.db",
+  "questions_json": "assets\\banks\\sap\\questions.json"
+}
