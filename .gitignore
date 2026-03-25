@@ -18,7 +18,8 @@ android/.gradle/
 
 # Logs
 *.log
-
+# Bash scripts
+web挂载脚本.bash
 # Database backups
 *.db.bak
 *.db.bak.*

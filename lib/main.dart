@@ -1425,19 +1425,12 @@ $enOptions
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (stemBody.isNotEmpty)
-                    Text('【中文题干】\n$stemBody\n', style: TextStyle(fontSize: model.fontSize)),
+                    Text('$stemBody\n', style: TextStyle(fontSize: model.fontSize)),
                   if (displayOptions.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          '【中文选项】',
-                          style: TextStyle(
-                            fontSize: model.fontSize,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 2),
                         ...displayOptions.map((opt) {
                           final isSelected = _lastAnsweredQuestionId == q.id && _lastSelectedOption == opt.label;
                           final selectedColor = (_lastAnswerCorrect ?? false)
