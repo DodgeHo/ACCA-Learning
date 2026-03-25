@@ -169,12 +169,34 @@ class _MainScaffoldState extends State<MainScaffold> {
   @override
   Widget build(BuildContext context) {
     final isCompact = MediaQuery.of(context).size.width < 760;
+    final model = context.watch<AppModel>();
+    final answered = model.answeredQuestionCount;
+    final total = model.allQuestions.length;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: isCompact ? 48 : null,
         titleSpacing: isCompact ? 8 : null,
         title: isCompact ? null : const Text('SAA 练习'),
         actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.blueGrey.shade50,
+                borderRadius: BorderRadius.circular(999),
+                border: Border.all(color: Colors.blueGrey.shade200),
+              ),
+              child: Text(
+                '进度 $answered/$total',
+                style: TextStyle(
+                  color: Colors.blueGrey.shade800,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+          ),
           if (!isCompact)
             IconButton(
               tooltip: '快捷键帮助',
@@ -1115,14 +1137,11 @@ $enOptions
     final isKnowSelected = model.currentStatus == 'Know';
     final isDontKnowSelected = model.currentStatus == 'DontKnow';
     final isFavoriteSelected = model.currentStatus == 'Favorite';
-    final answeredCount = model.answeredQuestionCount;
-    final totalCount = model.allQuestions.length;
-    final progressValue = totalCount > 0 ? answeredCount / totalCount : 0.0;
     final stemBody = _buildStemWithoutOptions(q.stemZh);
     final displayOptions = _extractOptions(q);
     final hasLastAnswerState = _lastAnsweredQuestionId == q.id && _lastAnswerCorrect != null;
-    final questionHeadline = '第${model.currentIndex + 1}/${model.questions.length} 题 | 题号 ${q.qNum ?? '-'}';
-    final compactHeadline = '${model.currentIndex + 1}/${model.questions.length} | 题号 ${q.qNum ?? '-'}';
+    final questionHeadline = '题号 ${q.qNum ?? '-'}';
+    final compactHeadline = '题号 ${q.qNum ?? '-'}';
     final headerCollapsed = compact && _compactHeaderCollapsed;
     final answerText =
         '正确答案：${q.correctAnswer ?? '(空)'}\n';
@@ -1133,30 +1152,6 @@ $enOptions
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.blueGrey.shade50,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.blueGrey.shade100),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                '刷题进度：$answeredCount/$totalCount',
-                style: TextStyle(
-                  fontSize: (model.fontSize - 7).clamp(10, 15).toDouble(),
-                  fontWeight: FontWeight.w700,
-                  color: Colors.blueGrey.shade800,
-                ),
-              ),
-              const SizedBox(height: 6),
-              LinearProgressIndicator(value: progressValue.clamp(0.0, 1.0)),
-            ],
-          ),
-        ),
-        const SizedBox(height: 8),
         if (compact)
           Row(
             children: [

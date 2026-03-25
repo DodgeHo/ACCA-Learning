@@ -1,5 +1,12 @@
 ﻿# Changelog
 
+## 0.1.6 - 2026-03-25
+- Release packaging:
+  - prepared Android release artifacts for v0.1.6 (`APK` + `AAB`)
+  - prepared Web release artifact for v0.1.6 (`web.zip`)
+  - prepared Windows release artifact for v0.1.6 (`windows-x64.zip`)
+  - bumped web cache version to `aws-saa-web-v6`
+
 ## 0.1.5 - 2026-03-24
 - Settings UX:
   - removed manual save button in settings and switched to auto-save behavior

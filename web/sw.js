@@ -2,7 +2,7 @@
 // - Keep format: aws-saa-web-v{number}
 // - Bump this value whenever STATIC_ASSETS changes, offline strategy changes,
 //   or any deployment may require clearing stale caches.
-const CACHE_VERSION = 'aws-saa-web-v5';
+const CACHE_VERSION = 'aws-saa-web-v6';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
