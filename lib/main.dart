@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
@@ -18,6 +19,31 @@ void main() {
 class AwsSaaTrainerApp extends StatelessWidget {
   const AwsSaaTrainerApp({super.key});
 
+  ThemeData _buildTheme() {
+    final base = ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+      useMaterial3: true,
+    );
+
+    // On Windows, prefer a Chinese-friendly font stack to improve readability.
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {
+      final windowsTextTheme = base.textTheme.apply(
+        fontFamily: 'Microsoft YaHei UI',
+        fontFamilyFallback: const ['Microsoft YaHei', 'Segoe UI'],
+      );
+      final windowsPrimaryTextTheme = base.primaryTextTheme.apply(
+        fontFamily: 'Microsoft YaHei UI',
+        fontFamilyFallback: const ['Microsoft YaHei', 'Segoe UI'],
+      );
+      return base.copyWith(
+        textTheme: windowsTextTheme,
+        primaryTextTheme: windowsPrimaryTextTheme,
+      );
+    }
+
+    return base;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -28,10 +54,7 @@ class AwsSaaTrainerApp extends StatelessWidget {
       },
       child: MaterialApp(
         title: 'SAA 练习',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-          useMaterial3: true,
-        ),
+        theme: _buildTheme(),
         home: const MainScaffold(),
       ),
     );
@@ -198,6 +221,11 @@ class _QuizPageState extends State<QuizPage> {
   List<Map<String, String>> _cachedAiMessages = const <Map<String, String>>[];
   String? _filterBeforeWrongLoop;
   Timer? _fontAdjustTimer;
+  int _lastEncouragedMilestone = 0;
+  int? _lastEncouragementIndex;
+  int? _lastAnsweredQuestionId;
+  String? _lastSelectedOption;
+  bool? _lastAnswerCorrect;
 
   static const String _keyboardHint =
       '快捷键：← 上一题，→ 下一题，A 显示答案，K 标记会，D 标记不会，F 标记收藏，/ 聚焦提问框（输入框聚焦时不触发）';
@@ -221,6 +249,14 @@ class _QuizPageState extends State<QuizPage> {
     'DontKnow': '不会',
     'Favorite': '收藏 ★',
   };
+
+  static const List<String> _encouragementMessages = [
+    '稳住节奏，理解在持续累积。',
+    '做得很好，再坚持一轮就更扎实了。',
+    '你的判断速度和准确性都在提升。',
+    '继续推进，离目标又近了一步。',
+    '保持这个状态，今天的复习很高效。',
+  ];
 
   Color _statusColor(String? status) {
     switch (status) {
@@ -395,6 +431,134 @@ class _QuizPageState extends State<QuizPage> {
         tooltip: tooltip,
         onPressed: () => _changeFontSize(model, delta),
         icon: Icon(icon),
+      ),
+    );
+  }
+
+  bool _isOptionLine(String line) {
+    return RegExp(r'^\s*[A-Fa-f][\.、\)]\s*').hasMatch(line);
+  }
+
+  String? _extractOptionLabel(String line, int fallbackIndex) {
+    final match = RegExp(r'^\s*([A-Fa-f])[\.、\)]\s*').firstMatch(line);
+    if (match != null) {
+      return match.group(1)!.toUpperCase();
+    }
+    if (fallbackIndex >= 0 && fallbackIndex < 6) {
+      return String.fromCharCode('A'.codeUnitAt(0) + fallbackIndex);
+    }
+    return null;
+  }
+
+  String _trimOptionPrefix(String line) {
+    return line.replaceFirst(RegExp(r'^\s*[A-Fa-f][\.、\)]\s*'), '').trim();
+  }
+
+  List<({String label, String text})> _extractOptions(Question q) {
+    final options = <({String label, String text})>[];
+    final rawOptions = q.optionsZh;
+
+    if (rawOptions != null && rawOptions.isNotEmpty) {
+      for (var i = 0; i < rawOptions.length; i++) {
+        final line = rawOptions[i].trim();
+        if (line.isEmpty) continue;
+        final label = _extractOptionLabel(line, i);
+        if (label == null) continue;
+        final text = _trimOptionPrefix(line);
+        options.add((label: label, text: text.isEmpty ? line : text));
+      }
+      if (options.isNotEmpty) return options;
+    }
+
+    final stem = q.stemZh ?? '';
+    for (final raw in stem.split('\n')) {
+      final line = raw.trim();
+      if (!_isOptionLine(line)) continue;
+      final label = _extractOptionLabel(line, options.length);
+      if (label == null) continue;
+      final text = _trimOptionPrefix(line);
+      options.add((label: label, text: text.isEmpty ? line : text));
+    }
+    return options;
+  }
+
+  String _buildStemWithoutOptions(String? stem) {
+    if (stem == null || stem.trim().isEmpty) return '';
+    final lines = stem.split('\n');
+    final kept = <String>[];
+    for (final raw in lines) {
+      final line = raw.trimRight();
+      if (_isOptionLine(line)) break;
+      kept.add(line);
+    }
+    return kept.join('\n').trim();
+  }
+
+  String _normalizeAnswerLetters(String? raw) {
+    if (raw == null) return '';
+    return RegExp(r'[A-Fa-f]')
+        .allMatches(raw)
+        .map((m) => m.group(0)!.toUpperCase())
+        .join();
+  }
+
+  Future<void> _maybeCelebrateMilestone({
+    required int beforeAnswered,
+    required int afterAnswered,
+  }) async {
+    final beforeMilestone = beforeAnswered ~/ 10;
+    final afterMilestone = afterAnswered ~/ 10;
+    if (afterMilestone <= beforeMilestone || afterMilestone == 0) return;
+
+    final milestone = afterMilestone * 10;
+    if (_lastEncouragedMilestone == milestone) return;
+
+    final candidates = List<int>.generate(_encouragementMessages.length, (i) => i)
+        .where((i) => i != _lastEncouragementIndex)
+        .toList();
+    final pool = candidates.isEmpty ? [0] : candidates;
+    final picked = pool[DateTime.now().microsecondsSinceEpoch % pool.length];
+
+    _lastEncouragedMilestone = milestone;
+    _lastEncouragementIndex = picked;
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 3),
+        content: Text('已完成 $milestone 题，${_encouragementMessages[picked]}'),
+      ),
+    );
+  }
+
+  Future<void> _handleOptionAnswer(AppModel model, Question q, String optionLabel) async {
+    final beforeAnswered = model.answeredQuestionCount;
+    final normalizedCorrect = _normalizeAnswerLetters(q.correctAnswer);
+    final isCorrect = normalizedCorrect.length == 1 && normalizedCorrect == optionLabel;
+
+    if (mounted) {
+      setState(() {
+        _lastAnsweredQuestionId = q.id;
+        _lastSelectedOption = optionLabel;
+        _lastAnswerCorrect = isCorrect;
+      });
+    }
+
+    model.showAnswer();
+    await _markAndMaybeNext(model, isCorrect ? 'Know' : 'DontKnow');
+
+    final afterAnswered = model.answeredQuestionCount;
+    await _maybeCelebrateMilestone(beforeAnswered: beforeAnswered, afterAnswered: afterAnswered);
+
+    if (!mounted) return;
+    final feedback = isCorrect
+        ? '回答正确，已自动标记为“会”'
+      : '回答错误，已自动标记为“不会”（正确答案：${normalizedCorrect.isEmpty ? '-' : normalizedCorrect}）';
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 2),
+        content: Text(feedback),
       ),
     );
   }
@@ -951,6 +1115,12 @@ $enOptions
     final isKnowSelected = model.currentStatus == 'Know';
     final isDontKnowSelected = model.currentStatus == 'DontKnow';
     final isFavoriteSelected = model.currentStatus == 'Favorite';
+    final answeredCount = model.answeredQuestionCount;
+    final totalCount = model.allQuestions.length;
+    final progressValue = totalCount > 0 ? answeredCount / totalCount : 0.0;
+    final stemBody = _buildStemWithoutOptions(q.stemZh);
+    final displayOptions = _extractOptions(q);
+    final hasLastAnswerState = _lastAnsweredQuestionId == q.id && _lastAnswerCorrect != null;
     final questionHeadline = '第${model.currentIndex + 1}/${model.questions.length} 题 | 题号 ${q.qNum ?? '-'}';
     final compactHeadline = '${model.currentIndex + 1}/${model.questions.length} | 题号 ${q.qNum ?? '-'}';
     final headerCollapsed = compact && _compactHeaderCollapsed;
@@ -963,6 +1133,30 @@ $enOptions
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.blueGrey.shade50,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.blueGrey.shade100),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                '刷题进度：$answeredCount/$totalCount',
+                style: TextStyle(
+                  fontSize: (model.fontSize - 7).clamp(10, 15).toDouble(),
+                  fontWeight: FontWeight.w700,
+                  color: Colors.blueGrey.shade800,
+                ),
+              ),
+              const SizedBox(height: 6),
+              LinearProgressIndicator(value: progressValue.clamp(0.0, 1.0)),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
         if (compact)
           Row(
             children: [
@@ -1235,11 +1429,79 @@ $enOptions
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (q.stemZh != null)
-                    Text('【中文题干】\n${q.stemZh}\n', style: TextStyle(fontSize: model.fontSize)),
-                  if (q.optionsZh != null)
-                    Text('【中文选项】\n${q.optionsZh!.join('\n')}\n',
-                        style: TextStyle(fontSize: model.fontSize)),
+                  if (stemBody.isNotEmpty)
+                    Text('【中文题干】\n$stemBody\n', style: TextStyle(fontSize: model.fontSize)),
+                  if (displayOptions.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '【中文选项】',
+                          style: TextStyle(
+                            fontSize: model.fontSize,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        ...displayOptions.map((opt) {
+                          final isSelected = _lastAnsweredQuestionId == q.id && _lastSelectedOption == opt.label;
+                          final selectedColor = (_lastAnswerCorrect ?? false)
+                              ? Colors.green.shade100
+                              : Colors.red.shade100;
+
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 8),
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                backgroundColor: isSelected ? selectedColor : null,
+                                side: BorderSide(
+                                  color: isSelected
+                                      ? ((_lastAnswerCorrect ?? false)
+                                          ? Colors.green.shade400
+                                          : Colors.red.shade400)
+                                      : Colors.black26,
+                                ),
+                                alignment: Alignment.centerLeft,
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              ),
+                              onPressed: () => _handleOptionAnswer(model, q, opt.label),
+                              child: Text(
+                                '${opt.label}. ${opt.text}',
+                                style: TextStyle(fontSize: model.fontSize - 1),
+                              ),
+                            ),
+                          );
+                        }),
+                        if (hasLastAnswerState)
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: (_lastAnswerCorrect ?? false)
+                                  ? Colors.green.shade50
+                                  : Colors.red.shade50,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: (_lastAnswerCorrect ?? false)
+                                    ? Colors.green.shade300
+                                    : Colors.red.shade300,
+                              ),
+                            ),
+                            child: Text(
+                              (_lastAnswerCorrect ?? false)
+                                  ? '本题回答正确，已自动标记为“会”'
+                                  : '本题回答错误，已自动标记为“不会”',
+                              style: TextStyle(
+                                color: (_lastAnswerCorrect ?? false)
+                                    ? Colors.green.shade800
+                                    : Colors.red.shade800,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
                   if (q.stemEn != null)
                     Text('【English Stem】\n${q.stemEn}\n', style: TextStyle(fontSize: model.fontSize)),
                   if (q.optionsEn != null)

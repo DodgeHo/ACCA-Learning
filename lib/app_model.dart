@@ -271,6 +271,16 @@ class AppModel extends ChangeNotifier {
     return statusByQuestionId[q.id];
   }
 
+  int get answeredQuestionCount {
+    var count = 0;
+    for (final status in statusByQuestionId.values) {
+      if (status == 'Know' || status == 'DontKnow') {
+        count++;
+      }
+    }
+    return count;
+  }
+
   String get currentChatHistory {
     final q = currentQuestion;
     if (q == null) return '';
