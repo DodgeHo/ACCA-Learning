@@ -20,38 +20,57 @@
 
       .card {
         text-align: center;
-        padding: 24px;
+        padding: 28px;
         border: 1px solid #e4e4e7;
-        border-radius: 12px;
+        border-radius: 14px;
         background: #ffffff;
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+        width: min(92vw, 520px);
       }
 
       h1 {
-        margin: 0 0 16px;
+        margin: 0 0 14px;
         font-size: 22px;
       }
 
-      button {
-        border: none;
-        border-radius: 10px;
-        padding: 12px 18px;
-        font-size: 16px;
-        cursor: pointer;
-        background: #0f172a;
-        color: #ffffff;
+      p {
+        margin: 0 0 18px;
+        color: #475569;
       }
 
-      button:hover {
-        background: #1e293b;
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .entry {
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 12px 14px;
+        font-size: 16px;
+        cursor: pointer;
+        background: #f8fafc;
+        color: #0f172a;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .entry:hover {
+        background: #eef2ff;
+        border-color: #c7d2fe;
       }
     </style>
   </head>
   <body>
     <main class="card">
       <h1>题库入口</h1>
-      <button type="button" onclick="window.location.href='/saa/';">
-        进入 SAA 练习
-      </button>
+      <p>选择你要进入的题库版本</p>
+      <div class="grid">
+        <a class="entry" href="/saa/">进入 SAA 练习</a>
+        <a class="entry" href="/sap/">进入 SAP 练习</a>
+        <a class="entry" href="/ispm/">进入 ISPM 练习</a>
+      </div>
     </main>
   </body>
 </html>

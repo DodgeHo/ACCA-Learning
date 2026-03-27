@@ -1,6 +1,6 @@
 param(
   [Parameter(Mandatory=$true)]
-  [ValidateSet('saa','sap')]
+  [ValidateSet('saa','sap','ispm')]
   [string]$Bank
 )
 

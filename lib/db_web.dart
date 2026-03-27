@@ -5,7 +5,7 @@ import 'package:sembast_web/sembast_web.dart';
 // simple web database using sembast; questions are loaded from a JSON asset
 class AppDatabase {
   static Database? _db;
-  static const String _dbAssetVersion = '2026-03-25-quiz-fix-v2';
+  static const String _dbAssetVersion = '2026-03-26-multibank-v3';
   static final _questionStore = stringMapStoreFactory.store('questions');
   static final _statusStore = intMapStoreFactory.store('user_status');
   static final _chatStore = intMapStoreFactory.store('chat_history');

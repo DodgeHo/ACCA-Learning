@@ -1,5 +1,20 @@
 ﻿# Changelog
 
+## 0.2.0 - 2026-03-26
+- Multi-bank delivery:
+  - added developer bank switching workflow for SAA / SAP / ISPM without database schema changes
+  - added Android bank variant build script for `0.2.0-saa`, `0.2.0-sap`, and `0.2.0-ispm`
+  - added SAP PDF extraction and bank asset build pipeline
+  - added ISPM PDF build pipeline with OCR fallback and manifest output
+- Quiz UX:
+  - preserved existing SAA objective quiz behavior while adding ISPM question type detection
+  - answer panel can now show `正确答案` plus `要点点评（PDF）`
+  - AI quick prompts now route by question type for objective / case / essay flows
+- Web entry routing:
+  - root entry page now exposes `/saa/`, `/sap/`, and `/ispm/`
+- Release notes:
+  - current ISPM OCR extraction quality is not sufficient for full production confidence; release draft keeps this as an explicit risk
+
 ## 0.1.6 - 2026-03-25
 - Release packaging:
   - prepared Android release artifacts for v0.1.6 (`APK` + `AAB`)

@@ -12,7 +12,7 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 class AppDatabase {
   static sqflite.Database? _sqfliteDb;
   static sembast.Database? _sembastDb;
-  static const String _dbAssetVersion = '2026-03-25-quiz-fix-v2';
+  static const String _dbAssetVersion = '2026-03-26-multibank-v3';
 
   static final _questionStore = sembast.stringMapStoreFactory.store('questions');
   static final _statusStore = sembast.intMapStoreFactory.store('user_status');

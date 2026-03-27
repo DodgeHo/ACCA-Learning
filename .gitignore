@@ -42,4 +42,21 @@ __pycache__/
 *.py[cod]
 .venv/
 env/
+tmp/
+
+# Release binary artifacts (uploaded to GitHub Releases, not tracked in git)
+release/**/*.apk
+release/**/*.aab
+release/**/*.zip
+release/**/*.exe
+release/**/*.dll
+release/**/*.so
+release/**/*.dat
+release/**/*.otf
+release/**/*.ttf
+release/**/*.frag
+release/**/*.bin
+release/**/*.Z
+release/0.2.0/windows-x64/
+release/banks/
 

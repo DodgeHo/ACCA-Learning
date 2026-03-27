@@ -1,0 +1,13 @@
+{
+  "bank": "ispm",
+  "generated_at": "2026-03-26T15:20:59.680344+00:00",
+  "questions": 267,
+  "by_type": {
+    "objective": 219,
+    "case": 24,
+    "essay": 24
+  },
+  "pdf_root": "D:\\AWS-SAA-Learning-Flutter\\题库\\信息系统项目管理师历年真题（熟悉考情）",
+  "data_db": "assets\\banks\\ispm\\data.db",
+  "questions_json": "assets\\banks\\ispm\\questions.json"
+}

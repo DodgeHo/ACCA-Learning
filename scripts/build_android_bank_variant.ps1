@@ -1,6 +1,6 @@
 param(
   [Parameter(Mandatory=$true)]
-  [ValidateSet('saa','sap')]
+  [ValidateSet('saa','sap','ispm')]
   [string]$Bank,
 
   [string]$VersionTag = '0.2.0'
@@ -31,7 +31,8 @@ try {
 
   $outDir = Join-Path $root 'release/banks'
   New-Item -ItemType Directory -Force -Path $outDir | Out-Null
-  $outApk = Join-Path $outDir "app-$VersionTag-$Bank.apk"
+  $artifactBankTag = if ($Bank -eq 'ispm') { 'ispm-experimental' } else { $Bank }
+  $outApk = Join-Path $outDir "app-$VersionTag-$artifactBankTag.apk"
   Copy-Item -Path $apk -Destination $outApk -Force
 
   Write-Host "Built variant APK: $outApk"

@@ -280,6 +280,47 @@ class _QuizPageState extends State<QuizPage> {
     '保持这个状态，今天的复习很高效。',
   ];
 
+  String _questionTypeLabel(Question q) {
+    final source = (q.sourceDoc ?? '').toLowerCase();
+    final stem = (q.stemZh ?? '').toLowerCase();
+
+    if (source.contains(':essay:') || source.contains('论文写作') || stem.contains('论文')) {
+      return 'Essay';
+    }
+    if (source.contains(':case:') || source.contains('案例分析') || stem.contains('案例')) {
+      return 'Case';
+    }
+    if (_extractOptions(q).isNotEmpty) {
+      return 'Objective';
+    }
+    if (source.contains('ispm')) {
+      return 'Case';
+    }
+    return 'Objective';
+  }
+
+  String _questionTypeDisplay(String typeLabel) {
+    switch (typeLabel) {
+      case 'Essay':
+        return '论文题';
+      case 'Case':
+        return '案例题';
+      case 'Objective':
+      default:
+        return '客观题';
+    }
+  }
+
+  String? _extractKeyPointCommentary(Question q) {
+    final raw = (q.explanationZh ?? '').trim();
+    if (raw.isEmpty) return null;
+
+    final match = RegExp(r'(?:要点点评|评分要点|参考答案|解析)\s*[：:]?\s*([\s\S]+)$', multiLine: true)
+        .firstMatch(raw);
+    final picked = (match?.group(1) ?? raw).trim();
+    return picked.isEmpty ? null : picked;
+  }
+
   Color _statusColor(String? status) {
     switch (status) {
       case 'Know':
@@ -840,6 +881,28 @@ $enOptions
     bool bubbleMode = false,
     bool showAttachSwitch = false,
   }) {
+    final questionType = _questionTypeLabel(q);
+    final quickPrompts = switch (questionType) {
+      'Essay' => const <({String label, String prompt, Color color})>[
+        (label: '论文题怎么破题？', prompt: '请先给论文立意和结构提纲。', color: Color(0xFF455A64)),
+        (label: '评分点怎么覆盖？', prompt: '请按评分点给我写作检查清单。', color: Color(0xFF1565C0)),
+        (label: '给我可套用段落', prompt: '请给出可背诵的关键段落模板。', color: Color(0xFF00695C)),
+        (label: '30分钟作答计划', prompt: '请基于本题给出30分钟成文计划。', color: Color(0xFF6A1B9A)),
+      ],
+      'Case' => const <({String label, String prompt, Color color})>[
+        (label: '先梳理案例背景', prompt: '请先概括案例背景，再给答题步骤。', color: Color(0xFF455A64)),
+        (label: '按小问逐条作答', prompt: '请按子问题逐条作答并标注依据。', color: Color(0xFF1565C0)),
+        (label: '常见失分点', prompt: '这道案例常见失分点有哪些？', color: Color(0xFF00695C)),
+        (label: '给我作答模板', prompt: '请给我一份可直接套用的作答模板。', color: Color(0xFF6A1B9A)),
+      ],
+      _ => const <({String label, String prompt, Color color})>[
+        (label: '这题用到了什么知识？', prompt: '这题用到了什么知识？', color: Color(0xFF673AB7)),
+        (label: '这道题是什么意思？', prompt: '请用通俗中文解释这道题在问什么，并指出关键词。', color: Color(0xFF3F51B5)),
+        (label: '为什么是这个结果？', prompt: '为什么是这个结果？', color: Color(0xFF009688)),
+        (label: '我没看懂，能更简单吗？', prompt: '请用更简单、面向初学者的方式重讲，并给一个生活类比', color: Color(0xFF6A1B9A)),
+      ],
+    };
+
     final hasKey = model.apiKey.trim().isNotEmpty;
     final canAsk = hasKey && !_askingAi;
     final showQuickPrompts = !bubbleMode || _aiQuickPromptsExpanded;
@@ -897,10 +960,10 @@ $enOptions
                     key: const ValueKey('quickPromptsExpanded'),
                     spacing: 8,
                     runSpacing: 8,
-                    children: [
-                      ElevatedButton(
+                    children: quickPrompts.map((item) {
+                      return ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple.shade500,
+                          backgroundColor: item.color,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                           padding: bubbleMode
@@ -911,70 +974,13 @@ $enOptions
                             ? () => _sendQuestion(
                                   model,
                                   q,
-                                  '这题用到了什么知识？',
+                                  item.prompt,
                                   includeQuestionContext: _attachQuestionContext,
                                 )
                             : null,
-                        child: const Text('这题用到了什么知识？'),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.indigo.shade500,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                          padding: bubbleMode
-                              ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
-                              : null,
-                        ),
-                        onPressed: canAsk
-                            ? () => _sendQuestion(
-                                  model,
-                                  q,
-                                  '请用通俗中文解释这道题在问什么，并指出关键词。',
-                                  includeQuestionContext: _attachQuestionContext,
-                                )
-                            : null,
-                        child: const Text('这道题是什么意思？'),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.teal.shade500,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                          padding: bubbleMode
-                              ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
-                              : null,
-                        ),
-                        onPressed: canAsk
-                            ? () => _sendQuestion(
-                                  model,
-                                  q,
-                                  '为什么是这个结果？',
-                                  includeQuestionContext: _attachQuestionContext,
-                                )
-                            : null,
-                        child: const Text('为什么是这个结果？'),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purple.shade700,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                          padding: bubbleMode
-                              ? const EdgeInsets.symmetric(horizontal: 14, vertical: 10)
-                              : null,
-                        ),
-                        onPressed: canAsk
-                            ? () => _sendQuestion(
-                                  model,
-                                  q,
-                                  '请用更简单、面向初学者的方式重讲，并给一个生活类比',
-                                  includeQuestionContext: _attachQuestionContext,
-                                )
-                            : null,
-                        child: const Text('我没看懂，能更简单吗？'),
-                      ),
-                    ],
+                        child: Text(item.label),
+                      );
+                    }).toList(),
                   ),
           ),
         ),
@@ -1140,11 +1146,13 @@ $enOptions
     final stemBody = _buildStemWithoutOptions(q.stemZh);
     final displayOptions = _extractOptions(q);
     final hasLastAnswerState = _lastAnsweredQuestionId == q.id && _lastAnswerCorrect != null;
+    final questionType = _questionTypeLabel(q);
+    final questionTypeText = _questionTypeDisplay(questionType);
+    final keyPointCommentary = _extractKeyPointCommentary(q);
     final questionHeadline = '题号 ${q.qNum ?? '-'}';
     final compactHeadline = '题号 ${q.qNum ?? '-'}';
     final headerCollapsed = compact && _compactHeaderCollapsed;
-    final answerText =
-        '正确答案：${q.correctAnswer ?? '(空)'}\n';
+    final answerText = '正确答案：${q.correctAnswer ?? '(空)'}\n';
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -1399,7 +1407,7 @@ $enOptions
           ),
         if (!headerCollapsed)
           Text(
-            '状态：$statusText',
+            '题型：$questionTypeText   状态：$statusText',
             style: TextStyle(
               fontSize: model.fontSize,
               color: statusColor,
@@ -1583,7 +1591,28 @@ $enOptions
                 border: Border.all(color: Colors.black12),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Text(answerText, style: TextStyle(fontSize: model.fontSize - 1)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(answerText, style: TextStyle(fontSize: model.fontSize - 1)),
+                  if (keyPointCommentary != null) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      '要点点评（PDF）',
+                      style: TextStyle(
+                        fontSize: model.fontSize - 2,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.blueGrey.shade700,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      keyPointCommentary,
+                      style: TextStyle(fontSize: model.fontSize - 2),
+                    ),
+                  ],
+                ],
+              ),
             ),
           ),
           ],
