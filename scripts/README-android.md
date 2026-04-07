@@ -1,4 +1,4 @@
-# Android 快速使用说明（AWS-SAA-Learning-Flutter）
+# Android 快速使用说明（ACCA-Learning-Flutter）
 
 > ACCA 十科多 bank 建库与多端打包说明见：`scripts/README-acca.md`
 
