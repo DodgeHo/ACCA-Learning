@@ -1,0 +1,16 @@
+{
+  "bank": "sbr",
+  "generated_at": "2026-04-07T07:16:01.238226+00:00",
+  "source": "ocr_docx",
+  "questions": 64,
+  "ocr_root": "ocr_packets",
+  "data_db": "assets/banks/sbr/data.db",
+  "questions_json": "assets/banks/sbr/questions.json",
+  "source_docx_count": 3,
+  "parsed_blocks": 64,
+  "by_type": {
+    "objective": 0,
+    "case": 0,
+    "essay": 64
+  }
+}

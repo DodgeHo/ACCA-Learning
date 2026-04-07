@@ -1,0 +1,16 @@
+{
+  "bank": "apm",
+  "generated_at": "2026-04-07T07:16:05.312513+00:00",
+  "source": "ocr_docx",
+  "questions": 137,
+  "ocr_root": "ocr_packets",
+  "data_db": "assets/banks/apm/data.db",
+  "questions_json": "assets/banks/apm/questions.json",
+  "source_docx_count": 1,
+  "parsed_blocks": 137,
+  "by_type": {
+    "objective": 0,
+    "case": 137,
+    "essay": 0
+  }
+}

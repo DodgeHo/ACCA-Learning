@@ -1,0 +1,31 @@
+name: aws_saa_trainer
+version: 0.2.1+8
+description: SAA 练习，支持PC、平板、手机多端适配
+publish_to: 'none'
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  sqflite: ^2.3.0
+  path_provider: ^2.1.0
+  provider: ^6.0.0
+  http: ^1.2.0
+  shared_preferences: ^2.0.0
+  path: ^1.9.1
+  sembast: ^3.2.0
+  sembast_web: ^2.4.4+1
+  flutter_markdown_plus: ^1.0.3
+  flutter_secure_storage: ^9.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/data.db
+    - assets/questions.json

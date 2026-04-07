@@ -1,0 +1,240 @@
+{
+  "subject": "sbr",
+  "generated_at": "2026-04-04T06:20:06.616249+00:00",
+  "pdf_root": ".",
+  "source_pdf_count": 107,
+  "ocr_pdf_count": 38,
+  "ocr_packet_pdf": "ocr_packets\\sbr\\sbr-ocr-needed.pdf",
+  "min_text_threshold": 240,
+  "max_pages_per_pdf": 220,
+  "files": [
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR历年真题\\SBR 2023 Dec - A.pdf",
+      "pages": 10,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR历年真题\\SBR 2023 Specimen 1 A.pdf",
+      "pages": 10,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR历年真题\\SBR 2023 Specimen 2 - A.pdf",
+      "pages": 8,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR历年真题\\SBR 2023-MJ A.pdf",
+      "pages": 22,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR历年真题\\SBR-2022-Mar&Jun-A.pdf",
+      "pages": 11,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR历年真题\\SBR-2022-Sep&Dec-A.pdf",
+      "pages": 10,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR历年真题\\SBR-2024-Mar&Jun-A.pdf",
+      "pages": 12,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR历年真题\\SBR-2024-SD-A.pdf",
+      "pages": 11,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR官方模考卷Pre-Mock\\SBR 202409 Pre-Mock\\SBR-2409 Pre-Mock A.pdf",
+      "pages": 18,
+      "text_len": 19,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR官方模考卷Pre-Mock\\SBR 202503 Pre-Mock\\SBR-25年3月考季官方Pre-Mock-A.pdf",
+      "pages": 18,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2018 Dec 真题解析.pdf",
+      "pages": 18,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2018 Sept 真题解析.pdf",
+      "pages": 20,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2019 MJ 真题解析.pdf",
+      "pages": 22,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2019 SD 真题解析.pdf",
+      "pages": 34,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2020 MJ 真题解析.pdf",
+      "pages": 23,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2020 SD 真题解析.pdf",
+      "pages": 15,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2021 MJ 真题解析.pdf",
+      "pages": 19,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2021 SD 真题解析.pdf",
+      "pages": 20,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2022 MJ 真题解析.pdf",
+      "pages": 45,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2022 Pre June 真题解析.pdf",
+      "pages": 24,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2022 SD 真题解析.pdf",
+      "pages": 24,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2023 Sept - Sample 1 真题解析.pdf",
+      "pages": 8,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\2023 Sept - Sample 2 真题解析.pdf",
+      "pages": 7,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\SBR 2023 MJ 真题解析.pdf",
+      "pages": 30,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\SBR 2023改版后 Specimen 1真题解析.pdf",
+      "pages": 26,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\SBR 2023改版后 Specimen 2真题解析.pdf",
+      "pages": 20,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\改革前 Specimen 1 真题解析.pdf",
+      "pages": 18,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-SBR 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\SBR真题解析\\改革前 Specimen 2 真题解析.pdf",
+      "pages": 17,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-SBR 补充资料\\11 SBR 2024.09-2025.06 高顿ACCA考纲解析白皮书.pdf",
+      "pages": 10,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-SBR 补充资料\\SBR考官文章Technical articles\\Section C - Accounting for cryptocurrencies.pdf",
+      "pages": 5,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-SBR 补充资料\\SBR考官文章Technical articles\\Section C - IFRS 9, Financial Instruments – part 1.pdf",
+      "pages": 15,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-SBR 补充资料\\SBR考官文章Technical articles\\Section C - IFRS 9, Financial Instruments – part 2.pdf",
+      "pages": 10,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-SBR 补充资料\\SBR考官文章Technical articles\\Section C - When does debt seem to be equity.pdf",
+      "pages": 4,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-SBR 补充资料\\SBR考官文章Technical articles\\Section E - Additional performance measures.pdf",
+      "pages": 9,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-SBR 补充资料\\SBR考官文章Technical articles\\Section E - Giving investors what they need.pdf",
+      "pages": 8,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-SBR 补充资料\\SBR考官文章Technical articles\\Section E - The integrated report framework.pdf",
+      "pages": 8,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-SBR 补充资料\\SBR考官文章Technical articles\\Section E - Using the business model of a company to help analyse its performance.pdf",
+      "pages": 7,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\11-SBR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-SBR 补充资料\\SBR考官文章Technical articles\\Section F - The definition and disclosure of capital.pdf",
+      "pages": 6,
+      "text_len": 0,
+      "reason": "text_len<240"
+    }
+  ]
+}

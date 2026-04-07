@@ -1,0 +1,16 @@
+{
+  "bank": "afm",
+  "generated_at": "2026-04-07T07:16:03.257463+00:00",
+  "source": "ocr_docx",
+  "questions": 36,
+  "ocr_root": "ocr_packets",
+  "data_db": "assets/banks/afm/data.db",
+  "questions_json": "assets/banks/afm/questions.json",
+  "source_docx_count": 2,
+  "parsed_blocks": 36,
+  "by_type": {
+    "objective": 0,
+    "case": 36,
+    "essay": 0
+  }
+}

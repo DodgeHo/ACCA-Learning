@@ -1,0 +1,132 @@
+{
+  "subject": "afm",
+  "generated_at": "2026-04-04T06:20:30.263807+00:00",
+  "pdf_root": ".",
+  "source_pdf_count": 112,
+  "ocr_pdf_count": 20,
+  "ocr_packet_pdf": "ocr_packets\\afm\\afm-ocr-needed.pdf",
+  "min_text_threshold": 240,
+  "max_pages_per_pdf": 220,
+  "files": [
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM历年真题\\AFM 2022 Dec A.pdf",
+      "pages": 8,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM历年真题\\AFM 2023 MJ A.pdf",
+      "pages": 10,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM历年真题\\AFM-2022-Mar&Jun-A.pdf",
+      "pages": 11,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM历年真题\\AFM-2022-Sep-A.pdf",
+      "pages": 11,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM历年真题\\AFM-2024 SD-A.pdf",
+      "pages": 11,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM历年真题\\AFM-2024-Mar&Jun-A.pdf",
+      "pages": 12,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM官方模考卷Pre-Mock\\AFM 202409 Pre-Mock\\AFM-2409 官方Pre-Mock A.pdf",
+      "pages": 16,
+      "text_len": 14,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM官方模考卷Pre-Mock\\AFM 202503 Pre-Mock\\AFM 25年3月季考官方Pre-Mock A.pdf",
+      "pages": 16,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM真题解析\\AFM 2019 SD 真题解析.pdf",
+      "pages": 35,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM真题解析\\AFM 2020 M 真题解析.pdf",
+      "pages": 26,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM真题解析\\AFM 2020 SD 真题解析.pdf",
+      "pages": 34,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM真题解析\\AFM 2021 MJ 真题解析.pdf",
+      "pages": 21,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM真题解析\\AFM 2021 SD 真题解析.pdf",
+      "pages": 33,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM真题解析\\AFM 2022 Dec 真题解析.pdf",
+      "pages": 37,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM真题解析\\AFM 2022 Sep 真题解析.pdf",
+      "pages": 33,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM真题解析\\AFM 2023 MJ 真题解析.pdf",
+      "pages": 25,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AFM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AFM真题解析\\AFM Pre Sep 2022 真题解析.pdf",
+      "pages": 34,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-AFM 补充资料\\12 AFM 2024.09-2025.06 高顿ACCA考纲解析白皮书.pdf",
+      "pages": 8,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-AFM 补充资料\\AFM真题刷题指南.pdf",
+      "pages": 4,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-AFM 补充资料\\新增-AFM公式总结.pdf",
+      "pages": 26,
+      "text_len": 0,
+      "reason": "text_len<240"
+    }
+  ]
+}

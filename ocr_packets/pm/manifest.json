@@ -1,0 +1,126 @@
+{
+  "subject": "pm",
+  "generated_at": "2026-04-04T06:24:22.800117+00:00",
+  "pdf_root": ".",
+  "source_pdf_count": 81,
+  "ocr_pdf_count": 19,
+  "ocr_packet_pdf": "ocr_packets/pm/pm-ocr-needed.pdf",
+  "min_text_threshold": 240,
+  "max_pages_per_pdf": 220,
+  "files": [
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM 官方模考Pre-Mock全卷/PM 202406 Pre-Mock/PM 202406 Pre-Mock 答案/PM-2024-Jun PreMock Q31(a) 判分标准.pdf",
+      "pages": 6,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM 官方模考Pre-Mock全卷/PM 202406 Pre-Mock/PM 202406 Pre-Mock 答案/PM-2024-Jun PreMock Q31(a) 参考答案.pdf",
+      "pages": 3,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM 官方模考Pre-Mock全卷/PM 202406 Pre-Mock/PM 202406 Pre-Mock 答案/PM-2024-Jun PreMock Q31(b) 判分标准.pdf",
+      "pages": 6,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM 官方模考Pre-Mock全卷/PM 202406 Pre-Mock/PM 202406 Pre-Mock 答案/PM-2024-Jun PreMock Q31(b) 参考答案.pdf",
+      "pages": 2,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM 官方模考Pre-Mock全卷/PM 202406 Pre-Mock/PM 202406 Pre-Mock 答案/PM-2024-Jun PreMock Q31(c) 判分标准.pdf",
+      "pages": 6,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM 官方模考Pre-Mock全卷/PM 202406 Pre-Mock/PM 202406 Pre-Mock 答案/PM-2024-Jun PreMock Q31(c) 参考答案.pdf",
+      "pages": 2,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM 官方模考Pre-Mock全卷/PM 202406 Pre-Mock/PM 202406 Pre-Mock 答案/PM-2024-Jun PreMock Q32(a) 判分标准.pdf",
+      "pages": 2,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM 官方模考Pre-Mock全卷/PM 202406 Pre-Mock/PM 202406 Pre-Mock 答案/PM-2024-Jun PreMock Q32(a) 参考答案.pdf",
+      "pages": 2,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM 官方模考Pre-Mock全卷/PM 202406 Pre-Mock/PM 202406 Pre-Mock 答案/PM-2024-Jun PreMock Q32(b) 判分标准.pdf",
+      "pages": 2,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM 官方模考Pre-Mock全卷/PM 202406 Pre-Mock/PM 202406 Pre-Mock 答案/PM-2024-Jun PreMock Q32(b) 参考答案.pdf",
+      "pages": 3,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM历年真题主观题/PM-2022-Mar&Jun-A.pdf",
+      "pages": 5,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM历年真题主观题/PM-2022-SD-A.pdf",
+      "pages": 6,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM历年真题主观题/PM-2023-MJ-A.pdf",
+      "pages": 5,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM历年真题主观题/PM-2023-SD-A.pdf",
+      "pages": 6,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM历年真题主观题/PM-2024-Mar&Jun-A.pdf",
+      "pages": 7,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM历年真题主观题/PM-2024-SD-A.pdf",
+      "pages": 6,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/1-PM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock/PM真题解析/PM 2022 Pre-Dec模考卷解析.pdf",
+      "pages": 37,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/2-PM 补充资料/6. PM 思维导图.pdf",
+      "pages": 19,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库/5-PM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）/2-PM 补充资料/PM 2024.09-2025.06 高顿ACCA考纲解析白皮书.pdf",
+      "pages": 12,
+      "text_len": 0,
+      "reason": "text_len<240"
+    }
+  ]
+}

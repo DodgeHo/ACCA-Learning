@@ -1,0 +1,16 @@
+{
+  "bank": "fr",
+  "generated_at": "2026-04-07T07:15:50.730362+00:00",
+  "source": "ocr_docx",
+  "questions": 8,
+  "ocr_root": "ocr_packets",
+  "data_db": "assets/banks/fr/data.db",
+  "questions_json": "assets/banks/fr/questions.json",
+  "source_docx_count": 1,
+  "parsed_blocks": 8,
+  "by_type": {
+    "objective": 0,
+    "case": 8,
+    "essay": 0
+  }
+}

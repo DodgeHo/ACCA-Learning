@@ -1,0 +1,180 @@
+{
+  "subject": "aaa",
+  "generated_at": "2026-04-04T06:21:03.512374+00:00",
+  "pdf_root": ".",
+  "source_pdf_count": 95,
+  "ocr_pdf_count": 28,
+  "ocr_packet_pdf": "ocr_packets\\aaa\\aaa-ocr-needed.pdf",
+  "min_text_threshold": 240,
+  "max_pages_per_pdf": 220,
+  "files": [
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2021-Dec-Q.pdf",
+      "pages": 16,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2021-MJ-Q.pdf",
+      "pages": 12,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2022-Dec-A.pdf",
+      "pages": 15,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2022-Mar&Jun-A.pdf",
+      "pages": 17,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2022-MJ-Q.pdf",
+      "pages": 13,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2022-Sep-A.pdf",
+      "pages": 16,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2023-MJ-A.pdf",
+      "pages": 15,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2023-SD-A.pdf",
+      "pages": 15,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2024 Jun Pre-Mock\\AAA-2024-Jun PreMock Q1-Exhibits 1.pdf",
+      "pages": 1,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2024 Jun Pre-Mock\\AAA-2024-Jun PreMock Q1-Exhibits 2.pdf",
+      "pages": 1,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2024 Jun Pre-Mock\\AAA-2024-Jun PreMock Q1-Exhibits 3.pdf",
+      "pages": 2,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2024 Jun Pre-Mock\\AAA-2024-Jun PreMock Q1-Exhibits 4.pdf",
+      "pages": 1,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2024 Jun Pre-Mock\\AAA-2024-Jun PreMock Q1-Exhibits 5.pdf",
+      "pages": 1,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2024 Jun Pre-Mock\\AAA-2024-Jun PreMock Q2-Exhibits 1.pdf",
+      "pages": 2,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2024 Jun Pre-Mock\\AAA-2024-Jun PreMock Q3-Exhibits 1.pdf",
+      "pages": 2,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2024 Jun Pre-Mock\\AAA-2024-Jun PreMock Q3-Exhibits 2.pdf",
+      "pages": 1,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2024-Mar&Jun-A.pdf",
+      "pages": 15,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA历年真题\\AAA-2024-SD-A.pdf",
+      "pages": 17,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA官方模考卷Pre-Mock\\AAA 202409 Pre-Mock\\AAA-2409 官方Pre-Mock A.pdf",
+      "pages": 26,
+      "text_len": 9,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA官方模考卷Pre-Mock\\AAA 202503 Pre-Mock\\AAA-3月季考官方Pre-Mock A.pdf",
+      "pages": 26,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA真题刷题指南.pdf",
+      "pages": 3,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA真题解析\\AAA 2022 Dec 真题解析.pdf",
+      "pages": 27,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA真题解析\\AAA 2022 MJ 真题解析.pdf",
+      "pages": 34,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA真题解析\\AAA 2022 pre sep 真题解析.pdf",
+      "pages": 28,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA真题解析\\AAA 2022 Sep 真题解析.pdf",
+      "pages": 44,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-AAA 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\AAA真题解析\\AAA-2023-Mar&Jun真题解析.pdf",
+      "pages": 31,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-AAA 补充资料\\14 AAA 2024.09-2025.06 高顿ACCA考纲解析白皮书.pdf",
+      "pages": 8,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-AAA 补充资料\\AAA真题刷题指南.pdf",
+      "pages": 3,
+      "text_len": 0,
+      "reason": "text_len<240"
+    }
+  ]
+}

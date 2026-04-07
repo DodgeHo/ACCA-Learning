@@ -1,0 +1,16 @@
+{
+  "bank": "fm",
+  "generated_at": "2026-04-07T07:15:53.903914+00:00",
+  "source": "ocr_docx",
+  "questions": 168,
+  "ocr_root": "ocr_packets",
+  "data_db": "assets/banks/fm/data.db",
+  "questions_json": "assets/banks/fm/questions.json",
+  "source_docx_count": 1,
+  "parsed_blocks": 168,
+  "by_type": {
+    "objective": 2,
+    "case": 166,
+    "essay": 0
+  }
+}

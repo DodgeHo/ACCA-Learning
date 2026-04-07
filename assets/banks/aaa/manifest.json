@@ -1,0 +1,16 @@
+{
+  "bank": "aaa",
+  "generated_at": "2026-04-07T07:16:07.810393+00:00",
+  "source": "ocr_docx",
+  "questions": 30,
+  "ocr_root": "ocr_packets",
+  "data_db": "assets/banks/aaa/data.db",
+  "questions_json": "assets/banks/aaa/questions.json",
+  "source_docx_count": 1,
+  "parsed_blocks": 30,
+  "by_type": {
+    "objective": 1,
+    "case": 29,
+    "essay": 0
+  }
+}

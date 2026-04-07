@@ -1,0 +1,78 @@
+# Flutter / Dart generated files
+.dart_tool/
+.packages
+.pub-cache/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
+
+# iOS / Android
+ios/Pods/
+android/.gradle/
+
+# IDE settings
+.idea/
+.vscode/
+*.code-workspace
+
+# Logs
+*.log
+# Bash scripts
+web挂载脚本.bash
+# Database backups
+*.db.bak
+*.db.bak.*
+*.db.manual_backup.*
+*.db.manual_backup_before_aggressive.*
+*.json.bak.*
+
+# Generated reports
+reports/*.txt
+
+# OCR intermediate/raw artifacts (do not expose)
+ocr_packets/*.docx
+ocr_packets/**/*.pdf
+
+# Ignore all PDFs under ACCA source question folders
+题库/**/*.pdf
+题库/**/*.xlsx
+题库/**/*.zip
+题库/**/*.docx
+
+# Local temp probes
+tmp/probe.txt
+tmp/inspect_docx.py
+tmp/sap_source.txt
+tmp/sap_source.pdf
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Python remnants (optional)
+__pycache__/
+*.py[cod]
+.venv/
+env/
+tmp/
+
+# Release binary artifacts (uploaded to GitHub Releases, not tracked in git)
+release/**/*.apk
+release/**/*.aab
+release/**/*.zip
+release/**/*.exe
+release/**/*.dll
+release/**/*.so
+release/**/*.dat
+release/**/*.otf
+release/**/*.ttf
+release/**/*.frag
+release/**/*.bin
+release/**/*.Z
+release/0.2.0/windows-x64/
+release/banks/
+

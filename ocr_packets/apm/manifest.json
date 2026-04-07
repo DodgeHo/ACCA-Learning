@@ -1,0 +1,156 @@
+{
+  "subject": "apm",
+  "generated_at": "2026-04-04T06:20:39.815127+00:00",
+  "pdf_root": ".",
+  "source_pdf_count": 73,
+  "ocr_pdf_count": 24,
+  "ocr_packet_pdf": "ocr_packets\\apm\\apm-ocr-needed.pdf",
+  "min_text_threshold": 240,
+  "max_pages_per_pdf": 220,
+  "files": [
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM历年真题\\APM 2022-Dec-A.pdf",
+      "pages": 10,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM历年真题\\APM 2023 MJ A.pdf",
+      "pages": 9,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM历年真题\\APM-2022-Mar&Jun-A.pdf",
+      "pages": 9,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM历年真题\\APM-2022-Pre Sep-A.pdf",
+      "pages": 16,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM历年真题\\APM-2022-Sep-A.pdf",
+      "pages": 8,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM历年真题\\APM-2023 Sep&Dec A.pdf",
+      "pages": 8,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM历年真题\\APM-2024-Mar&Jun-A.pdf",
+      "pages": 11,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM历年真题\\APM-2024-SD-A.pdf",
+      "pages": 10,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM官方模考卷Pre-Mock\\APM 202409 Pre-Mock\\APM-2409 官方Pre-Mock A.pdf",
+      "pages": 15,
+      "text_len": 14,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM官方模考卷Pre-Mock\\APM 202503 Pre-Mock\\APM 25年3月季考官方Pre-Mock A.pdf",
+      "pages": 14,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM真题刷题指南.pdf",
+      "pages": 2,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM真题解析\\APM 2019 MJ 真题解析.pdf",
+      "pages": 34,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM真题解析\\APM 2019 SD 真题解析.pdf",
+      "pages": 31,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM真题解析\\APM 2020 Dec 真题解析.pdf",
+      "pages": 29,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM真题解析\\APM 2020 Mar 真题解析.pdf",
+      "pages": 35,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM真题解析\\APM 2021 M_J 真题解析.pdf",
+      "pages": 29,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM真题解析\\APM 2022 Dec 真题解析.pdf",
+      "pages": 35,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM真题解析\\APM 2022 MJ 真题解析.pdf",
+      "pages": 25,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM真题解析\\APM 2022 Pre Sep 真题解析.pdf",
+      "pages": 24,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM真题解析\\APM 2022 SEP 真题解析.pdf",
+      "pages": 29,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\1-APM 历年真题主观题+部分真题解析+刷题指南+官方模考卷Pre-Mock\\APM真题解析\\APM 2023 MJ 真题解析.pdf",
+      "pages": 31,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-APM 补充资料\\13 APM 2024.09-2025.06 高顿ACCA考纲解析白皮书.pdf",
+      "pages": 9,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-APM 补充资料\\APM真题刷题指南.pdf",
+      "pages": 2,
+      "text_len": 0,
+      "reason": "text_len<240"
+    },
+    {
+      "file": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）\\2-APM 补充资料\\APM真题考点对照表-2023SD-2017.pdf",
+      "pages": 4,
+      "text_len": 0,
+      "reason": "text_len<240"
+    }
+  ]
+}
