@@ -1,5 +1,5 @@
 name: aws_saa_trainer
-version: 0.2.1+8
+version: 0.3.0+9
 description: SAA 练习，支持PC、平板、手机多端适配
 publish_to: 'none'
 environment:
@@ -23,9 +23,24 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.3
 
 flutter:
   uses-material-design: true
   assets:
     - assets/data.db
     - assets/questions.json
+    - assets/exhibits/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  web:
+    generate: true
+  windows:
+    generate: true
+  macos:
+    generate: true
+  image_path: assets/branding/app_logo.jpg
+  adaptive_icon_foreground: assets/branding/app_logo.jpg
+  adaptive_icon_background: "#FFFFFF"

@@ -1,16 +1,16 @@
 {
   "bank": "tx",
-  "generated_at": "2026-04-07T07:15:49.954699+00:00",
+  "generated_at": "2026-04-07T09:28:25.661182+00:00",
   "source": "ocr_docx",
-  "questions": 29,
+  "questions": 21,
   "ocr_root": "ocr_packets",
   "data_db": "assets/banks/tx/data.db",
   "questions_json": "assets/banks/tx/questions.json",
   "source_docx_count": 1,
   "parsed_blocks": 29,
   "by_type": {
-    "objective": 1,
-    "case": 28,
+    "objective": 0,
+    "case": 21,
     "essay": 0
   }
 }

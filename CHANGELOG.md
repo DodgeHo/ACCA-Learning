@@ -1,5 +1,18 @@
 ﻿# Changelog
 
+## 0.3.0 - 2026-04-07
+- ACCA PM/TX delivery:
+  - completed PM and TX quality fixes on current bank assets
+  - delivered PM/TX multiplatform artifacts for Android, Windows, and Web
+  - added release upload notes with SHA256 checksums under `release/0.3.0/UPLOAD_NOTES.md`
+- Question presentation upgrades:
+  - improved structured rendering for non-objective question types
+  - added exhibit mapping support and collapsible exhibit panel in question view
+  - registered `assets/exhibits/` with empty index fallback for safe runtime behavior
+- Branding update:
+  - replaced app icons across Android, iOS, Web, Windows, and macOS using the provided logo
+  - added launcher icon generation config via `flutter_launcher_icons`
+
 ## 0.2.1 - 2026-03-28
 - Android multi-app installability:
   - fixed SAP package id to `com.example.aws_sap_trainer`

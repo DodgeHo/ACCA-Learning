@@ -42,45 +42,6 @@
     "id": 4,
     "q_num": "4",
     "stem_en": null,
-    "stem_zh": "2. 加公司提供的住所福利，因租金高于 annual value故直接取租金4,140(1分)",
-    "options_en": null,
-    "options_zh": null,
-    "correct_answer": null,
-    "explanation_en": null,
-    "explanation_zh": null,
-    "source_doc": "ACCA:tx:case:tx-ocr-needed.docx#8",
-    "source_page": null
-  },
-  {
-    "id": 5,
-    "q_num": "5",
-    "stem_en": null,
-    "stem_zh": "3. 加住所的生活费用1,440(0.5分) 4.workplace nursery 为免费福利写0(0.5分)",
-    "options_en": null,
-    "options_zh": null,
-    "correct_answer": null,
-    "explanation_en": null,
-    "explanation_zh": null,
-    "source_doc": "ACCA:tx:case:tx-ocr-needed.docx#9",
-    "source_page": null
-  },
-  {
-    "id": 6,
-    "q_num": "6",
-    "stem_en": null,
-    "stem_zh": "2. 减去 capital allowance 26,200 (购买的新设备可以用AIA全额抵扣)(1分)所得利润 29,500。 第四部分租房收入 NLINE DELIVERY-F 按要求用accrual basis",
-    "options_en": null,
-    "options_zh": null,
-    "correct_answer": null,
-    "explanation_en": null,
-    "explanation_zh": null,
-    "source_doc": "ACCA:tx:case:tx-ocr-needed.docx#11",
-    "source_page": null
-  },
-  {
-    "id": 7,
-    "q_num": "7",
-    "stem_en": null,
     "stem_zh": "1. 应收房租减应计保险的租房收入(2分) 四部分收入相加的202,498 再减去PA 但是总收入大于125,140所以PA 为0。(0 . 5分) 本题的设置为考试常见模式，知识点为常考基础知识点，建议同学做题的得分应该在10分 以上。 (b)(i)State the period during which HM Revenue and Customs (HMRC)will have to notify Robinette if they intend to carry out a compliance check in respect of her self-assessment tax return for the tax year 2023/24,and the likely reason why such a check would be made. (2 marks) 题目类型： Word 答案： (1)If HMRC intend to carry out a compliance check into Robinette's self-assessment tax return for 2023/24,then they will have to notify her by 14 August 2025(12 months after they received her tax return). (2)If Robinette is confident that her return is complete and accurate,then the likely reason for HMRC carrying out a compliance check is because the return has been selected on a random basis. 难易程度 ：易",
     "options_en": null,
     "options_zh": null,
@@ -91,8 +52,8 @@
     "source_page": null
   },
   {
-    "id": 8,
-    "q_num": "8",
+    "id": 5,
+    "q_num": "5",
     "stem_en": null,
     "stem_zh": "2. 一般情况下HMRC 是随机抽查，除非发现有明显的错误。(1分) (ii)Advise Robinette as to how long she must retain the records used in preparing her self-assessment tax return for the tax year 2023/24. (1 mark) 题目类型：Word 答 案 ： Robinette was in business during 2023/24,so all of her records (both business and non-business) must be retained until five years after 31 January following the tax year,which is 31 January 2030. 难易程度：易 解 析 ： 本题考察保持记录的时间，共1分。 ii) 如纳税人是个体经营户，合伙人或有出租业务，记录必须保存到税务年度后的第一个1 月31日加5年，即2030.1.31(1分) 2019-S/D-Q33 本题核心知识点： 1、企业所得税的计算 2、税务折旧在企税中的运用 3、企业租赁收入和资本利得的计算 You are a trainee Chartered Certified Accountant dealing with the tax affairs of Maison Ltd. Your assistant has prepared a partly completed draft corporation tax computation for the year ended 31 March 2024.All of your assistant's workings for the figures provided are correct,but there are four uncompleted sections,all related to property,which your assistant does not know how to deal with. The assistant's corporation tax computation,along with references to the uncompleted sections (with missing figures indicated by a question mark(?),is shown below: Maison Ltd-Corporation tax computation for the year ended 31 March 2024 Uncompleted section f Operating profit 892,900 Non-deductible expenditure 22,340 Deduction for lease premium 1 ? Capital allowances 2 ? Trading profit ? Property business income 3 ? Loan interest receivable 1,460 Chargeable gains 4 ? Taxable total profits ? Corporation tax ? Uncompleted section 1-Deduction for lease premium Your assistant has identified that on 1 January 2024,Maison Ltd acquired a leasehold office building,paying a premium of f44,000 for the grant of a 12-year lease.The office building was used for business purposes by Maison Ltd throughout the period 1 January to 31March 2024. Uncompleted section 2-Capital allowances Your assistant has identified TWDV brought forward of f23,800 are available on the main pool. However,she is unsure of the amount of capital allowances and structure and buildings allowance which are available in respect of the £140,000 spent by Maison Ltd during November 2023 constructing an extension which is adjacent to the company's existing freehold office building. The extension is used by the company's employees as a staff room in December 2023. The Equipment for proceeds of f6,000 on which the 130%super deduction had been claimed (the sale proceeds are less than the original cost). Uncompleted section 3-Property business income On 1 July 2023,Maison Ltd purchased a freehold warehouse.The warehouse is currently surplus to requirements,so it was let out from 1 November 2023.However,the warehouse was purchased in a dilapidated state and could not be let until repair work was carried out during August 2023. This fact was represented by a reduced purchase price.Your assistant has listed any income and expenditure that is potentially relevant: Date received/(paid) f July 2023 Insurance for the period to 31 March 2024 (1,035) August 2023 Initial repairs (17,680) 28 September 2023 Advertising for tenants (780) 1 November 2023 Security deposit oftwo months'rent 12,200 1 November 2023 Rent for the quarter ended 31 January 2024 18,300 1 February 2024 Rent for the quarter ended 30 April 2024 18,300 Uncompleted section 4-Chargeable gains Maison Ltd disposed of two investment properties during August 2023,both resulting in gains. Your assistant has correctly calculated the gains,but is unsure of the amount of indexation allowance available.The assistant's workings are as follows: Date First property Second property f f Disposal proceeds August 2023 237,000 143,000 Cost April 2011 (101,000) (117,000) Enhancement expenditure May 2021 (26,200) 0 Gain 109,800 26,000 Indexation factors are: April 2011 to December 2017 0.315 April 2011 to August 2023 0.344 May 2021 to August 2023 0.012 No rollover relief claim is possible in respect ofthese gains. Required Prepare a completed version of Maison Ltd’s corporation tax computation for the year ended 31March 2024 after dealing with the sections uncompleted by your assistant . Notes: 1.Your computation should commence with the operating profit figure of £892,900,and you should indicate by the use of zero(0)any items which are not included in your calculation. 2.In calculating the operating profit figure of £892,900,no deduction has been made for the lease premium (uncompleted section 1)or any capital allowances(uncompleted section 2).It also does not include any income or expenditure in relation to property business income (uncompleted section 3)or any chargeable gains in relation to the disposal of the two investment properties (uncompleted section 4). (15 marks) 题目类型：excel 答案： Maison Ltd-Corporation tax computation for the year ended 31March 2024 f Operating profit 892,900 Non-deductible expenditure 22,340 Deduction for lease premium(working 1) (715) Capital allowances(working 2) 316 Trading profit 914,84 Property business income(working 3) 28,685 Loan interest receivable 1,460 Chargeable gains (working 4) 77,985 Taxable total profits 1,022,97 Corporation tax(at 25%) 255,743 Working 1-Deduction for lease premium f Premium paid 44,000 Less:44,000×2%×(12-1) (9,680) Amount assessed on the landlord 34,320 Amount assessed on the Maison Ltd as Deduction 34,320/12×3/12 715 Working 2-Capital allowances f BC on assets relating to 130%FYA:sales proceeds (6,000) WDA23,800*18% 4,284 SBA(3%×140,000×4/12) 1,400 Total allowances (316) Working 3-Property business income f Rent receivable(18,300+(18,300×2/3)) 30,500 Security deposit 0 Insurance (1,035) Initial repairs 0 Advertising (780) Property business income 28,685 Working 4-Chargeable gains f First property Gain 109,800 Less:Indexation allowance(101,000×0.315) (31,815) Less:indexation allowance for enhancement 0 Chargeable gain 77,985 ONLINE DELIVERY-PLATINUM Second property Gain 26,000 Less:Indexation allowance Cost(117,000×0.315) (26,000) Chargeable gain 0 难易程度： 中",
     "options_en": null,
@@ -104,8 +65,8 @@
     "source_page": null
   },
   {
-    "id": 9,
-    "q_num": "9",
+    "id": 6,
+    "q_num": "6",
     "stem_en": null,
     "stem_zh": "1. Under the additional director's remuneration and personal pension contribution alternative,you are expected to produce full income tax and employee class 1 NIC computations.",
     "options_en": null,
@@ -117,21 +78,8 @@
     "source_page": null
   },
   {
-    "id": 10,
-    "q_num": "10",
-    "stem_en": null,
-    "stem_zh": "2. If applicable,you should state if any of the four tax and NIC figures already calculated remain unchanged.",
-    "options_en": null,
-    "options_zh": null,
-    "correct_answer": null,
-    "explanation_en": null,
-    "explanation_zh": null,
-    "source_doc": "ACCA:tx:case:tx-ocr-needed.docx#15",
-    "source_page": null
-  },
-  {
-    "id": 11,
-    "q_num": "11",
+    "id": 7,
+    "q_num": "7",
     "stem_en": null,
     "stem_zh": "3. You should assume that the rate of corporation tax remains unchanged. (10 marks) 题目类型：Excel 答案： 1.Company pension scheme (1)Kioni's income tax liability will contribution will be an exempt benefit. remain unchanged at f32,145 because the pension (2)The class 1 national insurance contributions(NICs)for both Kioni and Nikio Ltd will also remain unchanged at f4,192 and f5,299 respectively. (3)Nikio Ltd's revised trading profit will bef80,000(100,000-20,000),and corporation tax liability will be f17,450(80,000×25%-(250,000-80,000)×3/200). 2.Personal pension contribution (1)Kioni's revised income tax liability will be f36,145: f Director's remuneration(47,500+20,000) 67,500 Dividend income 68,000 135,500 Personal allowance(working) (4,820) Taxable income 130,680 Income tax f (37,700+20,000)×20% 11,540 4,980(67,500-4,820-37,700-20,000)×40% 1,992 1,000×0% 0 67,000(68,000-1,000)×33.75% 22,613 Income tax liability 36,145 Working-Personal allowance 12,570 Reduction((135,500-20,000-100,000)/2) (7,750) Reduced personal allowance 4,820 (2)Kioni's revised employee class 1 NICs willbe f4,869 f (50,270-12,570)×12% 4,524 Nikio Ltd's revised corporation tax liability will be f15,314. (revised trading profit=100,000-20,000-8,059=71,941 revised corporation tax liability=71,941×25%-(250,000-71,941)×3/200). (67,500-50,270)×2% 345 Class 1 NICs 4,869 Nikio Ltd's revised employer's class 1 NICs will be f8,059. ((67,500-9,100)×13.8%). 难易程度：难 解 析： 本题考察节税，即税务筹划内容，包括个人所得税，NIC, 养老保险以及企业所得税的计算， 共10分。本题属于综合题型，养老金f20,000 的投入有公司投入和员工自己投入两种方式， 本题需要考虑两种不同方案下交税的情况，第一种方案公司给员工投入职业养老金。第二种 方案员工自己投入个人养老金，公司额外发放f20,000 给员工当作一笔工资remuneration。 因此需要计算出两种方案下相关应缴税款金额，再进行比较。",
     "options_en": null,
@@ -143,8 +91,8 @@
     "source_page": null
   },
   {
-    "id": 12,
-    "q_num": "12",
+    "id": 8,
+    "q_num": "8",
     "stem_en": null,
     "stem_zh": "1. 第一种方案，公司给员工投入养老金。 雇主给员工投入的职业养老金对于员工来说是免税福利，所以员工的个人所得税不变。 (0.5分) 员工和雇主需要缴纳的class 1 NIC不受影响。 (0.5分) 雇主给员工投入的职业养老金可以抵减公司的经营收入，所以£20,000可以抵减 tax adjusted trading profit,从而影响企业所得税的计算。 (0.5分)",
     "options_en": null,
@@ -156,8 +104,8 @@
     "source_page": null
   },
   {
-    "id": 13,
-    "q_num": "13",
+    "id": 9,
+    "q_num": "9",
     "stem_en": null,
     "stem_zh": "2. 第二种方案这笔养老金员工需要自己支付 personal pension contribution, 公 司 发放remuneration f20,000。 (1)员工总共的非储蓄收入变为47,500+20,000。(0.5分) (2)员工总共的股息收入是f68,000,题中已知条件。(0.5分) ( 3 ) 题 中 存 在 gross personal pension contribution, 会 影 响 adjusted net income 的计算，进而影响PA 的计算，以及basic rate limit=37,700+20,000=57,700 和 higher rate limit=125,140+20,000=145,140 。(2分 ) (4)计算个人所得税，员工有£67,500的NSI,, 扣 减PA 后应税的NSI 有 67,500-4,820 需要对应non saving income的税率.其中£57,700 对20%的税率， 剩余的部分对应40%的税率。(各0.5分，共1.5分)。 (5)计算个人所得税，员工有f68,000 的股息收入，其中1,000的部分免税， 剩余的部分对应33.75%的税率。(各0.5分，共1分)。 (6)公司发放f20,000 的 remuneration 导致employee Class 1NIC 发生变化。 (1.5分) (7)公司发放f20,000 的 remuneration 导致employer Class 1 NIC 发生变化。 (0.5分) (8)公司给员工发放的remuneration 以及缴纳的employer Class 1 NIC 可 以抵减公司的经营收入，从而影响企业所得税的计算。 ( 1 分 ) 本题的设置为考试中偏难的考题，知识点为基础知识点，但是考法灵活，需要同学们将知识 点融会贯通，建议同学做题的得分在6分左右。 2020-M/J-Q32 本题核心知识点：",
     "options_en": null,
@@ -169,8 +117,8 @@
     "source_page": null
   },
   {
-    "id": 14,
-    "q_num": "14",
+    "id": 10,
+    "q_num": "10",
     "stem_en": null,
     "stem_zh": "2. 考察PAYE 系统中，雇主需要为员工准备的P45. You should assume that today's date is 15 February 2023. Jason is currently employed by Initial plc as a sales manager,but he is considering resigning on 14 March 2023 and taking up an offer of employment with Subsequent plc which would commence on 15 March 2023.If employed by Subsequent plc,Jason will receive a higher base salary and more benefits compared to if he remains employed by Initial plc.However,Jason wants to know how much more income tax he will have to pay for the tax year 2023/24 should he take up the new offer ofemployment.The following information is available for the tax year 2023/24: Initial plc (1)If Jason remains employed by Initial plc,rather than taking up the offer of employment with Subsequent plc,he will be paid a gross annual salary of f180,000 during the tax year 2023/24. (2)Jason will contribute a total of £8,000 into Initial plc's HM revenue and Customs(HMRC) registered occupational pension scheme. (3)In addition to his salary,Jason expects to be paid the following bonus by Initial plc: Amount Date of payment Date of entitlement In respect of the year ended f 22,000 30 April 2023 15 March 2023 31 January 2023 24,000 30 April 2024 15 March 2024 31 January 2024 (4)Throughout the tax year 2023/24,Jason will be provided with free meals in Initial plc's staff canteen.The total cost of these meals to the company will be £1,440.Free meals in the staff canteen are available to all of Initial plc's employees. Subsequent plc (1)If Jason takes up the offer of employment with Subsequent plc,then he willbe paid a gross salary of f205,000 during the tax year 2023/24. (2)Subsequent plc willcontribute a total of f9,000 into the company's HM revenue and Customs (HMRC)registered occupational pension scheme on Jason's behalf. (3)Throughout the tax year 2023/24,Jason will be provided with a petrol car which has a list price of £62,500 and an official CO2 emission rate of 56 grams per kilometer.Jason will not be provided with any fuel for private journeys. (4)For the period 6 April to 31 July 2023,Subsequent plc will provide Jason with living accommodation in a property purchased by the company in 2013 for £140,000.The property willbe valued at £285,000 on 6 April 2023.Improvements costing f17,000 were made to the property during August 2020.The annual value of the property is f4,800. (5)On 1 August 2023,Subsequent plc will provide Jason with an interest free loan of £150,000 to help him purchase a main residence.No loan repayment willbe made before 5 April 2024. Where possible,Subsequent plc will payroll the taxable benefits provided to Jason so that the related income tax liability willbe collected under PAYE along with the tax on his salary. Jason will not have any other income for the tax year 2023/24. (2020M/JQ32) Required: (a)State one advantage and one disadvantage for an employee if their employer payrolls the taxable benefits provided to the employee. (2 marks) (b)Calculate how much more income tax Jason will have to pay for the tax year 2023/24 if he takes up the offer of employment with Subsequent plc rather than remaining employed by Initial plc. Notes: 1.Your answer should be based on separate calculation of Jason's employment income for the tax year 2023/24 under each employment alternative. 2.You should indicate by the use ofzero(0)any items which are not taxable or deductible. 3.You are not required to calculate Jason's national insurance contributions(NICs). (11 marks) (c)If Jason decides to resign as an employee of Initial plc on 14 March 2023,briefly explain the main content and purpose of PAYE form P45. (2 marks) (15marks) Required: (a)State one advantage and one disadvantage for an employee if their employer payrolls the taxable benefits provided to the employee. (2marks) 题目类型：word 答案： Advantage: There is no need to declare payroll benefits on an employee's self-assessment tax return. Disadvantage: Tax willgenerally be due earlier under PAYE than if tax was collected under self-assessment. 难易程度：中",
     "options_en": null,
@@ -182,8 +130,8 @@
     "source_page": null
   },
   {
-    "id": 15,
-    "q_num": "15",
+    "id": 11,
+    "q_num": "11",
     "stem_en": null,
     "stem_zh": "1. Your computation should commence with the operating loss figure of f93,820,and should indicate by the use of zero(0)any items which do not require adjustment 2.You should assume that the company claims the maximum available capital allowances. 题目类型：excel 答案： ONLINE DELIVERY-PLATINUMMooncake Ltd-tax adjusted trading loss for the year ended 31 March 2024 ONLINE DELIVERY-PLATINUM f Operating loss (93,820) Depreciation 7,230 Lease of office equipment 0 Lease of car(3,400×15%) 510 Entertaining staff 0 Entertaining overseas customers 8,720 Qualifying charitable donations 1,600 Capital allowance(working) 6,436 Trading loss (69,324) Working-capital allowances Main pool Allowances f f TWDV brought forward 43,200 Proceeds -Car [1] (8,100) -Car [2] (5,300) 29,800 Balance charge-Delivery van (11,800) WDA-18% (5,364) 5,364 TWDV carried forward 24,436 Total allowances (6,436) 难易程度：中",
     "options_en": null,
@@ -195,8 +143,8 @@
     "source_page": null
   },
   {
-    "id": 16,
-    "q_num": "16",
+    "id": 12,
+    "q_num": "12",
     "stem_en": null,
     "stem_zh": "3. 个税的计算 This scenario relates to four requirements. Amanda's taxable income for the tax year 2023/24 is: f Employment income 58,270 Property income 2,000 60,270 Deductions for loss relief and qualifying interest payments (3,200) 57,070 Personal allowance (12,570) Taxable income 44,500 Living accommodation For the period 1 November 2023 to 5 April 2024 Amanda's employer provided her with living accommodation. Her employer had purchased the property on 10 February 2021 for £174,000 and it was valued at £192,000 on 6 April 2023 and at £194,000 on 1 November 2023.Improvements costing £8,000 were made to the property during May 2022.The annual value of the property is f6,300. The property was furnished by Amanda's employer during August 2023 at a cost f12,400. The taxable benefit in respect of the living accommodation is included in the employment income figure of £58,270. Partnership loss Amanda has been in partnership with Benny and Cotton since 1 April 2010.For the year ended 31 March 2024,the partnership made a tax-adjusted trading loss of £10,800. Until31 May 2022,profits and losses were shared equally.Since 1 June 2022,profits and losses have been shared 15%to Amanda,60%to Benny and 25%to Cotton. Amanda has claimed her share of the partnership's loss against her total income for the tax year 2023/24 and this is included in the deductions for loss relief and interest payments figure f3,200. Gift aid donations During the tax year 2023/24,Amanda made charitable gift aid donations totaling f640(net). PAYE For each the twelve months of the tax year 2023/24,Amanda's employer deducted f900 ofincome tax from Amanda's monthly earnings under PAYE. Child benefit Amanda received child benefit f2,547 during the tax year 2023/24. Amanda's husband For the tax year 2023/24,Amanda's husband had a taxable income of f21,000. (2021 S/DQ32) Requirements: (a)Calculate Amanda's taxable benefit for the tax year 2023/24 in respect of the living accommodation provided by her employer. (5marks) (b)Calculate Amanda's partnership loss relief claim for the tax year 2023/24. (2marks) (c)Calculate the income tax and child benefit income tax charge payable by,or repayable to, Amanda for the tax year 2023/24.(5 marks) (d)Calculate the overall income tax saving and reduction in child benefit income tax charge for the tax year 2023/24 if the property income of £2,000 had been received by Amanda's husband rather than by Amanda.(3marks) (15 marks) (a)Calculate Amanda's taxable benefit for the tax year 2023/24 in respect of the living accommodation provided by her employer. (5marks) 题目类型：excel 答案： Amanda's taxable benefit on living accommodation f f General charge Annual value 6,300 Additional charge Cost 10 February 2020 174,000 Improvements 8,000 182,000 Limit (75,000) 107,000 ×2.25% 2,408 8,708 Accommodation benefit(Time apportions ×5/12) 3,628 Furniture ×5/12 12,400×20%×5/12 1,033 难易程度 ：易 解 析 ： 本题考查Accommodation 福利及use of asset 福利的计算，共5分。 1)Accommodation benefit 的第一部分 general charge 用 annual value,(1分 ) 因为成本大于75,000,所以需要计算additional charge,在计算时，购买房屋与第一次给员工 使用的时长没有超过6年，所以直接使用房子的购买成本。(1分) 2)Improvement cost 发生在本税务年度之前所以需要加入到成本的计算。(0.5分) 3)Additional charge用(174,000+8,000-75,000)×2.25%的计算。(0.5分) 没有全年提供Accommodation 故在最后计算时需要乘时间比例5/12。(0.5分) 4)使用家具会产生use of asset福利，需要按20%的市场价值计算(1分),没有全年提供 故在最后计算时需要乘时间比例。(0.5分) 本题的设置为考试常见模式，知识点为常考基础知识点，建议同学做题的得分应该在4分以 上 。 (b)Calculate Amanda's partnership loss relief claim for the tax year 2023/24. (2marks) 题目类型：excel 答 案 ： Amanda-Share of partnership loss f 1 April 2023 to 31 May 2023 10,800×2/12×1/3 600 1 June 2023 to 31 March 2024 10,800×10/12×15% 1,350 1,950 难易程度 ：易",
     "options_en": null,
@@ -208,8 +156,8 @@
     "source_page": null
   },
   {
-    "id": 17,
-    "q_num": "17",
+    "id": 13,
+    "q_num": "13",
     "stem_en": null,
     "stem_zh": "2. 税务折旧的资产判断以及计算 3.property income 的计算 Mixture Ltd is a large company and therefore has to make quarterly instalment payments in respect ofits corporation tax liability. For the year ended 31 March 2024,Mixture Ltd has taxable total profits of f470,000 and dividends from a non-group company of f45,000.The company had the same level of profits for the year ended 31March 2023. Mixture Ltd has had two 51%group companies for many years. Capital expenditure Mixture Ltd incurred the following capital expenditure during the year ended 31 March 2024: (1)A new freehold office building was purchased.The purchase price included £22,200 for a staircase linking the two floors of the building,f16,400 for sprinkler equipment and the fire alarm system f18,700 for doors and windows and £27,100 for the ventilation system. (2)Machinery was purchased for f76,600.At the same time,a further f9,200 was spent on building alterations which were necessary for the installation ofthis machinery. (3)Movable partition walls were purchased for f33,800.Mixture Ltd uses these to divide up its open plan offices,and the partition walls are moved around on a regular basis. (4)A new decorative wall was constructed around the boundary of Mixture Ltd's business premises at a cost of f44,700 Property business income Mixture Ltd lets out a warehouse which is surplus to requirements,although the property was empty between 1 September 2023 and 28 February 2024.The following income and expenditure relates to the year ended 31 March 2024 Date received/(paid) f 1 January 2023 Insurance for the year ended 31 December 2023 (1,700) 28 March 2023 Rent for the quarter ended 30 June 2023 7,800 4 July 2023 Rent for July and August 2023 5,200 5 December 2023 Advertising for tenants (900) 1 January 2024 Insurance for the year ended 31 December 2024 (1,900) 1 March 2024 Premium for the grant of a five-year lease 18,000 1 March 2024 Rent for the quarter ended 31 May 2024 8,400 Required (a)(i)Explain why Mixture Ltd is classed as a large company for the year ended 31 March 2024. (2marks) (ii)Calculate Mixture Ltd's corporation tax liability for the year ended 31 March 2024,and explain when this will have been paid. Note:You should assume that Mixture Ltd's profits accrued evenly throughout the year. (3marks) (b)List the expenditure incurred by Mixture Ltd during the year ended 31 March 2024 which will have qualified as plant and machinery for capital allowance purposes. Notes: 1.Your answer should indicate by the use ofzero(0)any item of expenditure which does not qualify as plant and machinery. 2.You are not expected to calculate the capital allowances or to state the rate of capital allowance available. (4 marks) (c)Explain why a company may wish to make a short-life asset election for capital allowance purposes. (2 marks) (d)Calculate the property business income figure which will have been included in Mixture Ltd's taxable total profits of £470,000 for the year ended 31 March 2024. (4 marks) (Total=15marks) (a)(i)Explain why Mixture Ltd is classed as a large company for the year ended 31 March 2024. (2 marks) 题目类型：w ord 答 案 ： (i)Mixture Ltd is classed as a large company for the year ended 31 March 2024 because its profits of f515,000(470,000+45,000)exceed the threshold of £500,000(1,500,000/3). 难易程度：易 解 析 ： 本题考察大公司的判断方法，共2分。 由 于 augmented profit=Taxable Total Profit+Dividends from Non-51%group companies 470,000+45,000=£515,000,Limit=£1,500,000×m/12×1/n,2 家关联公司加上自己一共是 n=3 个，所以临界值=1,500,000÷3=f500,000。augmented profit=£515,000>E500,000,所 以 Mixture Ltd 为大公司。(2分) 本题的设置为考试常见模式，知识点为常考基础知识点，建议同学做题的得分应该为2分。 (ii)Calculate Mixture Ltd's corporation tax liability for the year ended 31 March 2024,and explain when this will have been paid. Note:You should assume that Mixture Ltd's profits accrued evenly throughout the year. (3marks) 题目类型：w ord 答 案 ： (ii)(1)Mixture Ltd's corporation tax liability for the year ended 31 March 2024 is £117,500 (470,000 at 25%). (2)The company will have paid this in four quarterly installments of f29,375(117,500/4). (3)The instalments will have been due on the 14th of October 2023,January 2024,April 2024 and July 2024. 难易程度： 易",
     "options_en": null,
@@ -221,8 +169,8 @@
     "source_page": null
   },
   {
-    "id": 18,
-    "q_num": "18",
+    "id": 14,
+    "q_num": "14",
     "stem_en": null,
     "stem_zh": "1) staircase 是连接两层floor 的，所以算是构筑物，不作为P&M, 写 0 。 2)sprinkler equipment and the fire alarm system属 于P&M, 需计算折旧，加上。 3)Doors and windows算是构筑物，不作为P&M, 写0。 4)ventilation system 属于integral feature 的 P&M, 需计算折旧，加上。 5)Machinery 属于最常见的P&M, 需计算折旧，加上。 6)Building alterations 属于machinery 相关的资本性支出，cost 的一部分，需计算折旧， 加上。 7)Movable partition walls 不是真正的wall, 属于 P&M, 需计算折旧，加上。 8)Decorative wall算是构筑物，不作为P&M, 写 0 。 以上，每点0.5分。 本题的设置为考试常见模式，知识点为常考基础知识点，但是考法灵活，需要同学们将知识 点融会贯通，建议同学做题的得分应该在3分以上。 (c)Explain why a company may wish to make a short-life asset election for capital allowance purposes. (2marks) 题目类型：w ord 答案： (1)A short life asset election willbe beneficial when an asset is disposed of for less than its tax written down value within eight years of the accounting period in which it was purchased. (2)However,there is no benefit to a short life asset election where the 100%annual investment allowance can be claimed in respect of the asset. (3)The balancing allowance given when the asset is disposed of accelerates the allowances rather than these being given on a reducing balance basis. 难易程度：难",
     "options_en": null,
@@ -234,8 +182,8 @@
     "source_page": null
   },
   {
-    "id": 19,
-    "q_num": "19",
+    "id": 15,
+    "q_num": "15",
     "stem_en": null,
     "stem_zh": "4) Insurance 根据租赁期2023.4.1-2024.3.31找相应的费用，虽然其中有6个月没有租 客入住，但相关的insurance还是发生了，可以扣除。所以是 1,700×9÷12+1,900×3÷12=f1,750 。(1 分 ) 本题的设置为考试常见模式，知识点为常考基础知识点，建议同学做题的得分应该在3分以 上 。 2022-S/D-Q31 本题核心知识点：",
     "options_en": null,
@@ -247,21 +195,8 @@
     "source_page": null
   },
   {
-    "id": 20,
-    "q_num": "20",
-    "stem_en": null,
-    "stem_zh": "3. 个人所得税-mileage allowance",
-    "options_en": null,
-    "options_zh": null,
-    "correct_answer": null,
-    "explanation_en": null,
-    "explanation_zh": null,
-    "source_doc": "ACCA:tx:case:tx-ocr-needed.docx#29",
-    "source_page": null
-  },
-  {
-    "id": 21,
-    "q_num": "21",
+    "id": 16,
+    "q_num": "16",
     "stem_en": null,
     "stem_zh": "4. 国民保险-National Insurance contribution class 1 This scenario relates to three requirements. You should assume that today's date is 28 March 2023. Alicia is employed by Tusk Ltd,and is currently paid a gross annual salary of f60,000.She is therefore a higher rate taxpayer.Alicia does not have any other income. Tusk Ltd has offered Alicia the choice of either being provided with a company car or alternatively receiving a salary increase and also being paid a mileage allowance for using her private car for business journeys. Regardless of which alternative is chosen,Alicia's new remuneration package will take effect from 6April 2023 and will apply throughout the tax year 2023-24. Company car alternative The car will be petrol-powered with a list price of f22,400.It will have an official CO₂emissions rate of55 grams per kilometre. Tusk Ltd will not provide Alicia with any fuel for private journeys. Under this alternative,Alicia will not run a private car. Salary and mileage allowance alternative Alicia will receive an annual gross salary increase off10,000. Tusk Ltd will also pay Alicia a mileage allowance of 45 pence per mile when she uses her private car for business journeys.Alicia willdrive 8,000 miles in the performance of her duties for Tusk Ltd during the tax year 2023-24. Alicia's annual car running costs will be f6,200 higher if she uses her own car for both business and private journeys compared to using a company car. Required (a)Advise Alicia of the income tax and national insurance contribution implications for the tax year 2023-24 if she is provided with a company car. Note:Your answer should be supported by appropriate calculations.As Alicia is a higher rate tax payer you can use a working at the margin approach.However,a full computation approach is equally acceptable.You are not expected to consider any implications for Tusk Ltd.(3marks) 题目类型：excel 答案： a.Company car £ Marks Car benefit 22,400*16% 3,584 1 Additional income tax liability 3,584 at 40% 1,434 1 No class 1 employee implications 0 1 难易程度：中",
     "options_en": null,
@@ -273,21 +208,8 @@
     "source_page": null
   },
   {
-    "id": 22,
-    "q_num": "22",
-    "stem_en": null,
-    "stem_zh": "2. 企业计税期间accounting period",
-    "options_en": null,
-    "options_zh": null,
-    "correct_answer": null,
-    "explanation_en": null,
-    "explanation_zh": null,
-    "source_doc": "ACCA:tx:case:tx-ocr-needed.docx#32",
-    "source_page": null
-  },
-  {
-    "id": 23,
-    "q_num": "23",
+    "id": 17,
+    "q_num": "17",
     "stem_en": null,
     "stem_zh": "4. 企业经营亏损的抵减 This scenario relates to three requirements. Crumble Ltd has brought forward its accounting reference date to 31 March.Its summarised statement of profit or loss for the nine-month period ended 31 March 2024 is as follows: Note f Gross profit 261,100 Operating expenses Professional fees 1 (23,900) Repairs and renewals 2 (13,100) Qualifying charitable donation 3 (3,400) Other expenses 4 (408,500) Operating loss (187,800) Other income Property business income 5 7,960 Profit on disposal of shares 6 12,800 Finance costs Interest payable 7 (8,750) Loss before taxation (175,790) Note 1-Professional fees Professional fees of E23,900 comprise: f Accountancy fees 6,200 Legal fees in connection with varying the terms of Crumble Ltd's loan notes (see note 7) 4,600 Legal fees in connection with the issue of share capital 9,300 Legal fees in connection with the registration of trade marks 3,800 23,900 NLINE DELIVERY-PLATII NUM ONLINE DELIVERY-PLATINUM The accountancy fees of f6,200 include £2,800 in respect of the additional work arising as a result of a compliance check by HM Revenue and Customs(HMRC)into Crumble Ltd's self-assessment tax return for the year ended 30 June 2022.No additional tax was payable as a result of the compliance check. Note 2-Repairs and renewals Repairs and renewals of f13,100 comprise: f Constructing a new car park next to the company's business premises (there was previously no car park) 7,300 Repairing the wallof an office building after it was damaged by a lorry 5,800 13,100 Note 3-Qualifying charitable donation Crumble Ltd paid the qualifying charitable donation of f3,400 on 15 March 2024. Note 4-Other expenses ONLINE DELIVERY-PLATINUM Other expenses of f408,500 comprise: f Removal expenses to the company's new business premises (this was not an expansionary move) 14,400 Fine for infringing health and safety regulations 1,200 Remaining expenses-fully allowable 392,900 408,500 Note 5-Property business income Crumble Ltd lets out a warehouse which is surplus to requirements.The building was empty and available for letting from 1 July to 30 November 2023,but was let from 1 December 2023 onwards.The following income and expenditure was received or incurred during the nine-month period ended 31 March 2024: Date received/(paid) f 1 July 2023 Insurance for the year ended 30 June 2024 (840) 1 December 2023 Rent for the six months ended 31 May 2024 6,600 1 December 2023 Security deposit oftwo months'rent 2,200 7,960 Note 6-Profit on disposal of shares On 22 December 2023,Crumble Ltd sold a1%shareholding in an unconnected company for £25,200.The shareholding had been purchased for f12,400,and its indexed cost on 22 December 2023 was f13,600. Note 7-Interest payable The interest payable off8,750 is in respect of the company's loan notes which were issued on 1 January 2016 and were due for repayment on 31 December 2023.However,Crumble Ltd has varied the terms of the loan notes so that they are now repayable on 31 December 2028.At the same time,the annual rate of interest payable was reduced from 7%to 4%with effect from 1 January 2024. Interest of £8,750 was paid on 31 December 2023 in relation to the six-month period ended on that date.Interest for the six-month period ending 30 June 2024 will be £5,000. The loan notes were issued in order to finance the company's trading activities. Capital allowances No capital allowances are available for the nine-month period ended 31 March 2024. Yearended 30 June 2023 For the year ended 30 June 2023 Crumble Ltd had total profits off49,000. Required (a)Calculate Crumble Ltd's tax adjusted trading loss for the nine-month period ended 31 March 2024.(7 marks) Notes: 1.Your computation should commence with the operating loss figure of£187,800,and should also list all of the items referred to in notes 1,2,3,4 and 7,indicating by the use of zero(0)any items that do not require adjustment. 2.For this part ofthe question,the items referred to in notes 5 and 6 are not relevant. 题目类型：excel 答 案 ： (a) Crumble Ltd -Tax-adjusted trading loss for the nine-month period ended 31 March 2024 f Marks Operating loss (187,800) Accountancy fees 0 0.5 Compliance check 0 0.5 Legal fees in connection with varying the terms of loan notes 0 0.5 Legal fees in connection with the issue of share capital 9,300 0.5 Legal fees in connection with the registration of trade marks 0 0.5 Construction ofnew car park 7,300 0.5 Repairing the wall of an office building 0 0.5 Qualifying charitable donations 3,400 0.5 Removal expenses 0 0.5 Fine for infringing health and safety regulations 1,200 0.5 Remaining expenses -allowable 0 0.5 Interest payable(8,750+(5,000×3/6)) (11,250) 1.5 Trading loss (177,850) 难易程度：难 解 析 ： 本题考察经营收入金额的调节。 首先必须明确，经营活动金额的调节需要在计税期间AP(accounting period) 之 内 ，AP 参 照公司的账期period of accounts, 只要不超过12个月，AP 和公司账期保持一致。所以本题 AP=2023 年7月1日至2024年3月31日，共9个月。 本题是经营亏损，所以计算的起点£187,800应为负数。 会计费用可减，无需调整； 配合HMRC 进行合规检查并且没有发现违规，费用可减，无需调整； 法律费用-更改loan notes 的期限 (loan notes 是公司债券的一种形式),而note 7 表明该债券 的目的是支持经营活动，所以可减，无需调整； 法律费用-发行股票，不可减，需加回£9,300; 法律费用-注册商标可减，无需调整； 建造停车场属于capital性质，在trading profit中不可减，所以加回£7,300; 修理费用可减，无需调整； QCD 不可放在trading profit中，需加回£3,400; IVERY-PLATINUM 迁移办公场所并且没有扩建项目，所以费用可减，无需调整； 由于违背健康与安全法规产生的罚款不可减，所以加回f£1,200; 应付利息，由于该债券的目的是支持经营活动，所以在trading 中可减，而核算的起点 (£187,800)中没有包括该利息所以需要减去。金额包括2023.7.1至2023.12.31的部分£8,750, 以及2024.1.1至2024.3.31的部分f5,000×3/6, 总额£8,750+(E5,000×3/6)=£11,250。 调整过后的经营亏损£177,850。 Required (b)Before taking account of any possible loss relief claim,calculate Crumble Ltd's taxable total profits for the nine-month period ended 31March 2024. Note:For this part of the question,only the items referred to in notes 3,5 and 6 are relevant.(4 marks) 题目类型：e xcel 答 案 ： (b)Crumble Ltd-Taxable total profits for the nine-month period ended 31March 2024 f Marks Property business income Rent receivable(6,600×4/6) 4,400 1 Security deposit 0 0.5 Insurance(840×9/12) Chargeable gain(25,200-13,600) (630) 3,770 11,600 1 1 Total profits less:Qualifying charitable donations Taxable total profits 15,370 (3,400) 11,970 0.5 难易程度：中 解 析 ： 本题考察应税总收入的核算。 由于经营是亏损，所以trading profit 为零。 租赁房产收入，公司需按照accrual basis来核算，从2023.12.1开始出租，到AP 结束2024.3.31 一共4个月，应收租金=£6,600×4/6=£4,400;保险费£840缴纳的是2023.7.1至2024.6.30一 年的，但落在AP 中只有9个月，所以£840×9/12=£630。 Deposit是押金，不可计入收入。 资本利得，卖掉股票，公司的资本利得需要将通货膨胀计入成本 (indexation allowance), 题目没有提供股票购买日期，无法判断购买日期是否在2017.12.31之前，但由于提供了 indexed cost,所以认为这个成本是已经考虑过indexation allowance的成本，因此资本利得三 f25,200-£13,600=f11,600。 最后减去QCD, 可得应税总收入=£11,970 Required (c)(i)State by what date Crumble Ltd must make a claim ifit wishes to set its trading loss for the nine-month period ended 31 March 2024(as calculated in part(a))against the company's total profits for the year ended 30 June 2023.(1 mark) 题目类型：word 答 案 ： (i)Claim A claim must be made by31 March 2026(within two years of the end of the period ended 31 March 2024,the loss making period). 难易程度：易 解 析 ： 本题考核公司loss relief的时间期限。因为亏损产生的账期结束日是2024.3.31,向税务局 申报loss relief要在该日期两年之内完成，所以是2026.3.31。 Required (c)(ii)Calculate the amount of corporation tax which will be repaid by HM Revenue and Customs(HMRC)if Crumble Ltd makes this loss relief claim against the company's total profits for the year ended 30 June 2023. Note:You should take into account any necessary loss relief claim against the total profits for the nine-month period ended 31March 2024(as calculated in part (b)). (3 marks) 题目类型：word 答 案 ： (ii)Repayment of corporation tax The loss carried back is 177,850-15,370=£162,480.(1.5marks) This is more than Crumble Ltd's total profits off49,000 for the year ended 30 June 2023,so the corporation tax repayable is f49,000×19%=f9,310.(1.5 marks) 难易程度： 中 解 析 ： 本题考察经营亏损的抵减方式。 从问题上看，公司要向HMRC 申报抵减2023.6.30这个账期的利润，所以是carry back relief。 根据规则，在计税期间AP 产生的亏损，必须在抵减当年的total profit before QCD之后， 才可以向计税期间开始之前的12月带。所以，首先抵减当年的之后亏损还剩177,850-15,370 =f162,480, 而 y/e 2023.6.30的 total profits只 有 f49,000, 因此最多只能抵减 f49,000, 该 金额小于lower limit f50,000, 所以按照19%的税率，同时23年3月31日之前的税率位固 定的19%,因此可退回的税金为f49,000×19%=£9,310。 2023-M/J-Q31 本题核心知识点：",
     "options_en": null,
@@ -299,8 +221,8 @@
     "source_page": null
   },
   {
-    "id": 24,
-    "q_num": "24",
+    "id": 18,
+    "q_num": "18",
     "stem_en": null,
     "stem_zh": "5. 国民保险-National Insurance contribution class 1 You should assume that today's date is 25 March 2024 and the tax rates and allowances for the tax year 2023-24 apply throughout. Kazuo is currently employed at a gross annual salary of f£200,000.Kazuo will continue to earn the same salary until he retires on 5 April 2027,at which point his income willreduce to gross annual pension income of f55,000.This means that Kazuo is currently an additional rate taxpayer,but will only be a higher rate taxpayer from when he retires on 5 April 2027. Kazuo will undertake f40,000 ofwork on a freelance basis during the year ended 5 April 2024.To carry out this work,Kazuo will form a new limited company,Zaoku Ltd,of which he will be an employee.This freelance work will not involve any expenditure and will last for just one year, from 6 April 2023 to 5 April 2024.Zaoku Ltd will prepare accounts for the year ended 5 April 2024. Kazuo is looking at three alternative ways of extracting the profits of Zaoku Ltd: Alternative 1 After allowing for corporation tax,Kazuo will withdraw the entire net of tax profits as dividends during the tax year 2023-24. Alternative 2 Zaoku Ltd will pay Kazuo gross directors'remuneration of £8,000 and Zaoku Ltd will make a pension contribution of f32,000 into a company occupational pension scheme on Kazuo's behalf during the tax year 2023-24.Kazuo has sufficient unused pension annual allowances so that a pension contribution of this amount will not result in an annual allowance charge. Alternative 3 Kazuo will not withdraw any amounts during the tax year 2023-24.Instead,the net of tax profits will be left undrawn in Zaoku Ltd until the tax year 2027-28 when Kazuo has retired.He will then withdraw the entire net of tax amount as dividends in the tax year 2027-28. Kazuo does not have any other income. Assuming that Kazuo withdraws the entire net of tax profits of Zaoku Ltd as dividends (alternative 1)during the tax year 2023-24: (a)(i)Calculate the corporation tax liability of Zaoku Ltd for the year ended 5 April 2024; and (1mark) (ii)Calculate the income tax payable by Kazuo in respect of his dividend income. (2marks) 题目类型：word 答案 ： Marks (i)Zaoku Ltd's corporation tax liability for the year ended 5 April 2024 will be f7,600 (40,000 at 19%) 1 (ii)Kazuo will receive dividend income of f32,400(40,000-7,600)and the income tax payable on this amount will be £12,356((32,400-1,000)at 39.35%). 2 难易程度：易 解 析 ： 本题考察企税的计算以及分红收入纳税的计算。 该问按照要求根据alternative 1也就是Kazuo 将全部利润扣完企业所得税后作为股息发放至 个人账户去计算。 第一小问，企业所得税按所得利润乘以税率计算。公司的税率根据 Augment profit(Taxable Total Profit+Dividends from non-51%group companies) 来判定，由于公司没有非关联公司， 所以根据taxable total profit 即40,000进行判定，40,000小于lower limit 50,000, 因此今年的 税率为19%, corporation tax liability =f40,000*19%=f7,600。 第二小问，根据第一小问算出来企税为完税后利润为f7,600, 因此税后利润为f40,000- f7,600=£32,400 。 题干又写道Kazuo 在2023-24年度是additional rate taxpayer,因此dividend income 查表需使用最高税率39.35%。此处注意税务局针对dividend income对所有纳税人都 有£1,000的免税额，因此该笔股利的 tax payable=(f32,400-£1,000)*39.35%=£12,356。 Assuming that Zaoku Ltd will pay Kazuo gross directors'remuneration of £8,000 and Zaoku Ltd will make a pension contribution of £32,000 into a company occupational pension scheme on Kazuo's behalf(alternative 2)during the tax year 2023-24: (b)(i)Explain the corporation tax,income tax and national insurance contributions (NICs) implications of alternative 2;and (3marks) (ii)Calculate the tax saving of alternative 2 compared with alternative 1(entirely as dividends). (1mark) Notes: 1.You are not expected to explain the tax implications of ultimately receiving a pension from the pension scheme. 2.Zaoku Ltd is not entitled to the NICs annual employment allowance. 题目类型：word 答案： Marks i) Paying the director's remuneration and making the pension contribution will reduce Zaoku Ltd's taxable total profits(and corporation tax liability)to f0(40,000-8,000- 32,000). 1 Kazuo will pay income tax of just f3,600(8,000 at 45%)because the pension contribution will be an exempt benefit. 1 There will be no class 1 NICs because the earnings of £8,000 are below the NIC lower threshold. 1 ii) The overall tax saving compared to alternative 1 will be f16,356(7,600+12,356- 3,600). 1 难易程度：中 DELIVE",
     "options_en": null,
@@ -312,8 +234,8 @@
     "source_page": null
   },
   {
-    "id": 25,
-    "q_num": "25",
+    "id": 19,
+    "q_num": "19",
     "stem_en": null,
     "stem_zh": "4. 个人所得税-结业年度税务折旧的计算 This scenario relates to three requirements. On 31 March 2024,Hannah ceased self-employment.On 1 January 2024,she commenced employment with Lomly Ltd. The following information is available in respect of the tax year 2023-24: Self-employment Hannah's tax adjusted trading loss for the period ended 31 March 2024 was f66,000.This figure is before taking account of capital allowances.Prior to this final trading period,Hannah had always prepared accounts to 31 March each year. On 1 April 2023,the tax written down values of Hannah's plant and machinery were as follows: f£ Main pool 25,000 Car 7,700 The car has a CO2 emissions rate of 105 grams per kilometre and is used by Hannah 40%for business mileage. On 15May 2023,Hannah bought office equipment for f4,500. On 31 March 2024,all of the items of plant and machinery were disposed of for the following proceeds: Proceeds f£ Main pool 29,000 Car 10,000 None of the items were sold for more than their original cost. Hannah's recent tax adjusted trading profits have been: f Year ended 31 March 2021 45,000 Year ended 31 March 2022 82,000 Year ended 31 March 2023 40,000 These figures are after taking account of capital allowances. Employment On 1 January 2024,Hannah commenced employment with Lomly Ltd earning a gross annual salary off125,000.Lomly Ltd also provides Hannah with the following benefits: Living accommodation On 1 January 2024,Hannah moved into a property owned by Lomly Ltd which does not qualify as job-related accommodation.The property has an annual value of £16,000.The property was purchased by Lomly Ltd on 1 September 2020 for f250,000 and its market value on 1 January 2024 was £280,000. Beneficialloan Lomly Ltd provided Hannah with an interest-free loan of f60,000 on 1 January 2024.She has repaid f2,500 at the end of each month starting on 31 January 2024.The taxable benefit in respect of this loan is calculated using the average method. Travel and expenses During the period 1 January to 5 April 2024,Hannah used her private car to travel 6,000 business miles.She was reimbursed by Lomly Ltd at a rate of 50 pence per mile. Hannah also paid f450 out of her own bank account for hotel rooms which she stayed in during business trips in these three months.Lomly Ltd reimbursed her for these expenses on 20 March 2024. Requirements (a)Calculate the trading income assessment of Hannah for the tax year 2023-24 if she had claimed terminalloss relief. (6 marks) 题目类型：excel ONLINE DELIVERY-PL 答 案 ： Trading income for the tax year 2023-24: f Marks Trading loss for the year ended 31 March 2024 -66,000 0.5 Balancing charge(working) 420 0.5 Revised Trading loss for the year ended 31 March 2024 -65,580 Terminal loss of last 12 months 65,580 Less trading profit of 22/23 -40,000 0.5 Less trading profit of 21/22 -25,580 0.5 Trading income assessment for 23/34 0 0.5 Working-Capital allowances Main pool Car with Private use Allowances Marks f f f TWDV b/fat 1April 2023 25,000 7,700 0.5 Addition 4,500 0.5 Disposals (29,000) (10,000) 1 500 (2,300) Balancing allowance (500) 500 0.5 Balancing charge 2,300 (920) 1 TWDV c/f 0 0 Overall balancing charge (420) 难易程度：中",
     "options_en": null,
@@ -325,21 +247,8 @@
     "source_page": null
   },
   {
-    "id": 26,
-    "q_num": "26",
-    "stem_en": null,
-    "stem_zh": "3. 企业所得税-Loan relationship rules的处理",
-    "options_en": null,
-    "options_zh": null,
-    "correct_answer": null,
-    "explanation_en": null,
-    "explanation_zh": null,
-    "source_doc": "ACCA:tx:case:tx-ocr-needed.docx#46",
-    "source_page": null
-  },
-  {
-    "id": 27,
-    "q_num": "27",
+    "id": 20,
+    "q_num": "20",
     "stem_en": null,
     "stem_zh": "5. 企业所得税计算 This scenario relates to one requirement. Venus Ltd's summarised statement of profit or loss for the year ended 31 March 2024 is as follows: Note f Gross profit 521,750 Operating expenses Depreciation (32,046) Amortisation of leasehold property 1 (4,000) Other expenses 2 (285,012) Operating profit 200,692 Income from investments Bank interest received 3 18,050 Dividends received 4 34,000 Profit on disposal of shares 5 70,300 Profit before taxation 323,042 ONLINE DELIVERY-PLATINI Note1-Leasehold property On 1 October 2023,Venus Ltd acquired a leasehold office building for use by the business,paying a premium of f96,000 for the grant of a 12-year lease. Note 2-Other expenses Other expenses include the following: f Entertaining UK customers 3,600 Gifts to customers(food costing f30 each) 2,730 Qualifying charitable donations 1,410 Note 3-Bank interest received The bank interest received during the year ended 31 March 2024 of £18,050 relates to deposits held for non-trading purposes.In addition,on 10 April 2024,£350 ofnon-trading loan interest was received in relation to the year ended 31 March 2024. Note 4-Dividends received During the year ended 31 March 2024,Venus Ltd received dividends of 34,000 from Mars Ltd, an 80%UK subsidiary company. Note 5-Profit on disposal of shares The profit on disposal of shares is in respect of a 2%shareholding that was sold on 18 January 2024.The disposal resulted in a chargeable gain of £62,880 after taking account of the indexation allowance. Note 6-Plant and machinery On1 April 2023,the tax written down values of plant and machinery were as follows: f Main pool 8,400 Special rate pool 12,740 The following purchases took place during the year ended 31 March 2024: Date Description CO2 emissions f 10 August 2023 Car(1) 115 22,930 16November 2023 New delivery van 120 20,800 18 November 2023 Equipment(second hand) n/a 52,112 12 February 2024 Car(2) 40 26,470 On 15 March 2024,Venus Ltd sold an equipment in main pool for proceeds of £1,005 on which the 130%super deduction had been claimed(the sale proceeds are less than the original cost). Note 7-Group relief For the year ended 31 March 2024,Mars Ltd (the 80%UK subsidiary company-see note 4)made a trading loss of 7,635.Venus Ltd has made a group relief claim,for the year ended 31 March 2024,in respect of this loss. Requirement (a)Calculate Venus Ltd's corporation tax liability for the year ended 31March 2024. Notes: 1.Your computation should commence with the operating profit figure off200,692 indicating by the use of zero(0)any items which do not require adjustment. 2.You should assume that the full annual investment allowance is available to Venus Ltd. (15marks) 题目类型：excel 答案 ： Operating profit Depreciation Amortisation Leasehold premium(working 1) Entertaining UK customers Gifts to customers Qualifying charitable donation Capital allowances(working 2) Trading profit Investment income(18,050+350) Dividends from Mars Ltd Chargeable gain TTP before QCD Qualifying charitable donation Group relief Taxable total profits Corporation tax 233,269@25% Upper limit=250,000*1/2=125,000 f 200,692 32,046 4,000 (3,120) 3,600 2,730 1,410 (80,324) 161,034 18,400 0 62,880 242,314 (1,410) 240,904 (7,635) 233,269 58,317 工 工 工 工 Marks 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 Working 1 Leasehold premium Premium received Less:96,000x(12-1)x2% Deduction 74,880/12x6/12 f 96,000 (21,120) 74,880 3,120 Marks 0.5 1 1 Working 2 Capital allowances AIA Main pool Special rate pool Allowance S Marks f f f£ TWDVb/f 8,400 12,740 0.5 +Additions Car 1 22,930 Delivery van 20,800 Second-hand equipment 52,112 Car 2 26,470 0.5 -Disposal (1,005) 1 AIA (72,912) 72,912 2 34,870 35,670 WDA-18% (6,277) 6,277 0.5 WDA-6% (2,140) 2,140 0.5 TWDV c/f 28,593 33,530 Capital allowances 80,324 难易程度 ：难",
     "options_en": null,
@@ -351,21 +260,8 @@
     "source_page": null
   },
   {
-    "id": 28,
-    "q_num": "28",
-    "stem_en": null,
-    "stem_zh": "1. 科目介绍 T X 税 法 (UK)科目帮助ACCA 学员掌握商业相关的税法知识以及主要的五个税种的计算。 TX课程大纲首先介绍了英国的税务系统及税法基本知识；其次介绍了作为一名会计师，必须深入理解并掌 握五个税种的相关领域具体内容，包括个人所得税，企业所得税，资本利得税，增值税，遗产税。 TX课程要求学员掌握五大税种，以及国民保险和税收征管相关知识，同时可以综合税法知识进行简单的税 务筹划讨论，并可以从案例中识别各税种的合规问题。 2.近3年全球通过率 The Global Pass Rates of Taxation(TX)(UK) in the Past 3 Years Mar/21 Jun/21 Sep/21 Dec/21 Mar/22 Jun/22 Sep/22 Dec/22 Mar/23 Jun/23 Sep/23 46% 50% 52% 49% 51% 52% 52% 52% 52% 56% 54% 《税法》全球通过率，可登陆ACCA全球官网，进入“Studysupportresources”查询 《税法》全球通过率，可登陆ACCA全球官网，进入“Studysupportresources”查询 高顿ACCA,为学员赢得世界尊重 3.Syllabus and Study Guide考试大纲与科目知识结构 The UK tax system and its administration (A)Chargeablegains forindividuals(C)VAT (F)Income taxand NICliabilities(B)Corporation taxliabilities (E)Inheritance tax(D) The UK tax system and its administration (A) Chargeable gains for individuals(C) VAT (F) Income tax and NIC liabilities(B) Corporation tax liabilities (E) Inheritance tax(D) 4.考纲解析(新旧考纲的主要变化) 内容变更 (1)Income tax Rate of income tax Higher rate limit 由£150,000变为£125,140。 Dividend income nil rate band 由£2,000变为f1,000。 (2)Income tax Car fuel benefit 计算基数由£25,300变为£27,800。 (3)Income tax Company van Company van benefit 计算基数由£3,600变为E3,960 。 Company van fuel benefit计算基数由£688变为f757。 (4)Income tax National insurance contribution Class 1 Employee f1 to £12,570 per year Nil f12,571 to f50,270 per year 12% f50,271 and above per year 2% Class 1 Employer f1-f9,100 per year Nil £9,101 and above per year 13.8% Employment allowance f5,000 Class 1A 13.8% Class 2 f3.45 per week Lower profits limit £12,570 Class 4 f1 to f12,570 per year Nil f12,571 to f50,270 per year 9% £50,271 and above per year 2% (5)Capital gain tax Annual exempt amount Annual exempt amount由12,300变为£6,000。 高顿ACCA, 为学员赢得世界尊重 (6)Rates of interest Official rate of interest 2.25% Rate of interest on underpaid tax 6.50% Rate of interest on overpaid tax 3.00% (7)Corporation tax Rates of corporation tax Financial year 2023企业所得税税率分为small profits rate和 main rate: A small profits rate of 19%which applies where a company's augmented profits do not exceed a lower limit of £50,000;and Amain rate of 25%which applies where a company's augmented profits are f250,000 or more(the upper limit). Lower limit 和 Upper limit 要根据 accounting period 时长和associated company 个数进行调整。 (8)Corporation tax Marginal relief 当企业的augmented profits 在lower limit 和 upper limit之间时， Corporation tax=Taxable total profits×25%-Marginal relief Marginal relief计算公式如下： (Upper limit-Augmented profits)×Standard fraction ×Taxable total profits/Augmented profits The standard fraction for the financial year 2023 is 3/200. (9)Corporation tax Associated company Companies are associated if they are under the same control.This basically means a shareholding of more than 50%. 在计算associated company 个数时要注意：计税期间中部分时间联营视为整个计税期间联营； dormant company 不可以计入，resident overseas 的企业可以计入。 (10)Corporation tax Quarterly instalment payments 原 5 1 % group company 不再考查。 From 1 April 2023,the profit threshold is instead divided by the number of associated companies as at the end of the immediately preceding accounting period. (11)Corporation tax Enhanced capital allowances 不再考查initial claim for enhanced capital allowances,考查处置曾计提过 enhanced capital allowances的 P&M 如何处理，处理如下： Main pool (曾计提过130% super deduction) 于31 March 2023 后处置，计提balancing charge, 金额为sale proceeds; Special rate pool(曾计提过50% first year allowance)于31 March 2023后处置，50%的sale proceeds 从 special rate pool 里扣除，50%的sale proceeds 计提为 balancing charge。 (12)Value added tax Penalties for late payment and late filing 原Default surcharge system 被以下新规则替代，晚交VAT 和晚交VATreturn 分别处理。 Late filing(submission)penalties——Points-based system: A business incurs a penalty point each time a quarterly VATreturn is submitted late. If a penalty threshold of four points is reached,a f200 penalty is then charged. Thereafter,subsequent late VATreturns also incur a f200 penalty. Penalty points normally expire after two years. Late payment penalties and Late payment interest Up to 15 days late 16 to 30 days late More than 30 days late Penalty None 2% 4% 高 顿ACCA, 为学员赢得世界尊重 Daily penalty No No Yes Interest Yes Yes Yes 内容删除 (1)Income tax Basis of assessment The current year basis of assessment for sole traders and partnerships is to be replaced by a tax year basis. Current year basis opening and closing year rules 以 及 Overlap profits不 再 考 查 。 5.科目关联性 TX 科目是ACCA 基础阶段专业技能课程中唯——门税务科目。其中需要用到一些FA (财务会计)科目中 的基础财会知识。在TX 课程内容基础上，深入学习税法的科目为专业选修阶段的ATX (高级税法)。Advanced Taxation-United Kingdom(ATX-UK)Financial Accounting(FA)United Kingdom (TX-UK) 的基础财会知识。在TX 课程内容基础上，深入学习税法的科目为专业选修阶段的ATX (高级税法)。 Advanced Taxation- United Kingdom(ATX-UK) Financial Accounting(FA) United Kingdom (TX-UK) 6.考试形式 考试时间：3小时(考试开始之前有10分钟阅读考试说明的时间) Section A:15道客观题，每题2分，共30分。",
-    "options_en": null,
-    "options_zh": null,
-    "correct_answer": null,
-    "explanation_en": null,
-    "explanation_zh": null,
-    "source_doc": "ACCA:tx:case:tx-ocr-needed.docx#52",
-    "source_page": null
-  },
-  {
-    "id": 29,
-    "q_num": "29",
+    "id": 21,
+    "q_num": "21",
     "stem_en": null,
     "stem_zh": "Section B:3个客观案例题，每个案例包含5道客观题，每题2分，共30分。 Section C:3道主观题，分别为10分，15分，15分，共40分。 客观题题型有单选，多选，填空，拖拽，配对等形式。 Section C中有两道15分的题目， 一道考查个人所得税， 一道考查企业所得税。 Section C的主观题需要在简易的Excel 区域进行作答。 TX 考试中的各类题型难度： 1.客观题考查知识点涉及考纲各个部分，范围全面。 2.主观计算类题目，个人所得税和企业所得税综合题仍是考查重点，并且近年来综合类计算题是考查趋势， 需关注税务筹划相关问题，深刻理解知识点。并且，考生需要练习如何在Excel 上作答，熟练掌握 Excel 的功能 。 3.主观文字类题目占比较少，需要考生记忆背诵，可以使用简单的英文表达即可。 7.学习建议 高顿ACCA, 为学员赢得世界尊重 TX(UK) 这门课程的知识点较多，且比较细碎，因此通过练题熟练知识点非常重要，不仅可以对知识点 进行查漏补缺，还可以提高做题速度，帮助更好地通过考试。注意练题时客观题和主观题一样重要，都要 进行练习。考试的题目会涉及考纲当中的每个部分，尤其是对于税法当中必考的基础和重要知识点，学员 们一定要通过做题熟练地掌握操作方法，争取考试时不丢分，少丢分。 另外建议学员在题目的练习之后，可以根据答案给自己评分，并且能够进行有针对性的总结整理，理清思 路和框架，从而减少错误，熟悉税法规则。 另外本次考纲改革企业所得税知识点变动大，需格外注意。 8.考试思路 建议备考时长：1个月的课程知识学习+1个月的做题自我练习总结。 考试前自查：课程知识是否学习完毕，每个税种的题目(包括客观题和主观题)是否已练习，尤其是个人 所得税和企业所得税的主观计算题，每个税种的税收征管知识是否已牢记，客观题能否在提高速度的同时 保证正确率，主观题得分率能否达到70%-80%。 充分利用好模考：测试和锻炼考生对于考试时间合理分配的能力，提高机考界面操作的熟练度，根据考试 结果对相关知识点进行查漏补缺，复习教材对应的知识点，再去练习几道知识点相关的类似题型。 9.注意事项 在课程结束之后，学员一定要及时整理知识框架，并且通过大量的练习加强知识点的记忆和熟练度! 在课程结束之后，学员一定要及时整理知识框架，并且通过大量的练习加强知识点的记忆和熟练度! Q: TX 官网真题有必要做吗?A: 由于TX 税率每年会变动，而官网上的历年真题未修改税率， 因此，没有必要耗费大量时间刷历年真题。 Q: TX 官网真题有必要做吗?",
     "options_en": null,

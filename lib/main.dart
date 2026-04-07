@@ -557,6 +557,204 @@ class _QuizPageState extends State<QuizPage> {
     return kept.join('\n').trim();
   }
 
+  bool _containsDiagramCue(String text) {
+    if (text.trim().isEmpty) return false;
+    return RegExp(
+      r'图\s*\d+|如图|下图|见图|图表|表\s*\d+|如下表|Exhibit|Figure|Chart|Table',
+      caseSensitive: false,
+    ).hasMatch(text);
+  }
+
+  bool _looksTabularText(String text) {
+    if (text.trim().isEmpty) return false;
+    final lines = text.split('\n').where((e) => e.trim().isNotEmpty).toList();
+    if (lines.length < 3) return false;
+
+    var separatorLike = 0;
+    var multiSpaceLike = 0;
+    for (final l in lines) {
+      if (RegExp(r'[-_]{3,}|[|｜]{2,}').hasMatch(l)) {
+        separatorLike++;
+      }
+      if (RegExp(r'\S\s{2,}\S').hasMatch(l)) {
+        multiSpaceLike++;
+      }
+    }
+    return separatorLike >= 1 || multiSpaceLike >= 2;
+  }
+
+  String _normalizeSectionTitle(String raw) {
+    final t = raw.trim();
+    if (t.isEmpty) return '题干';
+    if (RegExp(r'background', caseSensitive: false).hasMatch(t) || t.contains('背景')) {
+      return '背景';
+    }
+    if (RegExp(r'requirement|task', caseSensitive: false).hasMatch(t) || t.contains('要求')) {
+      return '要求';
+    }
+    if (RegExp(r'analysis|explanation', caseSensitive: false).hasMatch(t) || t.contains('分析')) {
+      return '分析';
+    }
+    return t;
+  }
+
+  List<({String title, String content})> _splitStructuredSections(String stem) {
+    if (stem.trim().isEmpty) return const [];
+
+    final normalized = stem.replaceAll('\r\n', '\n').replaceAll('\r', '\n');
+    final marker = RegExp(
+      r'^\s*(section\s*[a-z]|task\s*\d+|requirement\s*\d*|background|题目背景|背景|要求|任务)\s*[:：]?\s*$',
+      multiLine: true,
+      caseSensitive: false,
+    );
+    final matches = marker.allMatches(normalized).toList();
+    if (matches.length < 2) {
+      return [(
+        title: '题干',
+        content: normalized.trim(),
+      )];
+    }
+
+    final out = <({String title, String content})>[];
+    for (var i = 0; i < matches.length; i++) {
+      final m = matches[i];
+      final titleRaw = normalized.substring(m.start, m.end).replaceAll(RegExp(r'[:：]'), '').trim();
+      final contentStart = m.end;
+      final contentEnd = i + 1 < matches.length ? matches[i + 1].start : normalized.length;
+      final content = normalized.substring(contentStart, contentEnd).trim();
+      if (content.isEmpty) continue;
+      out.add((title: _normalizeSectionTitle(titleRaw), content: content));
+    }
+
+    if (out.isEmpty) {
+      return [(
+        title: '题干',
+        content: normalized.trim(),
+      )];
+    }
+    return out;
+  }
+
+  Widget _buildStructuredStemView({
+    required String stem,
+    required double fontSize,
+    required List<String> exhibitAssets,
+  }) {
+    final sections = _splitStructuredSections(stem);
+    final hasDiagram = _containsDiagramCue(stem);
+    final tableLike = _looksTabularText(stem);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (exhibitAssets.isNotEmpty)
+          Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.blueGrey.shade200),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: ExpansionTile(
+              initiallyExpanded: false,
+              tilePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+              childrenPadding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+              title: Text(
+                '原题图表（${exhibitAssets.length}）',
+                style: TextStyle(
+                  fontSize: (fontSize - 2).clamp(12, 18).toDouble(),
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              subtitle: Text(
+                '用于还原 Exhibit/Figure 信息',
+                style: TextStyle(
+                  fontSize: (fontSize - 5).clamp(10, 14).toDouble(),
+                ),
+              ),
+              children: exhibitAssets.map((assetPath) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Image.asset(
+                      assetPath,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.red.shade50,
+                          child: Text(
+                            '图表加载失败：$assetPath',
+                            style: TextStyle(
+                              color: Colors.red.shade800,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        if (hasDiagram)
+          Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.amber.shade50,
+              border: Border.all(color: Colors.amber.shade300),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              '检测到图表/Exhibit 题。当前为文本版展示，可能缺失原图细节；建议结合原 PDF 对照作答。',
+              style: TextStyle(
+                color: Colors.amber.shade900,
+                fontWeight: FontWeight.w700,
+                fontSize: (fontSize - 3).clamp(11, 16).toDouble(),
+              ),
+            ),
+          ),
+        ...sections.map((sec) {
+          return Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.blueGrey.shade50,
+              border: Border.all(color: Colors.blueGrey.shade100),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  sec.title,
+                  style: TextStyle(
+                    fontSize: (fontSize - 2).clamp(12, 18).toDouble(),
+                    fontWeight: FontWeight.w800,
+                    color: Colors.blueGrey.shade700,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  sec.content,
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    height: 1.45,
+                    fontFamily: tableLike ? 'monospace' : null,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
+      ],
+    );
+  }
+
   String _normalizeAnswerLetters(String? raw) {
     if (raw == null) return '';
     return RegExp(r'[A-Fa-f]')
@@ -1149,6 +1347,7 @@ $enOptions
     final questionType = _questionTypeLabel(q);
     final questionTypeText = _questionTypeDisplay(questionType);
     final keyPointCommentary = _extractKeyPointCommentary(q);
+    final exhibitAssets = model.getExhibitAssetsForQuestion(q);
     final questionHeadline = '题号 ${q.qNum ?? '-'}';
     final compactHeadline = '题号 ${q.qNum ?? '-'}';
     final headerCollapsed = compact && _compactHeaderCollapsed;
@@ -1433,7 +1632,14 @@ $enOptions
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (stemBody.isNotEmpty)
-                    Text('$stemBody\n', style: TextStyle(fontSize: model.fontSize)),
+                    if (questionType == 'Objective')
+                      Text('$stemBody\n', style: TextStyle(fontSize: model.fontSize))
+                    else
+                      _buildStructuredStemView(
+                        stem: stemBody,
+                        fontSize: model.fontSize,
+                        exhibitAssets: exhibitAssets,
+                      ),
                   if (displayOptions.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

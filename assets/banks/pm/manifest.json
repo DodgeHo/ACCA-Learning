@@ -1,8 +1,8 @@
 {
   "bank": "pm",
-  "generated_at": "2026-04-07T07:15:49.305726+00:00",
+  "generated_at": "2026-04-07T09:28:25.636214+00:00",
   "source": "ocr_docx",
-  "questions": 9,
+  "questions": 6,
   "ocr_root": "ocr_packets",
   "data_db": "assets/banks/pm/data.db",
   "questions_json": "assets/banks/pm/questions.json",
@@ -10,7 +10,7 @@
   "parsed_blocks": 9,
   "by_type": {
     "objective": 0,
-    "case": 9,
+    "case": 6,
     "essay": 0
   }
 }

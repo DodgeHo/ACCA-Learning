@@ -37,8 +37,11 @@ W_NS = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 QUESTION_START_RE = re.compile(
     r"(?im)^\s*(?:question\s*\d+|q\s*\d+|\d{1,3}[\)\.]\s+|section\s*[ab]\s*)"
 )
+INLINE_QUESTION_SPLIT_RE = re.compile(
+    r"(?is)(?=(?:^|\s)(?:Q\s*)?\d{1,3}[\)\.]\s+[^\n]{0,180}?分值\s*[:：])"
+)
 OPTION_RE = re.compile(
-    r"(?ims)(?:^|\n)\s*([A-F])[\.\)\]:-]\s*(.*?)(?=(?:\n\s*[A-F][\.\)\]:-]\s*)|\Z)"
+    r"(?is)(?:^|[\n\r]|\s)([A-F])[\.\)\]:-]\s*(.*?)(?=(?:[\n\r]|\s)[A-F][\.\)\]:-]\s*|\Z)"
 )
 ANSWER_RE = re.compile(
     r"(?:answer|key|correct answer|\u7b54\u6848|\u6b63\u786e\u7b54\u6848)\s*[:\uff1a]?\s*([A-F](?:\s*[,/\\]\s*[A-F])*)",
@@ -117,16 +120,41 @@ def reflow_lines(lines: list[str]) -> list[str]:
 def split_blocks(text: str) -> list[str]:
     matches = list(QUESTION_START_RE.finditer(text))
     if not matches:
-        return [text] if text.strip() else []
+        base = [text] if text.strip() else []
+    else:
+        base = []
+        for i, m in enumerate(matches):
+            start = m.start()
+            end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
+            block = text[start:end].strip()
+            if block:
+                base.append(block)
 
     blocks: list[str] = []
-    for i, m in enumerate(matches):
-        start = m.start()
-        end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
-        block = text[start:end].strip()
-        if block:
-            blocks.append(block)
+    for b in base:
+        if b.count("分值") > 1:
+            inner = [x.strip() for x in INLINE_QUESTION_SPLIT_RE.split(b) if x.strip()]
+            if inner:
+                blocks.extend(inner)
+                continue
+        blocks.append(b)
     return blocks
+
+
+def is_noise_block(block: str) -> bool:
+    compact = re.sub(r"\s+", "", block)
+    if len(compact) > 2600 and "分值" not in block and "答案" not in block and "?" not in block:
+        return True
+
+    noise_hits = re.findall(
+        r"高顿教育|GOLDEN\s+EDUCATION|白皮书|Syllabus\s+and\s+Study\s+Guide|Practice\s+Platform|目录",
+        block,
+        flags=re.I,
+    )
+    if len(noise_hits) >= 2 and "分值" not in block and "答案" not in block:
+        return True
+
+    return False
 
 
 def parse_objective_block(block: str):
@@ -137,17 +165,24 @@ def parse_objective_block(block: str):
     prompt = split[0].strip()
     commentary = split[1].strip() if len(split) > 1 else None
 
+    # Remove trailing answer snippet from prompt to avoid leaking answer text into stem.
+    prompt_wo_answer = re.sub(
+        r"(?is)(?:答案|correct\s+answer|answer|key)\s*[:：].*$",
+        "",
+        prompt,
+    ).strip()
+
     options = []
-    marks = list(OPTION_RE.finditer(prompt))
+    marks = list(OPTION_RE.finditer(prompt_wo_answer or prompt))
     if marks:
-        stem = prompt[: marks[0].start()].strip()
+        stem = (prompt_wo_answer or prompt)[: marks[0].start()].strip()
         for om in marks:
             label = om.group(1).upper()
             content = safe_text(om.group(2))
             if content:
                 options.append(f"{label}. {content}")
     else:
-        stem = prompt
+        stem = prompt_wo_answer or prompt
 
     return safe_text(stem), options or None, safe_text(answer), safe_text(commentary)
 
@@ -205,10 +240,17 @@ def build_rows(subject: str, ocr_root: Path) -> tuple[list[dict], dict]:
             blocks = [text]
 
         for idx, block in enumerate(blocks, start=1):
+            if is_noise_block(block):
+                continue
+
+            has_options = bool(re.search(r"(?is)(?:^|\s)[A-D][\.\)\]:-]\s+", block))
+            has_answer = bool(ANSWER_RE.search(block))
+            has_exam_meta = ("分值" in block) or ("题目类型" in block)
+
             block_mode = default_mode
-            if default_mode == "subjective" and re.search(r"(?m)^\s*[A-D][\.\)\]:-]\s+", block):
+            if default_mode == "subjective" and has_options:
                 block_mode = "objective"
-            if default_mode == "objective" and not re.search(r"(?m)^\s*[A-D][\.\)\]:-]\s+", block):
+            if default_mode == "objective" and not (has_options or has_answer or has_exam_meta):
                 block_mode = "subjective"
 
             if block_mode == "objective":

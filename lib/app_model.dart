@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:async';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'db.dart';
@@ -21,6 +22,7 @@ class AppModel extends ChangeNotifier {
   Map<int, String> chatHistoryByQuestionId = {};
   bool answerVisible = false;
   bool questionsLoaded = false;
+  Map<String, List<String>> exhibitAssetsBySourceDoc = {};
 
   // web-specific flag when DB can't be opened
   bool webError = false;
@@ -192,6 +194,7 @@ class AppModel extends ChangeNotifier {
       chatHistoryByQuestionId = await AppDatabase.getAllChatHistories();
 
       _applyFilterAndRandom();
+      await _loadExhibitIndex();
       final restored = await _restoreLastQuestionPosition();
       if (!restored) {
         if (questions.isEmpty) {
@@ -215,6 +218,69 @@ class AppModel extends ChangeNotifier {
       questionsLoaded = true;
     }
     notifyListeners();
+  }
+
+  Future<void> _loadExhibitIndex() async {
+    exhibitAssetsBySourceDoc = {};
+    try {
+      final raw = await rootBundle.loadString('assets/exhibits/index.json');
+      final decoded = jsonDecode(raw);
+      if (decoded is! Map) return;
+
+      decoded.forEach((k, v) {
+        final key = _normalizeSourceDocKey(k.toString());
+        if (key.isEmpty) return;
+
+        final files = <String>[];
+        if (v is List) {
+          for (final item in v) {
+            final p = (item ?? '').toString().trim();
+            if (p.isNotEmpty) files.add(_normalizeAssetPath(p));
+          }
+        } else if (v is String) {
+          final p = v.trim();
+          if (p.isNotEmpty) files.add(_normalizeAssetPath(p));
+        } else if (v is Map && v['files'] is List) {
+          for (final item in (v['files'] as List)) {
+            final p = (item ?? '').toString().trim();
+            if (p.isNotEmpty) files.add(_normalizeAssetPath(p));
+          }
+        }
+
+        if (files.isNotEmpty) {
+          exhibitAssetsBySourceDoc[key] = files;
+        }
+      });
+    } catch (_) {
+      // Keep empty map when no exhibit index is provided.
+      exhibitAssetsBySourceDoc = {};
+    }
+  }
+
+  String _normalizeSourceDocKey(String raw) {
+    return raw.trim().toLowerCase().replaceAll(RegExp(r'#\d+$'), '');
+  }
+
+  String _normalizeAssetPath(String raw) {
+    var p = raw.replaceAll('\\', '/').trim();
+    if (p.startsWith('./')) p = p.substring(2);
+    return p;
+  }
+
+  List<String> getExhibitAssetsForQuestion(Question q) {
+    final source = (q.sourceDoc ?? '').trim();
+    if (source.isEmpty || exhibitAssetsBySourceDoc.isEmpty) return const [];
+
+    final fullKey = source.toLowerCase();
+    final baseKey = _normalizeSourceDocKey(source);
+
+    final fromFull = exhibitAssetsBySourceDoc[fullKey];
+    if (fromFull != null && fromFull.isNotEmpty) return fromFull;
+
+    final fromBase = exhibitAssetsBySourceDoc[baseKey];
+    if (fromBase != null && fromBase.isNotEmpty) return fromBase;
+
+    return const [];
   }
 
   Future<bool> _restoreLastQuestionPosition() async {
