@@ -1,16 +1,17 @@
 {
   "bank": "sbl",
-  "generated_at": "2026-04-07T07:15:58.564849+00:00",
-  "source": "ocr_docx",
-  "questions": 182,
-  "ocr_root": "ocr_packets",
-  "data_db": "assets/banks/sbl/data.db",
-  "questions_json": "assets/banks/sbl/questions.json",
-  "source_docx_count": 4,
-  "parsed_blocks": 182,
+  "generated_at": "2026-04-08T04:52:17.494347+00:00",
+  "questions": 206,
+  "pdf_root": ".",
+  "data_db": "assets\\banks\\sbl\\data.db",
+  "questions_json": "assets\\banks\\sbl\\questions.json",
+  "subject_dir": "题库\\10-SBL 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）",
+  "pdf_count": 103,
+  "ocr_used": 0,
+  "text_only": 57,
   "by_type": {
     "objective": 0,
     "case": 0,
-    "essay": 182
+    "essay": 206
   }
 }

@@ -1,16 +1,17 @@
 {
   "bank": "afm",
-  "generated_at": "2026-04-07T07:16:03.257463+00:00",
-  "source": "ocr_docx",
-  "questions": 36,
-  "ocr_root": "ocr_packets",
-  "data_db": "assets/banks/afm/data.db",
-  "questions_json": "assets/banks/afm/questions.json",
-  "source_docx_count": 2,
-  "parsed_blocks": 36,
+  "generated_at": "2026-04-08T04:53:27.749755+00:00",
+  "questions": 111,
+  "pdf_root": ".",
+  "data_db": "assets\\banks\\afm\\data.db",
+  "questions_json": "assets\\banks\\afm\\questions.json",
+  "subject_dir": "题库\\12-AFM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）",
+  "pdf_count": 112,
+  "ocr_used": 0,
+  "text_only": 93,
   "by_type": {
     "objective": 0,
-    "case": 36,
+    "case": 111,
     "essay": 0
   }
 }

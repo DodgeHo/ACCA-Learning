@@ -1,16 +1,17 @@
 {
   "bank": "fr",
-  "generated_at": "2026-04-07T07:15:50.730362+00:00",
-  "source": "ocr_docx",
-  "questions": 8,
-  "ocr_root": "ocr_packets",
-  "data_db": "assets/banks/fr/data.db",
-  "questions_json": "assets/banks/fr/questions.json",
-  "source_docx_count": 1,
-  "parsed_blocks": 8,
+  "generated_at": "2026-04-08T04:48:57.863064+00:00",
+  "questions": 196,
+  "pdf_root": ".",
+  "data_db": "assets\\banks\\fr\\data.db",
+  "questions_json": "assets\\banks\\fr\\questions.json",
+  "subject_dir": "题库\\7-FR 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）",
+  "pdf_count": 84,
+  "ocr_used": 0,
+  "text_only": 69,
   "by_type": {
-    "objective": 0,
-    "case": 8,
+    "objective": 196,
+    "case": 0,
     "essay": 0
   }
 }

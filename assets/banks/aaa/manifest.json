@@ -1,16 +1,17 @@
 {
   "bank": "aaa",
-  "generated_at": "2026-04-07T07:16:07.810393+00:00",
-  "source": "ocr_docx",
-  "questions": 30,
-  "ocr_root": "ocr_packets",
-  "data_db": "assets/banks/aaa/data.db",
-  "questions_json": "assets/banks/aaa/questions.json",
-  "source_docx_count": 1,
-  "parsed_blocks": 30,
+  "generated_at": "2026-04-08T04:53:57.793752+00:00",
+  "questions": 93,
+  "pdf_root": ".",
+  "data_db": "assets\\banks\\aaa\\data.db",
+  "questions_json": "assets\\banks\\aaa\\questions.json",
+  "subject_dir": "题库\\14-AAA 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）",
+  "pdf_count": 95,
+  "ocr_used": 0,
+  "text_only": 68,
   "by_type": {
-    "objective": 1,
-    "case": 29,
+    "objective": 0,
+    "case": 93,
     "essay": 0
   }
 }

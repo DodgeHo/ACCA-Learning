@@ -1,16 +1,17 @@
 {
   "bank": "fm",
-  "generated_at": "2026-04-07T07:15:53.903914+00:00",
-  "source": "ocr_docx",
-  "questions": 168,
-  "ocr_root": "ocr_packets",
-  "data_db": "assets/banks/fm/data.db",
-  "questions_json": "assets/banks/fm/questions.json",
-  "source_docx_count": 1,
-  "parsed_blocks": 168,
+  "generated_at": "2026-04-08T04:49:49.691026+00:00",
+  "questions": 251,
+  "pdf_root": ".",
+  "data_db": "assets\\banks\\fm\\data.db",
+  "questions_json": "assets\\banks\\fm\\questions.json",
+  "subject_dir": "题库\\9-FM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）",
+  "pdf_count": 80,
+  "ocr_used": 0,
+  "text_only": 61,
   "by_type": {
-    "objective": 2,
-    "case": 166,
+    "objective": 251,
+    "case": 0,
     "essay": 0
   }
 }

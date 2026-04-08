@@ -1,16 +1,17 @@
 {
   "bank": "apm",
-  "generated_at": "2026-04-07T07:16:05.312513+00:00",
-  "source": "ocr_docx",
-  "questions": 137,
-  "ocr_root": "ocr_packets",
-  "data_db": "assets/banks/apm/data.db",
-  "questions_json": "assets/banks/apm/questions.json",
-  "source_docx_count": 1,
-  "parsed_blocks": 137,
+  "generated_at": "2026-04-08T04:53:37.714588+00:00",
+  "questions": 91,
+  "pdf_root": ".",
+  "data_db": "assets\\banks\\apm\\data.db",
+  "questions_json": "assets\\banks\\apm\\questions.json",
+  "subject_dir": "题库\\13-APM 资料合集（历年真题+部分真题解析+补充资料+冲刺直播看课图解等）",
+  "pdf_count": 73,
+  "ocr_used": 0,
+  "text_only": 50,
   "by_type": {
-    "objective": 0,
-    "case": 137,
+    "objective": 21,
+    "case": 70,
     "essay": 0
   }
 }

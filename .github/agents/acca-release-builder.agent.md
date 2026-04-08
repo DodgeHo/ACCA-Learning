@@ -37,6 +37,19 @@ Deliver production-ready per-subject ACCA apps with minimal risk.
 5. Summarize OCR-needed files and exact OCR commands.
 6. If requested, clean non-ACCA or sensitive files and update .gitignore accordingly.
 
+## Current 11-Step Playbook
+1. Inventory repository state and existing bank assets.
+2. Confirm PM/TX baseline quality and parse coverage.
+3. Upgrade parser rules in scripts/build_acca_bank_from_docx.py when extraction quality is weak.
+4. If OCR DOCX is missing, run deterministic cleanup on current bank assets (JSON/DB/manifest sync).
+5. Apply bank switch smoke check with scripts/select_question_bank.ps1.
+6. Run app startup smoke check (at least one target platform).
+7. Finalize subject build matrix commands (android/windows/web).
+8. Improve non-objective rendering (Case/Essay structure and readability safeguards).
+9. Wire exhibit mapping support (assets/exhibits/index.json + UI folding panel).
+10. Package release artifacts with checksum notes under release/<version>/.
+11. Publish release node (commit + tag + GitHub Release) and keep docs aligned.
+
 ## Continuation Defaults
 - If prior context indicates OCR DOCX is ready under ocr_packets/, start with scripts/prepare_acca_bank_from_docx.ps1.
 - Use subject order: pm, tx, fr, aa, fm, sbl, sbr, afm, apm, aaa.
