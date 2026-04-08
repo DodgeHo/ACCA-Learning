@@ -1,44 +1,44 @@
-# Release Node: ACCA 8 Subjects Extension
+# 发布节点说明：ACCA 8 科目扩展
 
-## Scope
+## 本次范围
 
-- Subject banks updated: fr, aa, fm, sbl, sbr, afm, apm, aaa
-- Runtime compatibility: PM/TX/SAA/SAP/ISPM flows preserved
-- Platforms validated per subject: android, windows, web
+- 更新科目：fr、aa、fm、sbl、sbr、afm、apm、aaa
+- 兼容说明：保持 PM/TX/SAA/SAP/ISPM 现有流程兼容
+- 平台范围：每个科目均完成 android、windows、web
 
-## Completed Steps
+## 已完成步骤
 
-1. Repository and source readiness scan for ACCA banks
-2. Bank assets rebuilt for 8 subjects
-3. Bank switch and question-count smoke checks
-4. Web builds completed for 8 subjects
-5. Android and Windows builds completed for 8 subjects
-6. App startup smoke check completed (web-server)
-7. Build matrix and upload notes aligned
-8. Checksums generated for 8-subject artifacts
+1. 仓库与题库源文件可用性扫描
+2. 8 科 bank 资产重建
+3. 切库与题量冒烟检查
+4. 8 科 Web 构建
+5. 8 科 Android 与 Windows 构建
+6. 应用启动冒烟（web-server）
+7. 构建矩阵与上传说明对齐
+8. 8 科产物 SHA256 清单生成
 
-## Key Outputs
+## 关键产出
 
 - release/0.3.0/BUILD_MATRIX.md
 - release/0.3.0/UPLOAD_NOTES_ACCA_8_SUBJECTS.md
 - release/0.3.0/checksums-acca-8-subjects.sha256
-- assets/banks/<subject>/{data.db,questions.json,manifest.json} for 8 subjects
+- 8 科 bank 资产：assets/banks/<subject>/{data.db,questions.json,manifest.json}
 
-## Validation Summary
+## 校验摘要
 
-- Subject question counts (smoke):
+- 题量冒烟：
   - fr=196, aa=270, fm=251, sbl=206, sbr=258, afm=111, apm=91, aaa=93
-- Artifacts verified for each subject:
+- 每科产物核验通过：
   - Android APK
   - Windows x64 ZIP
   - Web ZIP
-- Startup smoke check:
-  - Web server launch succeeded for sbr on port 18080
-- Active runtime bank reset:
+- 启动冒烟：
+  - sbr 在 18080 端口成功启动 web-server
+- 运行时默认 bank 已恢复：
   - pm
 
-## Release Notes
+## 备注
 
-- This node extends v0.3.0 with validated 8-subject ACCA bank packages and cross-platform artifacts.
-- Existing published PM/TX assets remain unchanged in naming and compatibility.
-- Wasm dry-run warnings exist in web builds (flutter_secure_storage_web), but standard web artifacts build successfully.
+- 本节点基于 v0.3.0 增加并验证了 8 科 ACCA 题库三端产物。
+- 已发布 PM/TX 的产物命名与兼容性保持不变。
+- Web 构建存在 wasm dry-run 告警（flutter_secure_storage_web），但不影响标准 Web 产物生成。

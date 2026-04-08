@@ -1,12 +1,12 @@
-# Release v0.3.0 ACCA 8-Subject Upload Notes
+# Release v0.3.0 ACCA 8 科上传说明
 
-## Scope
+## 发布范围
 
-- Subjects: fr, aa, fm, sbl, sbr, afm, apm, aaa
-- Platforms: android, windows, web
-- Build date: 2026-04-08
+- 科目：fr, aa, fm, sbl, sbr, afm, apm, aaa
+- 平台：android, windows, web
+- 构建日期：2026-04-08
 
-## Artifacts
+## 发布产物
 
 ### FR
 - release/0.3.0-fr/acca-fr-0.3.0-android.apk
@@ -106,7 +106,7 @@
 - acca-aaa-0.3.0-web.zip
   - 7CF990AB098917F4F180F1B5A88A9D0A15DE81E7121F7F1243E88FE0C284912C
 
-## Size and Timestamp Snapshot
+## 体积与时间快照
 
 - release/0.3.0-fr/acca-fr-0.3.0-android.apk: 52.88 MB, 2026-04-08 17:09:26
 - release/0.3.0-fr/acca-fr-0.3.0-windows-x64.zip: 13.83 MB, 2026-04-08 17:09:53
@@ -140,10 +140,10 @@
 - release/0.3.0-aaa/acca-aaa-0.3.0-windows-x64.zip: 14.17 MB, 2026-04-08 17:27:50
 - release/0.3.0-aaa/acca-aaa-0.3.0-web.zip: 13.82 MB, 2026-04-08 16:52:13
 
-## Notes
+## 备注
 
-- Android and Windows artifacts were built by subject-batched script execution.
-- Web artifacts were produced in the previous step and re-verified during this consolidation.
-- Web startup smoke-check passed for sbr on 2026-04-08 (flutter web-server on port 18080).
-- Standard checksum manifest generated: release/0.3.0/checksums-acca-8-subjects.sha256.
-- Selected bank was restored to pm after build verification.
+- Android 与 Windows 产物通过分科批量脚本构建完成。
+- Web 产物在上一阶段完成构建，并在本阶段再次复核通过。
+- sbr 已于 2026-04-08 通过 Web 启动冒烟（flutter web-server，端口 18080）。
+- 标准 SHA256 清单已生成：release/0.3.0/checksums-acca-8-subjects.sha256。
+- 构建与核验后，活动 bank 已恢复到 pm。
